@@ -3,12 +3,14 @@ NAME = cub3d
 CC = cc
 
 SRC = main.c\
-   map_init.c\
-   validate_map.c\
-   validate_walls.c\
-   validate_textures.c\
-   gnl/get_next_line.c\
-   gnl/get_next_line_utils.c\
+	parsing/map_init.c\
+	parsing/validate_map.c\
+	parsing/validate_walls.c\
+	parsing/validate_textures.c\
+	parsing/errors.c\
+	parsing/parse_cub1.c\
+	gnl/get_next_line.c\
+	gnl/get_next_line_utils.c\
 
 OBJ = $(SRC:.c=.o)
 

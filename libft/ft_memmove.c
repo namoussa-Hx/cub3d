@@ -26,7 +26,7 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 		while (len-- > 0)
 			dest[len] = serc[len];
 	else
-	{	
+	{
 		while (i < len)
 		{
 			dest[i] = serc[i];
@@ -39,5 +39,5 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 {
 	char src[]="world world";
 	printf("%s",ft_memmove(src+2,src,3));
-	return 0;
+	return (0);
 }*/

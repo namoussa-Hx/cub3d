@@ -12,10 +12,10 @@
 
 #include "libft.h"
 
-int include_digit(const char *s, char c)
+int	include_digit(const char *s, char c)
 {
-	size_t i;
-	int flag;
+	size_t	i;
+	int		flag;
 
 	i = 0;
 	flag = 0;
@@ -33,7 +33,7 @@ int include_digit(const char *s, char c)
 size_t	count_strings(const char *s, char c)
 {
 	size_t	nb_strings;
-	int i;
+	int		i;
 
 	nb_strings = 0;
 	i = 0;
@@ -41,8 +41,8 @@ size_t	count_strings(const char *s, char c)
 	{
 		if (s[i] != c)
 		{
-			if(include_digit(s + i, c))
-			 		return (0);
+			if (include_digit(s + i, c))
+				return (0);
 			while (s[i] != '\0' && s[i] != '\n' && s[i] != c)
 				i++;
 			nb_strings++;
@@ -52,7 +52,6 @@ size_t	count_strings(const char *s, char c)
 	}
 	return (nb_strings);
 }
-
 
 const char	*dup_word(char **dest, const char *src, char c)
 {
@@ -82,7 +81,6 @@ const char	*dup_word(char **dest, const char *src, char c)
 	return (src);
 }
 
-
 void	free_strs(char ***strs, size_t len)
 {
 	size_t	i;
@@ -106,8 +104,8 @@ char	**ft_split(const char *s, char c)
 	if (s == NULL)
 		return (NULL);
 	nbr_strings = count_strings(s, c);
-	if(nbr_strings != 3)
-	    return (NULL);
+	if (nbr_strings != 3)
+		return (NULL);
 	strs = (char **)malloc(sizeof(char *) * (nbr_strings + 1));
 	if (strs != NULL)
 	{
@@ -117,10 +115,7 @@ char	**ft_split(const char *s, char c)
 		{
 			s = dup_word(strs + i, s, c);
 			if (s == NULL)
-			{
-				free_strs(&strs, i);
-				return (NULL);
-			}
+				return (free_strs(&strs, i), NULL);
 			i++;
 		}
 	}

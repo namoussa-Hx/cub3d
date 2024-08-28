@@ -20,7 +20,7 @@ long long	ft_atoi(const char *str)
 	long long	ress;
 
 	i = 0;
-	if(str == NULL)
+	if (str == NULL)
 		return (-1);
 	negative = 1;
 	res = 0;
@@ -42,5 +42,5 @@ long long	ft_atoi(const char *str)
 {
 	char str[] = "------1234";
 	printf ("%d",ft_atoi(str));
-	return 0;
+	return (0);
 }*/

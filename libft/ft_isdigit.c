@@ -13,29 +13,27 @@
 
 int	ft_isdigit(char *c)
 {
-	int	i;
-	int	j;
-
+	int		i;
+	int		j;
+	char	*str;
 
 	i = 0;
-	if(c == NULL)
-	  return (0);
-	printf("==>%s\n", c);
-	while(c[i] == 32 || (c[i] >= 9 && c[i] <= 13))
+	if (c == NULL)
+		return (0);
+	str = ft_strtrim(c, " ");
+	if (str == NULL)
+		return (0);
+	if (str[i] == '-' || str[i] == '+')
 		i++;
-//    printf("c[i] = %c\n", c[i]);
-	if (c[i] == '-' || c[i] == '+')
+	while (str[i] == '0' && str[i] >= '0' && str[i] <= '9')
 		i++;
-	while (c[i] == '0' && c[i] >= '0' && c[i] <= '9')
-			i++;
-	printf("i : %d\n", i);
 	j = 0;
-	while (c[i] != '\0' && c[i] != '\n' && (c[i] >= '0' && c[i] <= '9'))
+	while (str[i] != '\0' && str[i] != '\n' && (str[i] >= '0' && str[i] <= '9'))
 	{
 		j++;
 		i++;
 	}
-	if (c[i] == '\0' && j <= 10)
+	if (str[i] == '\0' && j <= 10)
 		return (1);
 	return (0);
 }

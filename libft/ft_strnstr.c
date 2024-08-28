@@ -12,11 +12,24 @@
 
 #include "libft.h"
 
-int my_spar(char c) 
+int	my_spar(char c)
 {
-    if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r' ) 
-        return 1;
-    return 0;
+	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
+		|| c == '\r')
+		return (1);
+	return (0);
+}
+
+char	*strnstr_helper(size_t *i, size_t *j, char *c1, char *to_find)
+{
+	while (c1[*i] && to_find[*j] && c1[*i] == to_find[*j])
+	{
+		*i += 1;
+		*j += 1;
+	}
+	if (to_find[*j] == '\0')
+		return (&c1[*i - *j]);
+	return (NULL);
 }
 
 char	*ft_strnstr(const char *s1, const char *s2, size_t len)
@@ -36,25 +49,9 @@ char	*ft_strnstr(const char *s1, const char *s2, size_t len)
 	while (c1[i] && i < len)
 	{
 		j = 0;
-		while (c1[i + j] && c1[i + j] == to_find[j] && (i + j) < len)
-		{
-			j++;
-			if (to_find[j] == '\0')
-			{
-				if (c1[i + j] == '\0' || my_spar(c1[i + j]))
-					return (c1 + i);
-				else
-					break;
-			}
-		}
+		if (strnstr_helper(&i, &j, c1, to_find))
+			return (strnstr_helper(&i, &j, c1, to_find));
 		i++;
 	}
 	return (NULL);
 }
-/*int main ()
-{
-    char s1[] = "Foo Bar Baz";
-    char s2[] = "a";
-    printf("%s",ft_strnstr(s1,s2,7));
-    return 0;
-}*/
