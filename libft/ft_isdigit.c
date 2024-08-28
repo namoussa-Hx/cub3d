@@ -16,15 +16,21 @@ int	ft_isdigit(char *c)
 	int	i;
 	int	j;
 
+
 	i = 0;
 	if(c == NULL)
 	  return (0);
+	printf("==>%s\n", c);
+	while(c[i] == 32 || (c[i] >= 9 && c[i] <= 13))
+		i++;
+//    printf("c[i] = %c\n", c[i]);
 	if (c[i] == '-' || c[i] == '+')
 		i++;
 	while (c[i] == '0' && c[i] >= '0' && c[i] <= '9')
-		i++;
+			i++;
+	printf("i : %d\n", i);
 	j = 0;
-	while (c[i] && c[i] >= '0' && c[i] <= '9')
+	while (c[i] != '\0' && c[i] != '\n' && (c[i] >= '0' && c[i] <= '9'))
 	{
 		j++;
 		i++;

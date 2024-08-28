@@ -20,7 +20,7 @@ long long	ft_atoi(const char *str)
 	long long	ress;
 
 	i = 0;
-	if(!str)
+	if(str == NULL)
 		return (-1);
 	negative = 1;
 	res = 0;

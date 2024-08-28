@@ -8,8 +8,10 @@ int print_error(char *str)
 
 int check_extension(char *file)
 {
-    char *ext = ft_strrchr(file, '.');
-    if (ext == NULL || ft_strncmp(ext, ".cub", 5) != 0)
+    char *ext;
+    ext = ft_strrchr(file, '.');
+    char *res = ft_strnstr(ext, ".cub", 5);
+    if (ext == NULL || res == NULL)
         return (1);
     return (0);
 }
@@ -45,13 +47,24 @@ int parse_color(char *line)
     {
         i++;
         while (line[i] == ' ')
-            i++;
-        res = ft_split(line + i, ',');
-        if (ft_isdigit(res[0]) != 0 || ft_isdigit(res[1]) != 0 || ft_isdigit(res[2]) != 0)
+                i++;  
+        // if(ft_strtrim(line, " ") == NULL)
+	    //             return (-1);
+        res = ft_split(ft_strtrim(line + 1, " "), ',');
+        if(res == NULL)
+            return (-1);
+        if (ft_isdigit(res[0]) != 0 && ft_isdigit(res[1]) != 0 
+         && ft_isdigit(res[2]) != 0)
         {
+            // printf("res[0] = %s\n", res[0]);
+            // printf("res[1] = %s\n", res[1]);
+            // printf("res[2] = %s\n", res[2]);
 			   r = ft_atoi(res[0]);
                g = ft_atoi(res[1]);
                b = ft_atoi(res[2]);
+            //    printf("r = %d\n", r);
+            //     printf("g = %d\n", g);
+            //     printf("b = %d\n", b);
 			if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
                      return (-1);
         }
@@ -83,45 +96,47 @@ int my_strchr(char *str, char *c)
 
 int parse_cub(char *file, t_data *prog)
 {
-    int fd;
-    int i;
-    char *line;
-    if (check_extension(file))
-        return (1);
+    // int fd;
+    // // int i;
+    // // char *line;
+    // if (check_extension(file))
+    //     return (1);
 
-    fd = open(file, O_RDONLY);
-    if (fd == -1)
-        return (1);
-    while ((line = get_next_line(fd)))
-    {
-        i = 0;
-        if (ft_strnstr(line, "NO", ft_strlen(line)))
-            prog->maze.no = parse_texture(line);
-        else if (ft_strnstr(line, "SO", ft_strlen(line)))
-            prog->maze.so = parse_texture(line);
-        else if (ft_strnstr(line, "WE", ft_strlen(line)))
-            prog->maze.we = parse_texture(line);
-        else if (ft_strnstr(line, "EA", ft_strlen(line)))
-            prog->maze.ea = parse_texture(line);
-        else if (ft_strnstr(line, "F", ft_strlen(line)))
-            prog->maze.f = parse_color(line);
-        else if (ft_strnstr(line, "C", ft_strlen(line)))
-            prog->maze.c = parse_color(line);
-        else if (line[i] == '\0' || line[i] == '\n')
-        {
-            free(line);
-            continue;
-        }
-        else
-         break ;
-        free(line);
-    }
+    // fd = open(file, O_RDONLY);
+    // if (fd == -1)
+    //     return (1);
+    // while ((line = get_next_line(fd)))
+    // {
+    //     i = 0;
+    //     if (ft_strnstr(line, "NO", ft_strlen(line)))
+    //         prog->maze.no = parse_texture(line);
+    //     else if (ft_strnstr(line, "SO", ft_strlen(line)))
+    //         prog->maze.so = parse_texture(line);
+    //     else if (ft_strnstr(line, "WE", ft_strlen(line)))
+    //         prog->maze.we = parse_texture(line);
+    //     else if (ft_strnstr(line, "EA", ft_strlen(line)))
+    //         prog->maze.ea = parse_texture(line);
+    //     else if (ft_strnstr(line, "F", ft_strlen(line)))
+    //         prog->maze.f = parse_color(line);
+    //     else if (ft_strnstr(line, "C", ft_strlen(line)))
+    //         prog->maze.c = parse_color(line);
+    //     else if (line[i] == '\0' || line[i] == '\n')
+    //     {
+    //         free(line);
+    //         continue;
+    //     }
+    //     else
+    //      break ;
+    //     free(line);
+    // }
     if (check_is_map_valid(prog, file))
         return (1);
-    if(prog->maze.no == NULL || prog->maze.so == NULL || prog->maze.we == NULL
-        || prog->maze.ea == NULL || (prog->maze.f < 0 && prog->maze.c < 0))
-        return (1);
-    close(fd);
+    // if(check_textures(prog))
+    // {
+    //     printf("check_textures\n");
+    //     return (1);
+    // }
+    // close(fd);
     return (0);
 }
 

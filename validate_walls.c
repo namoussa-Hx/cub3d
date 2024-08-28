@@ -2,7 +2,7 @@
 
 int check_valid_char(char c)
 {
-    if (c == 0 || c == 10 || (c >= 9 && c <= 13) || c == 32)
+    if (c == '\0' || c == 10 || (c >= 9 && c <= 13) || c == 32)
         return (1);
     return (0);
 }
@@ -12,13 +12,15 @@ int check_empty(t_map *maze)
     int i;
     int h;
 
-    h = 0;
+    h = 1;
     while (h < maze->height)
     {
         i = 0;
         while (maze->map[h][i] != '\n' && maze->map[h][i] != '\0')
         {
-            if (maze->map[h][i] == '0')
+            if (maze->map[h][i] == '0' || maze->map[h][i] == 'N' 
+                || maze->map[h][i] == 'S' || maze->map[h][i] == 'E' 
+                || maze->map[h][i] == 'W')
             {
                 if (i == 0 || h == 0 || maze->map[h][i + 1] == '\0' || maze->map[h][i + 1] == '\n' 
                 || maze->map[h][i - 1] == '\0' || maze->map[h - 1][i] == '\0' 

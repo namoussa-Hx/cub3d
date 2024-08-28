@@ -1,23 +1,31 @@
-NO ./path_to_the_north_texture
-
-
-SO ./path_to_the_south_texture
+NO textures/simonkraft/respawn_anchor_side0.xpm
 
 
 
-WE ./path_to_the_west_texture
+EA textures/simonkraft/respawn_anchor_side2.xpm
 
 
 
-EA ./path_to_the_east_texture
+SO textures/simonkraft/respawn_anchor_side4.xpm
 
-F 220,100,0
 
-C 225,30,0
 
-   111111
-   1W0111
-   10111111
-111111111101
-10101111111
-111111111
+WE textures/simonkraft/respawn_anchor_side3.xpm
+
+C                  878      1,            223,                             
+
+F                                  15,6,40
+
+ 11111111111111
+111111000111111
+111110000011111
+11110000001111
+111000000000111
+11000000000011
+1000011111000011111111111
+110000111000011
+111000010000111
+111100000001111
+111110000011111
+11111100111111
+111111111111111

@@ -18,12 +18,12 @@ int should_skip(char *line)
     return (0);
 }
 
-int calcule_map_size(int fd, t_map *prog)
+int calcule_map_size(int fd, t_map *prog, int *lenght)
 {
     char *line;
     int len = 0;
 
- 
+    *lenght = 0;
     while ((line = get_next_line(fd)))
     {
         
@@ -33,13 +33,42 @@ int calcule_map_size(int fd, t_map *prog)
             continue;
         }
         len++;
+        if (*lenght < (int)ft_strlen(line))
+            *lenght = ft_strlen(line);
         free(line);
     }
     prog->height = len;
     close(fd);
     return (len);
 }
+void	*ft_calloc(size_t count, size_t size)
+{
+	void	*result;
 
+	result = malloc(count * size);
+	if (result == NULL)
+		return (NULL);
+	ft_bzero(result, count * size);
+	return (result);
+}
+
+char	*my_strdup(const char *s1, int lenght)
+{
+	char	*ptr;
+	int		i;
+
+	i = 0;
+    ptr = (char *)ft_calloc(lenght + 1, sizeof(char));
+    if (ptr == NULL)
+            return (NULL);
+	while (s1[i])
+	{
+		ptr[i] = s1[i];
+		i++;
+	}
+	ptr[i] = '\0';
+	return (ptr);
+}
 
 int map_copy(t_map *prog, char *file)
 {
@@ -48,12 +77,12 @@ int map_copy(t_map *prog, char *file)
     int len = 0;
     int fd1 = 0;
     int fd = 0;
+    int lenght;
 
     fd = open(file, O_RDONLY);
     if (fd == -1)
         return (1); 
-
-    len  = calcule_map_size(fd, prog);
+    len  = calcule_map_size(fd, prog, &lenght);
     prog->map = (char **)malloc(sizeof(char *) * (len + 1));
     if (!prog->map)
          return (1);
@@ -67,7 +96,7 @@ int map_copy(t_map *prog, char *file)
             free(line);
             continue;
         }
-        prog->map[j] = ft_strdup(line);
+        prog->map[j] = my_strdup(line, lenght);
         j++;
         free(line);
     }

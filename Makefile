@@ -6,6 +6,7 @@ SRC = main.c\
    map_init.c\
    validate_map.c\
    validate_walls.c\
+   validate_textures.c\
    gnl/get_next_line.c\
    gnl/get_next_line_utils.c\
 

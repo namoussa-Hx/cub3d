@@ -11,7 +11,7 @@
 #include <limits.h>
 #include "gnl/get_next_line.h"
 #include "libft/libft.h"
-#include <mlx.h>
+// #include <mlx.h>
 
 #define WIDTH 1920
 #define HEIGHT 1080
@@ -53,6 +53,7 @@ int         validate_walls(t_map *maze);
 int         check_empty(t_map *maze);
 int         print_error(char *str);
 int         map_copy(t_map *prog, char *file);
+int         check_textures(t_data *prog);
 
 
 
