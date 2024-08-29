@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_cub1.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namoussa <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/29 13:41:42 by namoussa          #+#    #+#             */
+/*   Updated: 2024/08/29 13:41:44 by namoussa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3d.h"
 
 char	*parse_texture(char *line, int *counter)
@@ -94,8 +106,11 @@ int	parse_cub(char *file, t_data *prog)
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 		return (1);
-	while ((line = get_next_line(fd)))
+	while (1)
 	{
+		line = get_next_line(fd);
+		if (line == NULL)
+			break ;
 		i = 0;
 		counter += check_map_line(line, prog);
 		free(line);

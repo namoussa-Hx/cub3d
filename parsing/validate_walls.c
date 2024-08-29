@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validate_walls.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namoussa <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/29 13:42:12 by namoussa          #+#    #+#             */
+/*   Updated: 2024/08/29 13:42:13 by namoussa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3d.h"
 
 int	check_empty(t_map *maze)
@@ -42,7 +54,7 @@ int	last_line(t_map *maze, int h)
 			j++;
 			continue ;
 		}
-		if (line[j] != '1')
+		if (line[j] == '0')
 			return (1);
 		j++;
 	}
@@ -66,7 +78,7 @@ int	check_first_last_line(t_map *maze)
 			j++;
 			continue ;
 		}
-		if (line[j] != '1')
+		if (line[j] == '0')
 			return (1);
 		j++;
 	}

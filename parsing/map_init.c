@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_init.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namoussa <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/29 13:41:33 by namoussa          #+#    #+#             */
+/*   Updated: 2024/08/29 13:41:35 by namoussa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3d.h"
 
 int	should_skip(char *line)
@@ -17,32 +29,33 @@ int	should_skip(char *line)
 	return (0);
 }
 
-int	calcule_map_size(t_map *prog, int *lenght, char *file)
+int	map_size(t_map *prog, int *lenght, char *file)
 {
 	char	*line;
 	int		len;
 	int		fd;
+	int		flag;
 
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 		return (1);
 	len = 0;
+	flag = 1;
 	*lenght = 0;
-	while ((line = get_next_line(fd)))
+	while (1)
 	{
-		if (should_skip(line))
-		{
-			free(line);
+		line = get_next_line(fd);
+		if (is_skip(line, flag) == 1)
 			continue ;
-		}
+		else if (is_skip(line, flag) == 2)
+			break ;
+		flag = 2;
 		len++;
 		if (*lenght < (int)ft_strlen(line))
 			*lenght = ft_strlen(line);
 		free(line);
 	}
-	prog->height = len;
-	close(fd);
-	return (len);
+	return (prog->height = len, close(fd), len);
 }
 
 void	*ft_calloc(size_t count, size_t size)
@@ -78,25 +91,25 @@ int	map_copy(t_map *prog, char *file)
 {
 	char	*line;
 	int		j;
-	int		len;
 	int		fd1;
 	int		lenght;
+	int		flag;
 
 	j = 0;
-	len = calcule_map_size(prog, &lenght, file);
-	prog->map = (char **)malloc(sizeof(char *) * (len + 1));
-	if (!prog->map)
-		return (1);
+	flag = 1;
+	prog->map = (char **)malloc(sizeof(char *) * (map_size(prog, &lenght, file)
+				+ 1));
 	fd1 = open(file, O_RDONLY);
 	if (fd1 == -1)
 		return (1);
-	while ((line = get_next_line(fd1)))
+	while (1)
 	{
-		if (should_skip(line))
-		{
-			free(line);
+		line = get_next_line(fd1);
+		if (is_skip(line, flag) == 1)
 			continue ;
-		}
+		else if (is_skip(line, flag) == 2)
+			break ;
+		flag = 2;
 		prog->map[j++] = my_strdup(line, lenght);
 		free(line);
 	}

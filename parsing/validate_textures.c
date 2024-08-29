@@ -1,4 +1,36 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validate_textures.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namoussa <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/29 13:42:03 by namoussa          #+#    #+#             */
+/*   Updated: 2024/08/29 13:42:04 by namoussa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3d.h"
+
+int	free_line(char *line)
+{
+	free(line);
+	return (1);
+}
+
+int	is_skip(char *line, int flag)
+{
+	if (line == NULL)
+		return (2);
+	if (should_skip(line))
+	{
+		if (flag == 2)
+			return (2);
+		if (flag == 1 && free_line(line))
+			return (1);
+	}
+	return (0);
+}
 
 int	include_xpm(char *str)
 {
