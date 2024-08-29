@@ -1,0 +1,6 @@
+{
+    "files.autoSave": "afterDelay",
+    "files.associations": {
+        "cub3d.h": "c"
+    }
+}

@@ -11,6 +11,7 @@ SRC = main.c\
 	parsing/parse_cub1.c\
 	gnl/get_next_line.c\
 	gnl/get_next_line_utils.c\
+	execution/exec.c
 
 OBJ = $(SRC:.c=.o)
 

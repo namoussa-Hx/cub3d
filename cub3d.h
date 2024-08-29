@@ -23,21 +23,24 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-// #include <mlx.h>
+#include  <mlx.h>
 
 # define WIDTH 1920
 # define HEIGHT 1080
+# define		PI 3.14159265359
+# define		move_speed 5.0
+# define		rotation_speed 0.1
 
 typedef struct s_player
 {
-	double		x;
-	double		y;
-	double		dir_x;
-	double		dir_y;
+	// double		x;
+	// double		y;
+	// double		dir_x;
+	// double		dir_y;
+	double		angle;
+	double		fov;
 	double		player_x;
 	double		player_y;
-	double		move_speed;
-	double		rot_speed;
 }				t_player;
 
 typedef struct s_map
@@ -51,13 +54,31 @@ typedef struct s_map
 	int			c;
 	int			height;
 }				t_map;
-
+typedef struct s_vec
+{
+	int  x;
+	int  y;
+	int map_x;
+	int map_y;
+	int step_x;
+	int step_y;
+	double side_dist_x;
+	double side_dist_y;
+	double ray_dir_x;
+	double ray_dir_y;
+	int hit;
+	int side;
+	double delta_dist_x;
+	double delta_dist_y;
+	double perp_wall_dist;
+}	t_vec;
 typedef struct s_data
 {
 	void		*mlx;
 	void		*win;
 	t_map		maze;
 	t_player	player;
+	t_vec		vector;
 }				t_data;
 
 int				check_is_map_valid(t_data *prog, char *file);
@@ -74,5 +95,6 @@ int				parse_cub(char *file, t_data *prog);
 int				is_skip(char *line, int flag);
 int				should_skip(char *line);
 int				check_valid_char(char c, int flag);
+void			draw_map(t_data *game, int tile_size);
 
 #endif
