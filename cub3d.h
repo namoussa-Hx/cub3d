@@ -6,7 +6,7 @@
 /*   By: namoussa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 23:56:58 by namoussa          #+#    #+#             */
-/*   Updated: 2024/08/28 23:57:00 by namoussa         ###   ########.fr       */
+/*   Updated: 2024/09/02 23:33:59 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@
 # include <string.h>
 # include <unistd.h>
 #include  <mlx.h>
-
+#include <sys/time.h>
 # define WIDTH 1920
 # define HEIGHT 1080
 # define		PI 3.14159265359
-# define		move_speed 5.0
-# define		rotation_speed 0.1
+//# define		move_speed 5.0
+//# define		rotation_speed 0.1
 
 typedef struct s_player
 {
@@ -53,7 +53,9 @@ typedef struct s_map
 	int			f;
 	int			c;
 	int			height;
-}				t_map;
+	int			width;
+}	t_map;
+
 typedef struct s_vec
 {
 	int  x;
@@ -79,8 +81,25 @@ typedef struct s_data
 	t_map		maze;
 	t_player	player;
 	t_vec		vector;
+	void        *img;
+	char        *img_data;
+	int         bpp;
+	int         size_line;
+    	int         endian;
+    	double      oldTime;
+	double      currentTime;
+	double		frame_Time;
+	double		move_speed;
+	double      rot_speed;
+
 }				t_data;
 
+int update(t_data *data);
+void render_flor(t_data *game);
+void render_color(t_data *game) ;
+void render_3d_projection(t_data *game, float distance, int ray_index, int tile_size) ;
+void cast_ray_dda(t_data *game, float angle, int ray_index, int tile_size);
+int key_hook(int keycode, t_data *game) ;
 int				check_is_map_valid(t_data *prog, char *file);
 int				validate_walls(t_map *maze);
 int				check_empty(t_map *maze);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoussa <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 13:45:39 by namoussa          #+#    #+#             */
-/*   Updated: 2024/08/29 13:45:41 by namoussa         ###   ########.fr       */
+/*   Updated: 2024/09/02 23:33:06 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,72 @@ void	init_data(t_data *data)
 	data->player.angle = 0;
 	data->player.fov = PI / 3;
 	data->player.player_x = 0;
-	data->player.player_y = 0;
+    data->player.player_y = 0;
+}
+
+int is_wall(t_data *game, int x, int y, int tile_size)
+{
+    int map_x;
+    int map_y;
+    map_x = x / tile_size;
+    map_y = y / tile_size;
+    if (map_x < 0 || map_x >= WIDTH || map_y < 0 || map_y >= HEIGHT)
+        return 1;
+
+    return (game->maze.map[map_y][map_x] == '1');
+}
+
+void init_player(t_data *game, int tile_size) 
+{
+    float start_x;
+    float start_y;
+    start_x = WIDTH / 2.0;
+    start_y = HEIGHT / 2.0;
+
+    while (is_wall(game, start_x, start_y, tile_size)) 
+    {
+        start_x += tile_size; 
+        if (start_x >= WIDTH) 
+        {
+            start_x = tile_size;
+            start_y += tile_size; 
+            if (start_y >= HEIGHT)
+             {
+                start_x = tile_size;
+                start_y = tile_size;
+            }
+        }
+    }
+    game->player.player_x = start_x;
+    game->player.player_y = start_y;
+}
+
+double getTicks()
+{
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    return (tv.tv_sec * 1000.0) + (tv.tv_usec / 1000.0); 
+}
+
+int update(t_data *data)
+{
+    data->currentTime = getTicks();
+    data->frame_Time = (data->currentTime - data->oldTime) / 1000.0;
+    data->oldTime = data->currentTime;
+
+    data->move_speed = 15.0;
+    data->rot_speed = 0.1; 
+    return 0;
 }
 
 int	main(int ac, char **av)
 {
 	t_data	data;
-	// int x;
+	int x;
 	int tile_size;
+    float ray_angle;
 
-		// x = 0;
+		x = 0;
 	if (ac == 2)
 	{
 		init_data(&data);
@@ -45,18 +101,26 @@ int	main(int ac, char **av)
 			print_error("Error \n");
 			return (1);
 		}
-		tile_size = fmin(WIDTH / 2, HEIGHT / 2);
-		//     while (x < WIDTH) 
-		// 	{
-        // float ray_angle = data.player.angle + atanf((x - WIDTH / 2.0) / (WIDTH / 2.0 / tanf(data.player.fov / 2.0)));
-        // cast_ray_dda(&data, ray_angle, x, tile_size);
-        // x++;
-        // }
-   
-    // mlx_hook(data.win, 02, 1L << 0, key_hook, &data);
-	draw_map(&data, 20);
+		data.maze.width=  ft_strlen(data.maze.map[0]);
+		data.player.player_x = 1080;
+		data.player.player_y =700;
+		tile_size = fmin(WIDTH / data.maze.width, HEIGHT / data.maze.height);
+		data.oldTime = getTicks(); 
+        data.img = mlx_new_image(data.mlx, WIDTH, HEIGHT);
+        data.img_data = mlx_get_data_addr(data.img, &data.bpp, &data.size_line, &data.endian);
+        update(&data);
+	render_color(&data);
+	render_flor(&data);
+        while (x < WIDTH) 
+        {
+                ray_angle = data.player.angle + atanf((x - WIDTH / 2.0) / (WIDTH / 2.0 / tanf(data.player.fov / 2.0)));
+                cast_ray_dda(&data, ray_angle, x, tile_size);
+                x++;
+        }
+    // mlx_loop_hook(data.mlx, update, &data);
+    mlx_hook(data.win, 02, 1L << 0, key_hook, &data);
     mlx_loop(data.mlx);
-
+    mlx_destroy_image(data.mlx, data.img);
     free(data.maze.map);
 	}
 	else
