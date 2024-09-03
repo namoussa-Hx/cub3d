@@ -38,6 +38,18 @@ int	ft_check_chars(t_map *maze)
 	return (0);
 }
 
+void ft_player_angle(t_data *data, char c)
+{
+	if (c == 'N')
+		data->player.angle = 3 * PI / 2;
+	if (c == 'S')
+		data->player.angle = PI / 2;
+	if (c == 'E')
+		data->player.angle = 0;
+	if (c == 'W')
+		data->player.angle = PI;
+}
+
 int	check_help(t_data *data, int h, char ch)
 {
 	int	w;
@@ -56,8 +68,9 @@ int	check_help(t_data *data, int h, char ch)
 		if (data->maze.map[h][w] == 'N' || data->maze.map[h][w] == 'S'
 			|| data->maze.map[h][w] == 'E' || data->maze.map[h][w] == 'W')
 		{
-			data->player.player_x = w;
-			data->player.player_y = h;
+			ft_player_angle(data, data->maze.map[h][w]);
+			data->player.x = w;
+			data->player.y = h;
 		}
 		if (data->maze.map[h][w] == ch)
 			count += 1;
@@ -109,12 +122,24 @@ int	check_every_char(t_data *prog)
 int	check_is_map_valid(t_data *prog, char *file)
 {
 	if (map_copy(&prog->maze, file))
+	{
+		printf("map_copy\n");
 		return (1);
+	}
 	if (validate_walls(&prog->maze))
+	{
+		printf("validate_walls\n");
 		return (1);
+	}
 	if (check_every_char(prog))
+	{
+		printf("check_every_char\n");
 		return (1);
+	}
 	if (check_empty(&prog->maze))
+	{
+		printf("check_empty\n");
 		return (1);
+	}
 	return (0);
 }

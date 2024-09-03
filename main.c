@@ -28,6 +28,8 @@ void	init_data(t_data *data)
 	data->player.fov = PI / 3;
 	data->player.player_x = 0;
     data->player.player_y = 0;
+    data->player.x = 0;
+    data->player.y = 0;
 }
 
 int is_wall(t_data *game, int x, int y, int tile_size)
@@ -76,11 +78,10 @@ double getTicks()
 
 int update(t_data *data)
 {
-    data->currentTime = getTicks();
-    data->frame_Time = (data->currentTime - data->oldTime) / 1000.0;
-    data->oldTime = data->currentTime;
-
-    data->move_speed = 15.0;
+    // data->currentTime = getTicks();
+    // data->frame_Time = (data->currentTime - data->oldTime) / 1000.0;
+    // data->oldTime = data->currentTime;
+    data->move_speed = 10.0;
     data->rot_speed = 0.1; 
     return 0;
 }
@@ -91,36 +92,41 @@ int	main(int ac, char **av)
 	int x;
 	int tile_size;
     float ray_angle;
-
-		x = 0;
+	x = 0;
 	if (ac == 2)
 	{
 		init_data(&data);
-		if (parse_cub(av[1], &data))
-		{
-			print_error("Error \n");
+    data.textures = malloc(sizeof(t_images));
+	ft_bzero(data.textures, sizeof(t_images));
+		if (parse_cub(av[1], &data) && print_error("Error \n"))
 			return (1);
-		}
 		data.maze.width=  ft_strlen(data.maze.map[0]);
-		data.player.player_x = 1080;
-		data.player.player_y =700;
-		tile_size = fmin(WIDTH / data.maze.width, HEIGHT / data.maze.height);
-		data.oldTime = getTicks(); 
+		// tile_size = fmin(WIDTH / data.maze.width, HEIGHT / data.maze.height);
+        tile_size = 20;
+		data.player.player_x = (data.player.x * tile_size) + (tile_size / 2);
+		data.player.player_y = (data.player.y * tile_size) + (tile_size / 2);
+        init_textures(&data);
         data.img = mlx_new_image(data.mlx, WIDTH, HEIGHT);
         data.img_data = mlx_get_data_addr(data.img, &data.bpp, &data.size_line, &data.endian);
         update(&data);
-	render_color(&data);
-	render_flor(&data);
+        memset(data.img_data, 0, WIDTH * HEIGHT * (data.bpp / 8));
+	    render_color(&data);
+	    render_flor(&data);
         while (x < WIDTH) 
         {
                 ray_angle = data.player.angle + atanf((x - WIDTH / 2.0) / (WIDTH / 2.0 / tanf(data.player.fov / 2.0)));
                 cast_ray_dda(&data, ray_angle, x, tile_size);
                 x++;
         }
+        mlx_put_image_to_window(data.mlx, data.win, data.img, 0, 0);
     // mlx_loop_hook(data.mlx, update, &data);
     mlx_hook(data.win, 02, 1L << 0, key_hook, &data);
     mlx_loop(data.mlx);
     mlx_destroy_image(data.mlx, data.img);
+    // mlx_destroy_image(data.mlx, data.textures->images[0]);
+    // mlx_destroy_image(data.mlx, data.textures->images[1]);
+    // mlx_destroy_image(data.mlx, data.textures->images[2]);
+    // mlx_destroy_image(data.mlx, data.textures->images[3]);
     free(data.maze.map);
 	}
 	else

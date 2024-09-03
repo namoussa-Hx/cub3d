@@ -6,7 +6,8 @@ void render_3d_projection(t_data *game, float distance, int ray_index, int tile_
     int draw_start;
     int draw_end;
     int y;
-    int color = 0xFF0000;
+    int color;
+    color = 0xFF0000;
     int pixel_index;
 
     if (distance <= 0) distance = 0.1;
@@ -41,7 +42,7 @@ void render_color(t_data *game)
          {
 
         pixel_index = (y * WIDTH + x) * (game->bpp / 8);
-         *((unsigned int *)(game->img_data + pixel_index)) = 0x0000FF;
+         *((unsigned int *)(game->img_data + pixel_index)) = game->maze.c;
          x++;
          }
     y++;
@@ -65,7 +66,7 @@ void render_flor(t_data *game)
          {
 
         pixel_index = (y * WIDTH + x) * (game->bpp / 8);
-         *((unsigned int *)(game->img_data + pixel_index)) = 0x008000;
+         *((unsigned int *)(game->img_data + pixel_index)) = game->maze.f;
          x++;
          }
     y++;
@@ -122,7 +123,7 @@ void cast_ray_dda(t_data *game, float angle, int ray_index, int tile_size)
             game->vector.map_x < 0 || game->vector.map_x >= game->maze.width)
             return; // Out of bounds, stop processing
 
-        if (game->maze.map[game->vector.map_y][game->vector.map_x] != '0')
+        if (game->maze.map[game->vector.map_y][game->vector.map_x] == '1')
             game->vector.hit = 1;
     }
 
@@ -146,7 +147,8 @@ int key_hook(int keycode, t_data *game)
     float ray_angle;
 
     x = 0;
-    tile_size = fmin(WIDTH / 2, HEIGHT / 2);
+    // tile_size = fmin(WIDTH / 2, HEIGHT / 2);
+    tile_size = 20;
     update(game);
 
     if (keycode == 65361) 
@@ -155,12 +157,13 @@ int key_hook(int keycode, t_data *game)
         game->player.angle += game->rot_speed;
     if (keycode == 65362) 
     {
-        map_x = (int)((game->player.player_x + cosf(game->player.angle) * 8.0) / tile_size);
-        map_y = (int)((game->player.player_y + sinf(game->player.angle) * 8.0) / tile_size);
+        map_x = (int)((game->player.player_x + cosf(game->player.angle) * game->move_speed) / tile_size);
+        map_y = (int)((game->player.player_y + sinf(game->player.angle) * game->move_speed) / tile_size);
         if (game->maze.map[map_y][map_x] != '1') 
         {
             game->player.player_x += cosf(game->player.angle) * game->move_speed;
             game->player.player_y += sinf(game->player.angle) * game->move_speed;
+        // game->maze.map[game->player.x][game->player.y] = '0';
         }
     }
     if (keycode == 65364)
@@ -171,6 +174,7 @@ int key_hook(int keycode, t_data *game)
         {
             game->player.player_x -= cosf(game->player.angle) * game->move_speed;
             game->player.player_y -= sinf(game->player.angle) * game->move_speed;
+            // game->maze.map[game->player.x][game->player.y] = '0';
         }
     }
     if (keycode == 65307) 

@@ -23,8 +23,9 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-#include  <mlx.h>
-#include <sys/time.h>
+# include  <mlx.h>
+# include <sys/time.h>
+
 # define WIDTH 1920
 # define HEIGHT 1080
 # define		PI 3.14159265359
@@ -33,11 +34,11 @@
 
 typedef struct s_player
 {
-	// double		x;
-	// double		y;
+	int		x;
+	int		y;
 	// double		dir_x;
 	// double		dir_y;
-	double		angle;
+	float		angle;
 	double		fov;
 	double		player_x;
 	double		player_y;
@@ -74,10 +75,22 @@ typedef struct s_vec
 	double delta_dist_y;
 	double perp_wall_dist;
 }	t_vec;
+
+typedef struct s_images
+{
+	void	*images[4];
+	int		*addr[4];
+	int		 width;
+	int		 height;
+	int         bpp;
+	int         size_line;
+    int         endian;
+} t_images;
 typedef struct s_data
 {
 	void		*mlx;
 	void		*win;
+	t_images	*textures;
 	t_map		maze;
 	t_player	player;
 	t_vec		vector;
@@ -85,8 +98,8 @@ typedef struct s_data
 	char        *img_data;
 	int         bpp;
 	int         size_line;
-    	int         endian;
-    	double      oldTime;
+    int         endian;
+    double      oldTime;
 	double      currentTime;
 	double		frame_Time;
 	double		move_speed;
@@ -104,6 +117,8 @@ int				check_is_map_valid(t_data *prog, char *file);
 int				validate_walls(t_map *maze);
 int				check_empty(t_map *maze);
 int				print_error(char *str);
+void	init_textures(t_data *game);
+void	texture_address(t_data *game);
 int				map_copy(t_map *prog, char *file);
 int				check_textures(t_data *prog);
 int				my_strchr(char *str, char *c);

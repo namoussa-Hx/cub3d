@@ -28,7 +28,7 @@ char	*parse_texture(char *line, int *counter)
 	while (line[i] == ' ')
 		i++;
 	j = i;
-	while (line[j] && line[j] != ' ')
+	while (line[j] && line[j] != '\n' && line[j] != ' ')
 		j++;
 	texture = ft_substr(line, i, j - i);
 	return (texture);
