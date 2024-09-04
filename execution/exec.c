@@ -148,7 +148,7 @@ int key_hook(int keycode, t_data *game)
 
     x = 0;
     // tile_size = fmin(WIDTH / 2, HEIGHT / 2);
-    tile_size = 20;
+    tile_size = 30;
     update(game);
 
     if (keycode == 65361) 

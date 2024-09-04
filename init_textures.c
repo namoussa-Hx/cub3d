@@ -1,16 +1,55 @@
 #include "cub3d.h"
 
-	// mlx_put_image_to_window(game->mlx, game->win, game->textures->images[2], 0, 0);
-	// mlx_loop(game->mlx);
-	// exit(0);
+void	init_buffer(t_data *game)
+{
+
+   
+    int		i;
+	int		j;
+	int		k;
+	int		l;
+	int		*buffer;
+
+	i = 0;
+	while (i < 4)
+	{
+		buffer = (int *)malloc(sizeof(int) * game->textures->width * game->textures->height);
+		j = 0;
+		while (j < game->textures->height )
+		{
+			k = 0;
+			while (k < game->textures->width)
+			{
+				l = game->textures->width * j + k;
+				buffer[game->textures->width * j + k] = game->textures->addr[i][l];
+				k++;
+			}
+			j++;
+		}
+		game->textures->scale[i] = buffer;
+		i++;
+	}
+	mlx_destroy_image(game->mlx, game->textures->images[0]);
+	mlx_destroy_image(game->mlx, game->textures->images[1]);
+	mlx_destroy_image(game->mlx, game->textures->images[2]);
+	mlx_destroy_image(game->mlx, game->textures->images[3]);
+}
+
+  
+    
+
 void	texture_address(t_data *game)
 {
 
-	game->textures->addr[0] = (int *)mlx_get_data_addr(game->textures->images[0], &game->textures->bpp, &game->textures->size_line, &game->textures->endian);
-	game->textures->addr[1] = (int *)mlx_get_data_addr(game->textures->images[1], &game->textures->bpp, &game->textures->size_line, &game->textures->endian);
-	game->textures->addr[2] = (int *)mlx_get_data_addr(game->textures->images[2], &game->textures->bpp, &game->textures->size_line, &game->textures->endian);
-	game->textures->addr[3] = (int *)mlx_get_data_addr(game->textures->images[3], &game->textures->bpp, &game->textures->size_line, &game->textures->endian);
-	// scaling_image(game);
+	game->textures->addr[0] = (int *)mlx_get_data_addr(game->textures->images[0], 
+	&game->textures->bpp, &game->textures->size_line, &game->textures->endian);
+	game->textures->addr[1] = (int *)mlx_get_data_addr(game->textures->images[1], 
+	&game->textures->bpp, &game->textures->size_line, &game->textures->endian);
+	game->textures->addr[2] = (int *)mlx_get_data_addr(game->textures->images[2], 
+	&game->textures->bpp, &game->textures->size_line, &game->textures->endian);
+	game->textures->addr[3] = (int *)mlx_get_data_addr(game->textures->images[3], 
+	&game->textures->bpp, &game->textures->size_line, &game->textures->endian);
+	init_buffer(game);
 }
 
 void	*file_to_img(t_data *data, char *img_path, int *w, int *h)

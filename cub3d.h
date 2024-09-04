@@ -80,6 +80,7 @@ typedef struct s_images
 {
 	void	*images[4];
 	int		*addr[4];
+	int		 *scale[4];
 	int		 width;
 	int		 height;
 	int         bpp;

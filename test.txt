@@ -1,47 +1,58 @@
-void	texture_adress(t_data *game)
-{
-	game->textures->addr[0] = (int *)mlx_get_data_addr(game->textures->images[0], &game->textures->bpp, &game->textures->size_line, &game->textures->endian);
-	game->textures->addr[1] = (int *)mlx_get_data_addr(game->textures->images[1], &game->textures->bpp, &game->textures->size_line, &game->textures->endian);
-	game->textures->addr[2] = (int *)mlx_get_data_addr(game->textures->images[2], &game->textures->bpp, &game->textures->size_line, &game->textures->endian);
-	game->textures->addr[3] = (int *)mlx_get_data_addr(game->textures->images[3], &game->textures->bpp, &game->textures->size_line, &game->textures->endian);
-	// game->addr[0] = (int *)mlx_get_data_addr(game->textures[0].img, &game->textures[0].bpp, &game->textures[0].size_line,
-	// &game->textures[0].endian);
-	// game->addr[1] = (int *)mlx_get_data_addr(game->textures[1].img, &game->textures[1].bpp, &game->textures[1].size_line,
-	// &game->textures[1].endian);
-	// game->addr[2] = (int *)mlx_get_data_addr(game->textures[2].img, &game->textures[2].bpp, &game->textures[2].size_line,
-	// &game->textures[2].endian);
-	// game->addr[3] = (int *)mlx_get_data_addr(game->textures[3].img, &game->textures[3].bpp, &game->textures[3].size_line,
-	// &game->textures[3].endian);
-}
+/ void	print(int *buffer, int width, int height)
+// {
+// 	int		i;
+// 	int		j;
+// 	int		k;
 
-void	init_textures(t_data *game)
+// 	i = 0;
+// 	while (i < height / 2)
+// 	{
+// 		j = 0;
+// 		while (j < width)
+// 		{
+// 			k = width * i + j;
+// 			printf("%d ", buffer[k]);
+// 			j++;
+// 		}
+// 		printf("\n\n\n\n\n\n");
+// 		i++;
+// 	}
+// 	exit(0);
+// }
+void put(int *scale1, int *scale2, int width, int height, t_data *game)
 {
-	printf("===> nooooooo%s\n", game->maze.no);
-	// printf("===> soooooooooo%s\n", game->maze.so);
-	// printf("===> weeeeeeeeee%s\n", game->maze.we);
-	// printf("===> eaaaaaaaaaaaa%s\n", game->maze.ea);
-	if(!(game->textures->images[0] = mlx_xpm_file_to_image(game->mlx, game->maze.no, &game->textures->width, &game->textures->height)))
-		print_error("Texture NO\n");
-	// if(!(game->textures->images[1] = mlx_xpm_file_to_image(game->mlx, game->maze.so, &game->textures->width, &game->textures->height)))
-	// 	print_error("Texture SO\n");
-	// if(!(game->textures->images[2] = mlx_xpm_file_to_image(game->mlx, game->maze.we, &game->textures->width, &game->textures->height)))
-	// 	print_error("Texture WE\n");
-	// if(!(game->textures->images[3] = mlx_xpm_file_to_image(game->mlx, game->maze.ea, &game->textures->width, &game->textures->height)))
-	// 	print_error("Texture EA\n");
-
-	printf("===> %p\n", game->textures->images[0]);
-	// printf("===> %p\n", game->textures->images[1]);
-	// printf("===> %p\n", game->textures->images[2]);
-	// printf("===> %p\n", game->textures->images[3]);
-	exit(0);
-	///////////////////////////////////////////
-	// if(!(game->textures[0].img = mlx_xpm_file_to_image(game->mlx, game->maze.no, &game->textures[0].width, &game->textures[0].height)))
-	// 	print_error("Texture NO\n");
-	// if(!(game->textures[1].img = mlx_xpm_file_to_image(game->mlx, game->maze.so, &game->textures[1].width, &game->textures[1].height)))
-	// 	print_error("Texture SO\n");
-	// if(!(game->textures[2].img = mlx_xpm_file_to_image(game->mlx, game->maze.we, &game->textures[2].width, &game->textures[2].height)))
-	// 	print_error("Texture WE\n");
-	// if(!(game->textures[3].img = mlx_xpm_file_to_image(game->mlx, game->maze.ea, &game->textures[3].width, &game->textures[3].height)))
-	// 	print_error("Texture EA\n");
-	texture_adress(game);
+ void *img;
+ int *addr;
+ int i;
+ int j;
+ int k;
+  img = mlx_new_image(game->mlx, width, height);
+  addr = (int *)mlx_get_data_addr(img, &game->textures->bpp, &game->textures->size_line, &game->textures->endian);
+  i = 0;
+ while(i < height / 2)
+ {
+	j = 0;
+   while(j < width)
+   {
+	 k = width * i + j;
+	 addr[width * i + j] = scale1[k];
+	 j++;
+   }
+   i++;
+ }
+ i = height / 2;
+ while(i < height)
+ {
+	j = 0;
+   while(j < width)
+   {
+	 k = width * i + j;
+	 addr[width * i + j] = scale2[k];
+	 j++;
+   }
+   i++;
+ }
+  mlx_put_image_to_window(game->mlx, game->win, img, 0, 0);
+  mlx_destroy_image(game->mlx, img);
+  mlx_loop(game->mlx);
 }

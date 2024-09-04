@@ -101,8 +101,7 @@ int	main(int ac, char **av)
 		if (parse_cub(av[1], &data) && print_error("Error \n"))
 			return (1);
 		data.maze.width=  ft_strlen(data.maze.map[0]);
-		// tile_size = fmin(WIDTH / data.maze.width, HEIGHT / data.maze.height);
-        tile_size = 20;
+        tile_size = 30;
 		data.player.player_x = (data.player.x * tile_size) + (tile_size / 2);
 		data.player.player_y = (data.player.y * tile_size) + (tile_size / 2);
         init_textures(&data);
@@ -123,10 +122,6 @@ int	main(int ac, char **av)
     mlx_hook(data.win, 02, 1L << 0, key_hook, &data);
     mlx_loop(data.mlx);
     mlx_destroy_image(data.mlx, data.img);
-    // mlx_destroy_image(data.mlx, data.textures->images[0]);
-    // mlx_destroy_image(data.mlx, data.textures->images[1]);
-    // mlx_destroy_image(data.mlx, data.textures->images[2]);
-    // mlx_destroy_image(data.mlx, data.textures->images[3]);
     free(data.maze.map);
 	}
 	else
