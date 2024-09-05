@@ -24,7 +24,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C libft
-	$(CC) $(CFLAGS) $(OBJ)  -L libft -lft -o $(NAME) $(XFLAGS)
+	$(CC) $(CFLAGS) $(OBJ)  -L libft -lft  -o $(NAME) $(XFLAGS)
 
 clean:
 	make -C libft clean

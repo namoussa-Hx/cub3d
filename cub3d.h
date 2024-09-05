@@ -23,7 +23,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-# include  <mlx.h>
+# include  "minilibx/mlx.h"
 # include <sys/time.h>
 
 # define WIDTH 1080

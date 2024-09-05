@@ -34,6 +34,24 @@ char	*parse_texture(char *line, int *counter)
 	return (texture);
 }
 
+int is_comma(char *line)
+{
+	int i;
+	int count;
+
+	i = 0;
+	count = 0;
+	while (line[i])
+	{
+		if (line[i] == ',')
+			count++;
+		i++;
+	}
+	if (count != 2)
+		return (1);
+	return (0);
+}
+
 int	check_color(char *str, int *color)
 {
 	int		i;
@@ -43,6 +61,8 @@ int	check_color(char *str, int *color)
 	char	**res;
 
 	i = 0;
+	if(is_comma(str))
+	 return (-1);
 	i++;
 	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
 		i++;
