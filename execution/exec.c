@@ -104,8 +104,7 @@ void render_3d_projection(t_data *game, float distance, int ray_index, int tile_
         else
             texture_index =  3; // north wla south
     }
-     texture_buffer = game->textures->scale[texture_index];
-
+    texture_buffer = game->textures->scale[texture_index];
     texture_width = game->textures->width;
     texture_x = (int)(wall_x * (float)texture_width);
     if ((game->vector.side == 0 && game->vector.ray_dir_x > 0) ||

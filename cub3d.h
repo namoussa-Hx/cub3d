@@ -6,7 +6,7 @@
 /*   By: namoussa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 23:56:58 by namoussa          #+#    #+#             */
-/*   Updated: 2024/09/02 23:33:59 by elchakir         ###   ########.fr       */
+/*   Updated: 2024/09/04 21:52:09 by namoussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # include  <mlx.h>
 # include <sys/time.h>
 
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 1080
+# define HEIGHT 800
 # define		PI 3.14159265359
 //# define		move_speed 5.0
 //# define		rotation_speed 0.1

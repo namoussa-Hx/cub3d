@@ -33,7 +33,8 @@ void	init_buffer(t_data *game)
 	mlx_destroy_image(game->mlx, game->textures->images[3]);
 }
 
-void scale_texture(int *source, int *dest, int src_width, int src_height, int dest_width, int dest_height) {
+void scale_texture(int *source, int *dest, int src_width, int src_height, int dest_width, int dest_height) 
+{
     float x_ratio = (float)src_width / dest_width;
     float y_ratio = (float)src_height / dest_height;
     float px, py;
@@ -66,11 +67,11 @@ void	texture_address(t_data *game)
 	&game->textures->bpp, &game->textures->size_line, &game->textures->endian);
 	game->textures->addr[3] = (int *)mlx_get_data_addr(game->textures->images[3], 
 	&game->textures->bpp, &game->textures->size_line, &game->textures->endian);
-	if(!game->textures->addr[0] || !game->textures->addr[1] || !game->textures->addr[2] || !game->textures->addr[3])
-	{
-		write(2,"texutre is invalid\n",20);
-		exit(1);
-	}
+	// if(!game->textures->addr[0] || !game->textures->addr[1] || !game->textures->addr[2] || !game->textures->addr[3])
+	// {
+	// 	write(2,"texutre is invalid\n",20);
+	// 	exit(1);
+	// }
 	init_buffer(game);
 }
 
@@ -94,10 +95,10 @@ void	init_textures(t_data *game)
 	game->textures->images[2] = file_to_img(game, game->maze.we, &game->textures->width, &game->textures->height);
 	game->textures->images[3] = file_to_img(game, game->maze.ea, &game->textures->width, &game->textures->height);
 	
-	if(!game->textures->images[0] || !game->textures->images[1] || !game->textures->images[2] || !game->textures->images[3])
-	{
-		write(2,"texutre is invalid\n",20);
-		exit(1);
-	}
+	// if(!game->textures->images[0] || !game->textures->images[1] || !game->textures->images[2] || !game->textures->images[3])
+	// {
+	// 	write(2,"texutre is invalid\n",20);
+	// 	exit(1);
+	// }
 	texture_address(game);
 }
