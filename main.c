@@ -6,7 +6,7 @@
 /*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 13:45:39 by namoussa          #+#    #+#             */
-/*   Updated: 2024/09/02 23:33:06 by elchakir         ###   ########.fr       */
+/*   Updated: 2024/09/04 23:35:06 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,23 +96,23 @@ int	main(int ac, char **av)
 	if (ac == 2)
 	{
 		init_data(&data);
-    data.textures = malloc(sizeof(t_images));
-	ft_bzero(data.textures, sizeof(t_images));
 		if (parse_cub(av[1], &data) && print_error("Error \n"))
 			return (1);
-		data.maze.width=  ft_strlen(data.maze.map[0]);
-        tile_size = 30;
-		data.player.player_x = (data.player.x * tile_size) + (tile_size / 2);
-		data.player.player_y = (data.player.y * tile_size) + (tile_size / 2);
-        init_textures(&data);
-        data.img = mlx_new_image(data.mlx, WIDTH, HEIGHT);
-        data.img_data = mlx_get_data_addr(data.img, &data.bpp, &data.size_line, &data.endian);
-        update(&data);
-        memset(data.img_data, 0, WIDTH * HEIGHT * (data.bpp / 8));
-	    render_color(&data);
-	    render_flor(&data);
-        while (x < WIDTH) 
-        {
+            data.textures = malloc(sizeof(t_images));
+            ft_bzero(data.textures, sizeof(t_images));
+            data.maze.width=  ft_strlen(data.maze.map[0]);
+            tile_size = 30;
+            data.player.player_x = (data.player.x * tile_size) + (tile_size / 2);
+            data.player.player_y = (data.player.y * tile_size) + (tile_size / 2);
+            init_textures(&data);
+            data.img = mlx_new_image(data.mlx, WIDTH, HEIGHT);
+            data.img_data = mlx_get_data_addr(data.img, &data.bpp, &data.size_line, &data.endian);
+            update(&data);
+            memset(data.img_data, 0, WIDTH * HEIGHT * (data.bpp / 8));
+            render_color(&data);
+            render_flor(&data);
+            while (x < WIDTH) 
+            {
                 ray_angle = data.player.angle + atanf((x - WIDTH / 2.0) / (WIDTH / 2.0 / tanf(data.player.fov / 2.0)));
                 cast_ray_dda(&data, ray_angle, x, tile_size);
                 x++;

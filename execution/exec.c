@@ -1,27 +1,132 @@
 #include "../cub3d.h"
 
-void render_3d_projection(t_data *game, float distance, int ray_index, int tile_size) 
+// void render_3d_projection(t_data *game, float distance, int ray_index, int tile_size) 
+// {
+//     int wall_height;
+//     int draw_start;
+//     int draw_end;
+//     int y;
+//     int color;
+//     color = 0xFF0000;
+//     int pixel_index;
+
+//     if (distance <= 0) distance = 0.1;
+//     wall_height = (int)(tile_size * HEIGHT / distance);
+//     draw_start = -wall_height / 2 + HEIGHT / 2;
+//     if (draw_start < 0) draw_start = 0;
+//     draw_end = wall_height / 2 + HEIGHT / 2;
+//     if (draw_end >= HEIGHT) draw_end = HEIGHT - 1;
+//     y = draw_start;
+//     while( y < draw_end) 
+//     {
+//         pixel_index = (y * WIDTH + ray_index) * (game->bpp / 8);
+//         *((unsigned int *)(game->img_data + pixel_index)) = color;
+//     y++;
+//     }
+// }
+// void render_3d_projection(t_data *game, float distance, int ray_index, int tile_size)
+// {
+//     int wall_height;
+//     int draw_start;
+//     int draw_end;
+//     int y;
+//     int texture_x;
+//     int color;
+//     int texture_index;
+//     int *texture_buffer;
+
+//     if (distance <= 0) distance = 0.1;
+//     wall_height = (int)(tile_size * HEIGHT / distance);
+//     draw_start = -wall_height / 2 + HEIGHT / 2;
+//     if (draw_start < 0) draw_start = 0;
+//     draw_end = wall_height / 2 + HEIGHT / 2;
+//     if (draw_end >= HEIGHT) draw_end = HEIGHT - 1;
+
+//     // Choose texture based on side
+//     texture_index = (game->vector.side == 0) ? 0 : 1; // Update as needed
+//     texture_buffer = game->textures->scale[texture_index];
+//     int texture_width = game->textures->width; // Adjust if necessary
+
+//     for (y = draw_start; y < draw_end; y++)
+//     {
+//         // Calculate texture coordinates
+//         int texture_height = game->textures->height;
+//         int texture_y = (y - draw_start) * texture_height / (draw_end - draw_start);
+//         texture_x = ray_index % texture_width;
+
+//         color = texture_buffer[texture_y * texture_width + texture_x];
+//         int pixel_index = (y * WIDTH + ray_index) * (game->bpp / 8);
+//         *((unsigned int *)(game->img_data + pixel_index)) = color;
+//     }
+// }
+
+void render_3d_projection(t_data *game, float distance, int ray_index, int tile_size)
 {
+    int texture_y;
     int wall_height;
     int draw_start;
     int draw_end;
-    int y;
+    int texture_index;
+    int *texture_buffer;
     int color;
-    color = 0xFF0000;
+    int y;
+    float step;
+    float texture_pos;
     int pixel_index;
-
+    int texture_width;
+    int texture_x;
+    float wall_x;
     if (distance <= 0) distance = 0.1;
-    wall_height = (int)(tile_size * HEIGHT / distance);
-    draw_start = -wall_height / 2 + HEIGHT / 2;
+     wall_height = (int)(tile_size * HEIGHT / distance);
+     draw_start = HEIGHT / 2 - wall_height / 2 ;
     if (draw_start < 0) draw_start = 0;
-    draw_end = wall_height / 2 + HEIGHT / 2;
+     draw_end = wall_height / 2 + HEIGHT / 2;
     if (draw_end >= HEIGHT) draw_end = HEIGHT - 1;
-    y = draw_start;
-    while( y < draw_end) 
+
+    if (game->vector.side == 0)
+        wall_x = game->player.player_y / tile_size + distance * game->vector.ray_dir_y / tile_size; //vertical (side == 0) wla horizontal (side == 1) 
+    else
+        wall_x = game->player.player_x / tile_size + distance * game->vector.ray_dir_x / tile_size;
+    wall_x -= floor(wall_x);
+
+    if (game->vector.side == 0)
     {
-        pixel_index = (y * WIDTH + ray_index) * (game->bpp / 8);
+
+        if(game->vector.ray_dir_x > 0)
+             texture_index = 0;
+        else
+            texture_index = 1; // east wla west
+    } 
+    else
+    {
+         if(game->vector.ray_dir_y > 0) 
+            texture_index = 2;
+        else
+            texture_index =  3; // north wla south
+    }
+     texture_buffer = game->textures->scale[texture_index];
+
+    texture_width = game->textures->width;
+    texture_x = (int)(wall_x * (float)texture_width);
+    if ((game->vector.side == 0 && game->vector.ray_dir_x > 0) ||
+        (game->vector.side == 1 && game->vector.ray_dir_y < 0))
+        texture_x = texture_width - texture_x - 1;
+    step = 1.0 * game->textures->height / wall_height;
+    texture_pos = (draw_start - HEIGHT / 2 + wall_height / 2) * step;
+    y = draw_start;
+    while(y < draw_end)
+    {
+         texture_y = (int)texture_pos & (game->textures->height - 1); //hna fin kanscaliw
+        texture_pos += step; //kanzid position ila derna liha & m3a texture height tatb9a nefs color 3la 7sab tol dyal texture 
+
+        color = texture_buffer[texture_y * texture_width + texture_x]; //mli tandir scaling tanb9a nto7o fnafs color hadchi bach tansciliw 7it tandir & opertion 3la hsab tol d texture
+        
+        if (game->vector.side == 1)
+            color = (color >> 1) & 8355711; //hna 4ir kanraj3om dark
+
+         pixel_index = (y * WIDTH + ray_index) * (game->bpp / 8);
         *((unsigned int *)(game->img_data + pixel_index)) = color;
-    y++;
+        y++;
     }
 }
 
