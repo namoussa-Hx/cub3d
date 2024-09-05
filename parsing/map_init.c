@@ -99,6 +99,7 @@ int	map_copy(t_map *prog, char *file)
 	flag = 1;
 	prog->map = (char **)malloc(sizeof(char *) * (map_size(prog, &lenght, file)
 				+ 1));
+	prog->width = lenght;///
 	fd1 = open(file, O_RDONLY);
 	if (fd1 == -1)
 		return (1);

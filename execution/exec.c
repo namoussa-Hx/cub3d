@@ -1,63 +1,23 @@
 #include "../cub3d.h"
 
-// void render_3d_projection(t_data *game, float distance, int ray_index, int tile_size) 
+
+// void render_minimap(t_data *game, int tile_size, int player_x, int player_y) 
 // {
-//     int wall_height;
-//     int draw_start;
-//     int draw_end;
-//     int y;
+
+//     int x, y;
 //     int color;
-//     color = 0xFF0000;
-//     int pixel_index;
+//      int height = game->maze.height;
+//      int width = game->maze.width;
+//     int map_x;
+//     int map_y;
+//     game->mini_map.img = mlx_new_image(game->mlx, width * tile_size, height * tile_size);
+//     game->mini_map.img_data = mlx_get_data_addr(game->mini_map.img, 
+//     &game->mini_map.bpp, &game->mini_map.size_line, &game->mini_map.endian);
 
-//     if (distance <= 0) distance = 0.1;
-//     wall_height = (int)(tile_size * HEIGHT / distance);
-//     draw_start = -wall_height / 2 + HEIGHT / 2;
-//     if (draw_start < 0) draw_start = 0;
-//     draw_end = wall_height / 2 + HEIGHT / 2;
-//     if (draw_end >= HEIGHT) draw_end = HEIGHT - 1;
-//     y = draw_start;
-//     while( y < draw_end) 
-//     {
-//         pixel_index = (y * WIDTH + ray_index) * (game->bpp / 8);
-//         *((unsigned int *)(game->img_data + pixel_index)) = color;
-//     y++;
-//     }
-// }
-// void render_3d_projection(t_data *game, float distance, int ray_index, int tile_size)
-// {
-//     int wall_height;
-//     int draw_start;
-//     int draw_end;
-//     int y;
-//     int texture_x;
-//     int color;
-//     int texture_index;
-//     int *texture_buffer;
-
-//     if (distance <= 0) distance = 0.1;
-//     wall_height = (int)(tile_size * HEIGHT / distance);
-//     draw_start = -wall_height / 2 + HEIGHT / 2;
-//     if (draw_start < 0) draw_start = 0;
-//     draw_end = wall_height / 2 + HEIGHT / 2;
-//     if (draw_end >= HEIGHT) draw_end = HEIGHT - 1;
-
-//     // Choose texture based on side
-//     texture_index = (game->vector.side == 0) ? 0 : 1; // Update as needed
-//     texture_buffer = game->textures->scale[texture_index];
-//     int texture_width = game->textures->width; // Adjust if necessary
-
-//     for (y = draw_start; y < draw_end; y++)
-//     {
-//         // Calculate texture coordinates
-//         int texture_height = game->textures->height;
-//         int texture_y = (y - draw_start) * texture_height / (draw_end - draw_start);
-//         texture_x = ray_index % texture_width;
-
-//         color = texture_buffer[texture_y * texture_width + texture_x];
-//         int pixel_index = (y * WIDTH + ray_index) * (game->bpp / 8);
-//         *((unsigned int *)(game->img_data + pixel_index)) = color;
-//     }
+ 
+//     mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 0, 0);
+//     // mlx_destroy_image(game->mlx, game->mini_map.img);
+  
 // }
 
 void render_3d_projection(t_data *game, float distance, int ray_index, int tile_size)
@@ -198,7 +158,8 @@ void cast_ray_dda(t_data *game, float angle, int ray_index, int tile_size)
         game->vector.side_dist_x = (game->vector.map_x + 1.0 - game->player.player_x / tile_size) * game->vector.delta_dist_x;
     }
 
-    if (game->vector.ray_dir_y < 0) {
+    if (game->vector.ray_dir_y < 0) 
+    {
         game->vector.step_y = -1;
         game->vector.side_dist_y = (game->player.player_y / tile_size - game->vector.map_y) * game->vector.delta_dist_y;
     }
@@ -231,16 +192,18 @@ void cast_ray_dda(t_data *game, float angle, int ray_index, int tile_size)
             game->vector.hit = 1;
     }
 
-    if (game->vector.side == 0) {
+    if (game->vector.side == 0)
+    {
         game->vector.perp_wall_dist = (game->vector.map_x - game->player.player_x / tile_size + (1 - game->vector.step_x) / 2) / game->vector.ray_dir_x;
-    } else {
+    } 
+    else 
+    {
         game->vector.perp_wall_dist = (game->vector.map_y - game->player.player_y / tile_size + (1 - game->vector.step_y) / 2) / game->vector.ray_dir_y;
     }
 
     render_3d_projection(game, game->vector.perp_wall_dist * tile_size, ray_index, tile_size);
+    // render_minimap(game, tile_size, game->player.player_x / tile_size, game->player.player_y / tile_size);
 }
-
-
 
 int key_hook(int keycode, t_data *game) 
 {
@@ -254,11 +217,14 @@ int key_hook(int keycode, t_data *game)
     // tile_size = fmin(WIDTH / 2, HEIGHT / 2);
     tile_size = 30;
     update(game);
+    
 
-    if (keycode == 65361) 
-        game->player.angle -= game->rot_speed;
+
+    if (keycode == 65361)
+   game->player.angle -= game->rot_speed;
     if (keycode == 65363) 
         game->player.angle += game->rot_speed;
+ 
     if (keycode == 65362) 
     {
         map_x = (int)((game->player.player_x + cosf(game->player.angle) * game->move_speed) / tile_size);
@@ -267,8 +233,11 @@ int key_hook(int keycode, t_data *game)
         {
             game->player.player_x += cosf(game->player.angle) * game->move_speed;
             game->player.player_y += sinf(game->player.angle) * game->move_speed;
-        // game->maze.map[game->player.x][game->player.y] = '0';
         }
+       else if(game->maze.map[map_y][map_x] == '1')
+       {
+        game->player.angle += 0.09;
+       }
     }
     if (keycode == 65364)
     {
@@ -286,7 +255,7 @@ int key_hook(int keycode, t_data *game)
         mlx_destroy_window(game->mlx, game->win);
         exit(0);
     }
-
+    
     memset(game->img_data, 0, WIDTH * HEIGHT * (game->bpp / 8));
 
     render_color(game);
@@ -297,7 +266,7 @@ int key_hook(int keycode, t_data *game)
         cast_ray_dda(game, ray_angle, x, tile_size);
         x++;
     }
-
+   
     mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
     return (0);
 }

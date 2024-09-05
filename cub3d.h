@@ -44,6 +44,15 @@ typedef struct s_player
 	double		player_y;
 }				t_player;
 
+typedef struct s_mini_map
+{
+	 void *img;
+	 char *img_data;
+	int         bpp;
+	int         size_line;
+    int         endian;
+}				t_mini_map;
+
 typedef struct s_map
 {
 	char		**map;
@@ -95,6 +104,7 @@ typedef struct s_data
 	t_map		maze;
 	t_player	player;
 	t_vec		vector;
+	t_mini_map	mini_map;
 	void        *img;
 	char        *img_data;
 	int         bpp;
@@ -105,6 +115,11 @@ typedef struct s_data
 	double		frame_Time;
 	double		move_speed;
 	double      rot_speed;
+	// int minimap_width;
+    // int minimap_height;
+    // int minimap_x;
+    // int minimap_y;
+    // int minimap_tile_size;
 
 }				t_data;
 
