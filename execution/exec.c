@@ -210,6 +210,19 @@ void cast_ray_dda(t_data *game, float angle, int ray_index, int tile_size)
     render_3d_projection(game, game->vector.perp_wall_dist * tile_size, ray_index, tile_size);
 }
 
+void handle_collision(t_data *game, float player_angle, float collision_angle)
+{
+    float angle_diff;
+    angle_diff  = fmodf(collision_angle - player_angle + PI * 3, PI * 2) - PI;
+    
+    if (angle_diff > 0) 
+        game->player.angle -= 0.02;
+    else 
+        game->player.angle += 0.02;
+    
+    game->player.angle = fmodf(game->player.angle + PI * 2, PI * 2);
+}
+
 int key_hook(int keycode, t_data *game) 
 {
     int tile_size;
@@ -230,34 +243,13 @@ int key_hook(int keycode, t_data *game)
             game->player.player_x += cosf(game->player.angle) * move_speed;
             game->player.player_y += sinf(game->player.angle) * move_speed;
         }
-    //   else 
-    //      {
-    //          if (game->player.angle >= 2 * PI)
-    //                 game->player.angle -= 2 * PI;
-    //          if (game->player.angle < 0)
-    //                 game->player.angle += 2 * PI;
-    //         printf("angle %f\n", game->player.angle);
-    //         if (game->player.angle > 0 && game->player.angle <= PI / 2)
-    //         {
-    //             printf("111angle %f\n", game->player.angle);
-    //             game->player.angle -= 0.09;
-    //         }
-    //         else if (game->player.angle > PI / 2 && game->player.angle <= PI)
-    //         {
-    //             printf("222angle %f\n", game->player.angle);
-    //             game->player.angle += 0.09;
-    //         }
-    //         else if (game->player.angle > PI && game->player.angle <= 3 * PI / 2)
-    //         {
-    //             printf("333angle %f\n", game->player.angle);
-    //             game->player.angle -= 0.09;
-    //         }
-    //         else if (game->player.angle > 3 * PI / 2 && game->player.angle <= 2 * PI)
-    //         {
-    //             printf("444angle %f\n", game->player.angle);
-    //             game->player.angle += 0.09;
-    //         }
-    //  }
+       else
+        {
+
+           float collision_angle = atan2f(map_y * tile_size + tile_size / 2 - game->player.player_y,
+                                           map_x * tile_size + tile_size / 2 - game->player.player_x);
+            handle_collision(game, game->player.angle, collision_angle);
+        }
     }
     if (keycode == 65364)
     {

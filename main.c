@@ -6,7 +6,7 @@
 /*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 13:45:39 by namoussa          #+#    #+#             */
-/*   Updated: 2024/09/04 23:35:06 by elchakir         ###   ########.fr       */
+/*   Updated: 2024/09/06 18:45:48 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,9 +138,9 @@ int mouse_hook(int x_mouse, int y_mouse, t_data *game)
             game->player.angle -= 2 * PI;
      if (game->player.angle < 0)
             game->player.angle += 2 * PI;
-    printf("angle %f\n", game->player.angle);
-    printf("x_mouse %d\n", x_mouse);
-    printf("x_mouse_prev %d\n", game->x_mouse_prev);
+    // printf("angle %f\n", game->player.angle);
+    // printf("x_mouse %d\n", x_mouse);
+    // printf("x_mouse_prev %d\n", game->x_mouse_prev);
     if (x_mouse > game->x_mouse_prev)
         game->player.angle += 0.05;
     else if (x_mouse < game->x_mouse_prev)
