@@ -32,6 +32,7 @@ void	init_data(t_data *data)
     data->player.y = 0;
     data->player_face = 0;
     data->x_mouse_prev = 0;
+    data->hide_mouse = 0;
 }
 
 
@@ -56,10 +57,10 @@ int update(t_data *game)
     mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
     return 0;
 }
-
 int mouse_hook(int x_mouse, int y_mouse, t_data *game)
 {
     (void)y_mouse;
+
       if (game->player.angle >= 2 * PI)
             game->player.angle -= 2 * PI;
      if (game->player.angle < 0)
@@ -68,9 +69,22 @@ int mouse_hook(int x_mouse, int y_mouse, t_data *game)
         game->player.angle += 0.05;
     else if (x_mouse < game->x_mouse_prev)
         game->player.angle -= 0.05;
-    // game->x_mouse_prev = x_mouse;
-    mlx_mouse_move(game->mlx, game->win, WIDTH / 2, HEIGHT / 2);
-        game->x_mouse_prev = WIDTH / 2;
+    if(game->hide_mouse == 0)
+        mlx_mouse_move(game->mlx, game->win, WIDTH / 2, HEIGHT / 2);
+    return 0;
+}
+int mouse_hide(t_data *game)
+{
+    game->hide_mouse = 0;
+    mlx_mouse_hide(game->mlx, game->win);
+    return 0;
+}
+
+
+int ft_exit(t_data *game)
+{
+    mlx_destroy_window(game->mlx, game->win);
+    exit(0);
     return 0;
 }
 
@@ -97,6 +111,8 @@ int	main(int ac, char **av)
         update(&data);
     mlx_hook(data.win, 02, 1L << 0, key_hook, &data);
     mlx_hook(data.win, 6, 1L<<6, mouse_hook, &data);
+    mlx_hook(data.win, 7, 1L << 4, mouse_hide, &data);
+    mlx_hook(data.win, 17, 0, ft_exit, &data);
     mlx_mouse_hide(data.mlx, data.win);
     mlx_loop_hook(data.mlx, update, &data);
     mlx_loop(data.mlx);

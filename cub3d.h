@@ -23,7 +23,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-# include  <mlx.h>
+# include <mlx.h>
 # include <sys/time.h>
 
 # define WIDTH 1080
@@ -33,7 +33,7 @@
 #define DOWN 2
 #define LEFT 3
 #define RIGHT 4
-# define		move_speed 10.0
+# define		move_speed 5.0
 # define		rot_speed 0.1
 
 typedef struct s_player
@@ -118,6 +118,7 @@ typedef struct s_data
 	double      currentTime;
 	double		frame_Time;
 	int is_mouse_captured;
+	int hide_mouse;
 	// double		move_speed;
 	// double      rot_speed;
 	int 	   player_face;

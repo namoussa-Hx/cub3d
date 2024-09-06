@@ -235,8 +235,14 @@ int key_hook(int keycode, t_data *game)
             game->player.player_y -= sinf(game->player.angle) * move_speed;
         }
     }
-    if (keycode == 65307) 
+    if(keycode == 32)
     {
+         game->hide_mouse = 1;
+        mlx_mouse_show(game->mlx, game->win);
+    }
+    
+    if (keycode == 65307) 
+    {  
         mlx_destroy_window(game->mlx, game->win);
         exit(0);
     }
