@@ -70,12 +70,12 @@ void render_3d_projection(t_data *game, float distance, int ray_index, int tile_
     if ((game->vector.side == 0 && game->vector.ray_dir_x > 0) ||
         (game->vector.side == 1 && game->vector.ray_dir_y < 0))
         texture_x = texture_width - texture_x - 1;
-    step = 1.0 * game->textures->height / wall_height;
+    step = 1.0 * game->textures->height / wall_height;//hna fin kanscaliw
     texture_pos = (draw_start - HEIGHT / 2 + wall_height / 2) * step;
     y = draw_start;
     while(y < draw_end)
     {
-         texture_y = (int)texture_pos & (game->textures->height - 1); //hna fin kanscaliw
+         texture_y = (int)texture_pos % (game->textures->height - 1); 
         texture_pos += step; //kanzid position ila derna liha & m3a texture height tatb9a nefs color 3la 7sab tol dyal texture 
 
         color = texture_buffer[texture_y * texture_width + texture_x]; //mli tandir scaling tanb9a nto7o fnafs color hadchi bach tansciliw 7it tandir & opertion 3la hsab tol d texture
@@ -143,6 +143,12 @@ void cast_ray_dda(t_data *game, float angle, int ray_index, int tile_size)
     game->vector.ray_dir_x = cosf(angle);
     game->vector.ray_dir_y = sinf(angle);
 
+// int x_mousse;
+// int y_mousse;   
+
+//    mlx_mouse_get_pos(game->win, &x_mousse, &y_mousse);
+
+
     game->vector.delta_dist_x = fabs(1 / game->vector.ray_dir_x);
     game->vector.delta_dist_y = fabs(1 / game->vector.ray_dir_y);
     game->vector.hit = 0;
@@ -202,7 +208,6 @@ void cast_ray_dda(t_data *game, float angle, int ray_index, int tile_size)
     }
 
     render_3d_projection(game, game->vector.perp_wall_dist * tile_size, ray_index, tile_size);
-    // render_minimap(game, tile_size, game->player.player_x / tile_size, game->player.player_y / tile_size);
 }
 
 int key_hook(int keycode, t_data *game) 
@@ -210,44 +215,58 @@ int key_hook(int keycode, t_data *game)
     int tile_size;
     int map_x;
     int map_y;
-    int x;
-    float ray_angle;
-
-    x = 0;
-    // tile_size = fmin(WIDTH / 2, HEIGHT / 2);
     tile_size = 30;
-    update(game);
-    
-
-
     if (keycode == 65361)
-   game->player.angle -= game->rot_speed;
+   game->player.angle -= rot_speed;
     if (keycode == 65363) 
-        game->player.angle += game->rot_speed;
+        game->player.angle += rot_speed;
  
     if (keycode == 65362) 
     {
-        map_x = (int)((game->player.player_x + cosf(game->player.angle) * game->move_speed) / tile_size);
-        map_y = (int)((game->player.player_y + sinf(game->player.angle) * game->move_speed) / tile_size);
+        map_x = (int)((game->player.player_x + cosf(game->player.angle) * move_speed) / tile_size);
+        map_y = (int)((game->player.player_y + sinf(game->player.angle) * move_speed) / tile_size);
         if (game->maze.map[map_y][map_x] != '1') 
         {
-            game->player.player_x += cosf(game->player.angle) * game->move_speed;
-            game->player.player_y += sinf(game->player.angle) * game->move_speed;
+            game->player.player_x += cosf(game->player.angle) * move_speed;
+            game->player.player_y += sinf(game->player.angle) * move_speed;
         }
-       else if(game->maze.map[map_y][map_x] == '1')
-       {
-        game->player.angle += 0.09;
-       }
+    //   else 
+    //      {
+    //          if (game->player.angle >= 2 * PI)
+    //                 game->player.angle -= 2 * PI;
+    //          if (game->player.angle < 0)
+    //                 game->player.angle += 2 * PI;
+    //         printf("angle %f\n", game->player.angle);
+    //         if (game->player.angle > 0 && game->player.angle <= PI / 2)
+    //         {
+    //             printf("111angle %f\n", game->player.angle);
+    //             game->player.angle -= 0.09;
+    //         }
+    //         else if (game->player.angle > PI / 2 && game->player.angle <= PI)
+    //         {
+    //             printf("222angle %f\n", game->player.angle);
+    //             game->player.angle += 0.09;
+    //         }
+    //         else if (game->player.angle > PI && game->player.angle <= 3 * PI / 2)
+    //         {
+    //             printf("333angle %f\n", game->player.angle);
+    //             game->player.angle -= 0.09;
+    //         }
+    //         else if (game->player.angle > 3 * PI / 2 && game->player.angle <= 2 * PI)
+    //         {
+    //             printf("444angle %f\n", game->player.angle);
+    //             game->player.angle += 0.09;
+    //         }
+    //  }
     }
     if (keycode == 65364)
     {
-        map_x = (int)((game->player.player_x - cosf(game->player.angle) * game->move_speed) / tile_size);
-        map_y = (int)((game->player.player_y - sinf(game->player.angle) * game->move_speed) / tile_size);
+        map_x = (int)((game->player.player_x - cosf(game->player.angle) * move_speed) / tile_size);
+        map_y = (int)((game->player.player_y - sinf(game->player.angle) * move_speed) / tile_size);
         if (game->maze.map[map_y][map_x] != '1') 
         {
-            game->player.player_x -= cosf(game->player.angle) * game->move_speed;
-            game->player.player_y -= sinf(game->player.angle) * game->move_speed;
-            // game->maze.map[game->player.x][game->player.y] = '0';
+            game->player.player_x -= cosf(game->player.angle) * move_speed;
+            game->player.player_y -= sinf(game->player.angle) * move_speed;
         }
     }
     if (keycode == 65307) 
@@ -256,17 +275,5 @@ int key_hook(int keycode, t_data *game)
         exit(0);
     }
     
-    memset(game->img_data, 0, WIDTH * HEIGHT * (game->bpp / 8));
-
-    render_color(game);
-    render_flor(game);
-    while (x < WIDTH) 
-    {
-        ray_angle = game->player.angle + atanf((x - WIDTH / 2.0) / (WIDTH / 2.0 / tanf(game->player.fov / 2.0)));
-        cast_ray_dda(game, ray_angle, x, tile_size);
-        x++;
-    }
-   
-    mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
     return (0);
 }

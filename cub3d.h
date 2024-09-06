@@ -29,8 +29,12 @@
 # define WIDTH 1080
 # define HEIGHT 800
 # define		PI 3.14159265359
-//# define		move_speed 5.0
-//# define		rotation_speed 0.1
+#define UP 1
+#define DOWN 2
+#define LEFT 3
+#define RIGHT 4
+# define		move_speed 10.0
+# define		rot_speed 0.1
 
 typedef struct s_player
 {
@@ -113,13 +117,10 @@ typedef struct s_data
     double      oldTime;
 	double      currentTime;
 	double		frame_Time;
-	double		move_speed;
-	double      rot_speed;
-	// int minimap_width;
-    // int minimap_height;
-    // int minimap_x;
-    // int minimap_y;
-    // int minimap_tile_size;
+	// double		move_speed;
+	// double      rot_speed;
+	int 	   player_face;
+	int		x_mouse_prev;
 
 }				t_data;
 
