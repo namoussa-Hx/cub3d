@@ -34,82 +34,8 @@ void	init_data(t_data *data)
     data->x_mouse_prev = 0;
 }
 
-int is_wall(t_data *game, int x, int y, int tile_size)
-{
-    int map_x;
-    int map_y;
-    map_x = x / tile_size;
-    map_y = y / tile_size;
-    if (map_x < 0 || map_x >= WIDTH || map_y < 0 || map_y >= HEIGHT)
-        return 1;
-
-    return (game->maze.map[map_y][map_x] == '1');
-}
-
-void init_player(t_data *game, int tile_size) 
-{
-    float start_x;
-    float start_y;
-    start_x = WIDTH / 2.0;
-    start_y = HEIGHT / 2.0;
-
-    while (is_wall(game, start_x, start_y, tile_size)) 
-    {
-        start_x += tile_size; 
-        if (start_x >= WIDTH) 
-        {
-            start_x = tile_size;
-            start_y += tile_size; 
-            if (start_y >= HEIGHT)
-             {
-                start_x = tile_size;
-                start_y = tile_size;
-            }
-        }
-    }
-    game->player.player_x = start_x;
-    game->player.player_y = start_y;
-}
-
-double getTicks()
-{
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
-    return (tv.tv_sec * 1000.0) + (tv.tv_usec / 1000.0); 
-}
-
-// void player_facing(t_data *data)
-// {
-
-    
 
 
-// }
-// int update(t_data *game)
-// {
-//     int x = 0;
-//     int tile_size = 30;
-//     float ray_angle;
-
-   
-//     memset(game->img_data, 0, WIDTH * HEIGHT * (game->bpp / 8));
-
-
-//     render_color(game);
-//     render_flor(game);
-
-//     while (x < WIDTH)
-//     {
-//         ray_angle = game->player.angle + atanf((x - WIDTH / 2.0) / (WIDTH / 2.0 / tanf(game->player.fov / 2.0)));
-//         cast_ray_dda(game, ray_angle, x, tile_size);
-//         x++;
-//     }
-
-    
-//     mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
-
-//     return 0;
-// }
 
 int update(t_data *game)
 {
@@ -138,14 +64,13 @@ int mouse_hook(int x_mouse, int y_mouse, t_data *game)
             game->player.angle -= 2 * PI;
      if (game->player.angle < 0)
             game->player.angle += 2 * PI;
-    // printf("angle %f\n", game->player.angle);
-    // printf("x_mouse %d\n", x_mouse);
-    // printf("x_mouse_prev %d\n", game->x_mouse_prev);
     if (x_mouse > game->x_mouse_prev)
         game->player.angle += 0.05;
     else if (x_mouse < game->x_mouse_prev)
         game->player.angle -= 0.05;
-    game->x_mouse_prev = x_mouse;
+    // game->x_mouse_prev = x_mouse;
+    mlx_mouse_move(game->mlx, game->win, WIDTH / 2, HEIGHT / 2);
+        game->x_mouse_prev = WIDTH / 2;
     return 0;
 }
 
@@ -172,9 +97,11 @@ int	main(int ac, char **av)
         update(&data);
     mlx_hook(data.win, 02, 1L << 0, key_hook, &data);
     mlx_hook(data.win, 6, 1L<<6, mouse_hook, &data);
+    mlx_mouse_hide(data.mlx, data.win);
     mlx_loop_hook(data.mlx, update, &data);
     mlx_loop(data.mlx);
     mlx_destroy_image(data.mlx, data.img);
+    mlx_mouse_show(data.mlx, data.win);
       free(data.maze.map);
 	}
 	else

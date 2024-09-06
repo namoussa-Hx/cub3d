@@ -1,25 +1,5 @@
 #include "../cub3d.h"
 
-
-// void render_minimap(t_data *game, int tile_size, int player_x, int player_y) 
-// {
-
-//     int x, y;
-//     int color;
-//      int height = game->maze.height;
-//      int width = game->maze.width;
-//     int map_x;
-//     int map_y;
-//     game->mini_map.img = mlx_new_image(game->mlx, width * tile_size, height * tile_size);
-//     game->mini_map.img_data = mlx_get_data_addr(game->mini_map.img, 
-//     &game->mini_map.bpp, &game->mini_map.size_line, &game->mini_map.endian);
-
- 
-//     mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 0, 0);
-//     // mlx_destroy_image(game->mlx, game->mini_map.img);
-  
-// }
-
 void render_3d_projection(t_data *game, float distance, int ray_index, int tile_size)
 {
     int texture_y;
@@ -142,12 +122,6 @@ void cast_ray_dda(t_data *game, float angle, int ray_index, int tile_size)
     game->vector.map_y = (int)(game->player.player_y / tile_size);
     game->vector.ray_dir_x = cosf(angle);
     game->vector.ray_dir_y = sinf(angle);
-
-// int x_mousse;
-// int y_mousse;   
-
-//    mlx_mouse_get_pos(game->win, &x_mousse, &y_mousse);
-
 
     game->vector.delta_dist_x = fabs(1 / game->vector.ray_dir_x);
     game->vector.delta_dist_y = fabs(1 / game->vector.ray_dir_y);

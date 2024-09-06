@@ -117,6 +117,7 @@ typedef struct s_data
     double      oldTime;
 	double      currentTime;
 	double		frame_Time;
+	int is_mouse_captured;
 	// double		move_speed;
 	// double      rot_speed;
 	int 	   player_face;
