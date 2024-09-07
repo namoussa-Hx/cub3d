@@ -1,11 +1,11 @@
 
-C 220, 220, 255
-F 60, 60, 60
+NO  maps/textures/egypt/image1.xpm
+SO  maps/textures/egypt/image2.xpm
+WE  maps/textures/egypt/image3.xpm
+EA  maps/textures/egypt/image4.xpm
 
-NO  maps/textures/image1.xpm
-SO  maps/textures/image2.xpm
-WE  maps/textures/image3.xpm
-EA  maps/textures/image4.xpm
+C 210, 190, 140
+F 70, 50,40
 
 1111111111111111111
 10W1001001001000001

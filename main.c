@@ -60,7 +60,7 @@ int update(t_data *game)
 int mouse_hook(int x_mouse, int y_mouse, t_data *game)
 {
     (void)y_mouse;
-
+    
       if (game->player.angle >= 2 * PI)
             game->player.angle -= 2 * PI;
      if (game->player.angle < 0)
