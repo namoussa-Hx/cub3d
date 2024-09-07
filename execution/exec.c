@@ -1,5 +1,150 @@
 #include "../cub3d.h"
 
+int is_inside_circle(int x, int y, int center_x, int center_y, int radius)
+{
+    int dx ;
+    int dy;
+    dx = x - center_x;
+    dy = y - center_y;
+    return (dx * dx + dy * dy) <= (radius * radius);
+}
+
+void clear_minimap_area(t_data *game) 
+{
+    int center_x;
+    int center_y;
+    int screen_x;
+    int screen_y;
+    int x;
+    int y;
+    center_x = WIDTH - MINIMAP_RADIUS - 10;
+    center_y = MINIMAP_RADIUS + 10;
+    y = 0;
+    while (y < MINIMAP_DIAMETER)
+    {
+        x = 0;
+        while (x < MINIMAP_DIAMETER)
+        {
+            if (is_inside_circle(x, y, MINIMAP_RADIUS, MINIMAP_RADIUS, MINIMAP_RADIUS)) 
+            {
+                screen_x = center_x - MINIMAP_RADIUS + x;
+                screen_y = center_y - MINIMAP_RADIUS + y;
+                int pixel_index = (screen_y * game->size_line) + (screen_x * (game->bpp / 8));
+                *((unsigned int *)(game->img_data + pixel_index)) = 0x000000; // Black background
+            }
+            x++;
+        }
+        y++;
+    }
+}
+
+void draw_map_tiles(t_data *game) 
+{
+    int center_x;
+    int center_y;
+    float player_x;
+    float player_y;
+    int x;
+    int screen_x;
+    int screen_y;
+    int y;
+    center_x = WIDTH - MINIMAP_RADIUS - 10;
+    center_y = MINIMAP_RADIUS + 10;
+    player_x = game->player.player_x / 30.0f;
+    player_y = game->player.player_y / 30.0f;
+    y = -MINIMAP_RADIUS;
+    while ( y < MINIMAP_RADIUS) 
+    {
+        x = -MINIMAP_RADIUS;
+        while ( x < MINIMAP_RADIUS) 
+        {
+            if (is_inside_circle(x + MINIMAP_RADIUS, y + MINIMAP_RADIUS, MINIMAP_RADIUS, MINIMAP_RADIUS, MINIMAP_RADIUS - 2))
+            {
+                int map_x = (int)(player_x + x / (float)TILE_SIZE);
+                int map_y = (int)(player_y + y / (float)TILE_SIZE);
+                
+                unsigned int color;
+                if (map_x >= 0 && map_x < game->maze.width && map_y >= 0 && map_y < game->maze.height) 
+                {
+                  if (game->maze.map[map_y][map_x] == '1') 
+                            color = 0x36454F;
+                 else 
+                            color = 0xADD8E6;
+                } 
+             else 
+                 color = 0x008080;
+                screen_x = center_x + x;
+                screen_y = center_y + y;
+                int pixel_index = (screen_y * game->size_line) + (screen_x * (game->bpp / 8));
+                *((unsigned int *)(game->img_data + pixel_index)) = color;
+            }
+            x++;
+        }
+        y++;
+    }
+}
+
+void draw_player_marker(t_data *game) {
+    int center_x;
+    int center_y;
+    int x;
+    int y;
+    center_x = WIDTH - MINIMAP_RADIUS - 10;
+    center_y = MINIMAP_RADIUS + 10;
+    y = -PLAYER_MARKER_SIZE;
+    while(y <= PLAYER_MARKER_SIZE)
+    {
+        x = -PLAYER_MARKER_SIZE;
+        while( x <= PLAYER_MARKER_SIZE)
+        {
+            if (x*x + y*y <= PLAYER_MARKER_SIZE*PLAYER_MARKER_SIZE) {
+                int screen_x = center_x + x;
+                int screen_y = center_y + y;
+                int pixel_index = (screen_y * game->size_line) + (screen_x * (game->bpp / 8));
+                *((unsigned int *)(game->img_data + pixel_index)) =  0xFFFF00; // Yellow for player
+            }
+            x++;
+        }
+        y++;
+    }
+}
+
+
+
+void draw_minimap_border(t_data *game) {
+    int center_x;
+    int center_y;
+    int y;
+    int x;
+    center_x = WIDTH - MINIMAP_RADIUS - 10;
+    center_y = MINIMAP_RADIUS + 10;
+    y = -MINIMAP_RADIUS;
+
+    while(y <= MINIMAP_RADIUS)
+    {
+        x = -MINIMAP_RADIUS;
+        while(x <= MINIMAP_RADIUS) 
+        {
+            if (abs(x*x + y*y - MINIMAP_RADIUS*MINIMAP_RADIUS) < MINIMAP_RADIUS) {
+                int screen_x = center_x + x;
+                int screen_y = center_y + y;
+                int pixel_index = (screen_y * game->size_line) + (screen_x * (game->bpp / 8));
+                *((unsigned int *)(game->img_data + pixel_index)) = 0xFFFFFF; //white
+            }
+            x++;
+        }
+        y++;
+    }
+}
+
+int render_minimap(t_data *game) 
+{
+    clear_minimap_area(game);
+    draw_map_tiles(game);
+    draw_player_marker(game);
+    draw_minimap_border(game);
+    return 0;
+}
 void render_3d_projection(t_data *game, float distance, int ray_index, int tile_size)
 {
     int texture_y;
@@ -182,6 +327,7 @@ void cast_ray_dda(t_data *game, float angle, int ray_index, int tile_size)
     }
 
     render_3d_projection(game, game->vector.perp_wall_dist * tile_size, ray_index, tile_size);
+    // render_minimap(game);
 }
 
 void handle_collision(t_data *game, float player_angle, float collision_angle)

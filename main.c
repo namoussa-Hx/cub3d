@@ -53,6 +53,7 @@ int update(t_data *game)
         cast_ray_dda(game, ray_angle, x, tile_size);
         x++;
     }
+    render_minimap(game);
     mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
     return 0;
 }
@@ -114,6 +115,7 @@ int	main(int ac, char **av)
     mlx_hook(data.win, 17, 0, ft_exit, &data);
     mlx_mouse_hide(data.mlx, data.win);
     mlx_loop_hook(data.mlx, update, &data);
+    // mlx_loop_hook(data.mlx, render_minimap, &data);
     mlx_loop(data.mlx);
     mlx_destroy_image(data.mlx, data.img);
     mlx_mouse_show(data.mlx, data.win);

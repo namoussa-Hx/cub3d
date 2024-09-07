@@ -35,6 +35,10 @@
 # define RIGHT 4
 # define MOVE_SPEED 5.0
 # define ROT_SPEED 0.1
+#define MINIMAP_RADIUS 100
+#define MINIMAP_DIAMETER (MINIMAP_RADIUS * 2)
+#define TILE_SIZE 10
+#define PLAYER_MARKER_SIZE 4
 
 /***************ENEMY*********************/
 # define ENEMY0 "textures/frame1_xpm/enemy_0.xpm"
@@ -163,6 +167,7 @@ int				parse_cub(char *file, t_data *prog);
 int				is_skip(char *line, int flag);
 int				should_skip(char *line);
 int				check_valid_char(char c, int flag);
+int 			render_minimap(t_data *game);
 void			draw_map(t_data *game, int tile_size);
 
 #endif
