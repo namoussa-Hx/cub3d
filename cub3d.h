@@ -6,7 +6,7 @@
 /*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 23:56:58 by namoussa          #+#    #+#             */
-/*   Updated: 2024/09/06 18:46:24 by elchakir         ###   ########.fr       */
+/*   Updated: 2024/09/07 22:06:49 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,12 +117,13 @@ typedef struct s_images
 	void		*images[4];
 	int			*addr[4];
 	int			*scale[4];
-	int			width;
-	int			height;
+	int			width[4];
+	int			height[4];
 	int			bpp;
 	int			size_line;
 	int			endian;
 }				t_images;
+
 typedef struct s_data
 {
 	void		*mlx;

@@ -11,15 +11,15 @@ void	init_buffer(t_data *game)
 	i = 0;
 	while (i < 4)
 	{
-		buffer = (int *)malloc(sizeof(int) * game->textures->width * game->textures->height);
+		buffer = (int *)malloc(sizeof(int) * game->textures->width[i] * game->textures->height[i]);
 		j = 0;
-		while (j < game->textures->height )
+		while (j < game->textures->height[i] )
 		{
 			k = 0;
-			while (k < game->textures->width)
+			while (k < game->textures->width[i])
 			{
-				l = game->textures->width * j + k;
-				buffer[game->textures->width * j + k] = game->textures->addr[i][l];
+				l = game->textures->width[i] * j + k;
+				buffer[game->textures->width[i] * j + k] = game->textures->addr[i][l];
 				k++;
 			}
 			j++;
@@ -90,10 +90,10 @@ void	*file_to_img(t_data *data, char *img_path, int *w, int *h)
 
 void	init_textures(t_data *game)
 {
-	game->textures->images[0] = file_to_img(game, game->maze.no, &game->textures->width, &game->textures->height);
-	game->textures->images[1] = file_to_img(game, game->maze.so, &game->textures->width, &game->textures->height);
-	game->textures->images[2] = file_to_img(game, game->maze.we, &game->textures->width, &game->textures->height);
-	game->textures->images[3] = file_to_img(game, game->maze.ea, &game->textures->width, &game->textures->height);
+	game->textures->images[0] = file_to_img(game, game->maze.no, &game->textures->width[0], &game->textures->height[0]);
+	game->textures->images[1] = file_to_img(game, game->maze.so, &game->textures->width[1], &game->textures->height[1]);
+	game->textures->images[2] = file_to_img(game, game->maze.we, &game->textures->width[2], &game->textures->height[2]);
+	game->textures->images[3] = file_to_img(game, game->maze.ea, &game->textures->width[3], &game->textures->height[3]);
 	
 	// if(!game->textures->images[0] || !game->textures->images[1] || !game->textures->images[2] || !game->textures->images[3])
 	// {
