@@ -52,7 +52,7 @@
 # define ENEMY12 "textures/frame1_xpm/enemy_12.xpm"
 # define ENEMY13 "textures/frame1_xpm/enemy_13.xpm"
 # define ENEMY14 "textures/frame1_xpm/enemy_14.xpm"
-# define ENEMY14 "textures/frame1_xpm/enemy_15.xpm"
+# define ENEMY15 "textures/frame1_xpm/enemy_15.xpm"
 /****************************************/
 
 typedef struct s_player
