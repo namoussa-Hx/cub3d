@@ -27,7 +27,7 @@
 # include <sys/time.h>
 
 # define WIDTH 1080
-# define HEIGHT 800
+# define HEIGHT 1000
 # define		PI 3.14159265359
 #define UP 1
 #define DOWN 2
