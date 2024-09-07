@@ -162,7 +162,7 @@ void render_3d_projection(t_data *game, float distance, int ray_index, int tile_
     int texture_width;
     int texture_x;
     float wall_x;
-    distance = cosf(game->angel) * 
+    // distance = cosf(game->angel) * 
     if (distance <= 0) distance = 0.1;
      wall_height = (int)(tile_size * HEIGHT / distance);
      draw_start = HEIGHT / 2 - wall_height / 2 ;
