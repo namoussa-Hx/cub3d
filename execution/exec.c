@@ -204,18 +204,18 @@ int key_hook(int keycode, t_data *game)
     int map_y;
     tile_size = 30;
     if (keycode == 65361)
-   game->player.angle -= rot_speed;
+   game->player.angle -= ROT_SPEED;
     if (keycode == 65363) 
-        game->player.angle += rot_speed;
+        game->player.angle += ROT_SPEED;
  
     if (keycode == 65362) 
     {
-        map_x = (int)((game->player.player_x + cosf(game->player.angle) * move_speed) / tile_size);
-        map_y = (int)((game->player.player_y + sinf(game->player.angle) * move_speed) / tile_size);
+        map_x = (int)((game->player.player_x + cosf(game->player.angle) * MOVE_SPEED) / tile_size);
+        map_y = (int)((game->player.player_y + sinf(game->player.angle) * MOVE_SPEED) / tile_size);
         if (game->maze.map[map_y][map_x] != '1') 
         {
-            game->player.player_x += cosf(game->player.angle) * move_speed;
-            game->player.player_y += sinf(game->player.angle) * move_speed;
+            game->player.player_x += cosf(game->player.angle) * MOVE_SPEED;
+            game->player.player_y += sinf(game->player.angle) * MOVE_SPEED;
         }
        else
         {
@@ -227,12 +227,12 @@ int key_hook(int keycode, t_data *game)
     }
     if (keycode == 65364)
     {
-        map_x = (int)((game->player.player_x - cosf(game->player.angle) * move_speed) / tile_size);
-        map_y = (int)((game->player.player_y - sinf(game->player.angle) * move_speed) / tile_size);
+        map_x = (int)((game->player.player_x - cosf(game->player.angle) * MOVE_SPEED) / tile_size);
+        map_y = (int)((game->player.player_y - sinf(game->player.angle) * MOVE_SPEED) / tile_size);
         if (game->maze.map[map_y][map_x] != '1') 
         {
-            game->player.player_x -= cosf(game->player.angle) * move_speed;
-            game->player.player_y -= sinf(game->player.angle) * move_speed;
+            game->player.player_x -= cosf(game->player.angle) * MOVE_SPEED;
+            game->player.player_y -= sinf(game->player.angle) * MOVE_SPEED;
         }
     }
     if(keycode == 32)
