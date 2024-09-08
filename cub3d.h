@@ -119,16 +119,16 @@ typedef struct s_images
 	int			*scale[4];
 	int			width[4];
 	int			height[4];
-	int			bpp;
-	int			size_line;
-	int			endian;
+	int			bpp[4];
+	int			size_line[4];
+	int			endian[4];
 }				t_images;
 
 typedef struct s_data
 {
 	void		*mlx;
 	void		*win;
-	t_images	*textures;
+	t_images	*walls;
 	t_map		maze;
 	t_player	player;
 	t_vec		vector;
@@ -169,6 +169,7 @@ int				is_skip(char *line, int flag);
 int				should_skip(char *line);
 int				check_valid_char(char c, int flag);
 int 			render_minimap(t_data *game);
+void			init_walls(t_data *game);
 void			draw_map(t_data *game, int tile_size);
 
 #endif

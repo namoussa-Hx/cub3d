@@ -191,18 +191,18 @@ void render_3d_projection(t_data *game, float distance, int ray_index, int tile_
         else
             texture_index =  3; // north wla south
     }
-    texture_buffer = game->textures->scale[texture_index];
-    texture_width = game->textures->width[texture_index];
+    texture_buffer = game->walls->scale[texture_index];
+    texture_width = game->walls->width[texture_index];
     texture_x = (int)(wall_x * (float)texture_width);
     if ((game->vector.side == 0 && game->vector.ray_dir_x > 0) ||
         (game->vector.side == 1 && game->vector.ray_dir_y < 0))
         texture_x = texture_width - texture_x - 1;
-    step = 1.0 * game->textures->height[texture_index] / wall_height;//hna fin kanscaliw
+    step = 1.0 * game->walls->height[texture_index] / wall_height;//hna fin kanscaliw
     texture_pos = (draw_start - HEIGHT / 2 + wall_height / 2) * step;
     y = draw_start;
     while(y < draw_end)
     {
-         texture_y = (int)texture_pos % (game->textures->height[texture_index] - 1); 
+         texture_y = (int)texture_pos % (game->walls->height[texture_index] - 1); 
         texture_pos += step; //kanzid position ila derna liha & m3a texture height tatb9a nefs color 3la 7sab tol dyal texture 
 
         color = texture_buffer[texture_y * texture_width + texture_x]; //mli tandir scaling tanb9a nto7o fnafs color hadchi bach tansciliw 7it tandir & opertion 3la hsab tol d texture

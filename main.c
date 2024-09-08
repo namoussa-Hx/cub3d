@@ -98,14 +98,14 @@ int	main(int ac, char **av)
 		init_data(&data);
 		if (parse_cub(av[1], &data) && print_error("Error \n"))
 			        return (1);
-        data.textures = malloc(sizeof(t_images));
-        ft_bzero(data.textures, sizeof(t_images));
+        data.walls = malloc(sizeof(t_images));
+        ft_bzero(data.walls, sizeof(t_images));
         data.maze.width=  ft_strlen(data.maze.map[0]);
         tile_size = 30;
         data.player.player_x = (data.player.x * tile_size) + (tile_size / 2);
         data.player.player_y = (data.player.y * tile_size) + (tile_size / 2);
         data.x_mouse_prev = WIDTH / 2; 
-        init_textures(&data);
+        init_walls(&data);
         data.img = mlx_new_image(data.mlx, WIDTH, HEIGHT);
         data.img_data = mlx_get_data_addr(data.img, &data.bpp, &data.size_line, &data.endian);
         update(&data);
