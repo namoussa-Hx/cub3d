@@ -62,10 +62,14 @@ void	*file_to_img(t_data *data, char *img_path, int *w, int *h)
 
 void	init_walls(t_data *game)
 {
-	game->walls->images[0] = file_to_img(game, game->maze.no, &game->walls->width[0], &game->walls->height[0]);
-	game->walls->images[1] = file_to_img(game, game->maze.so, &game->walls->width[1], &game->walls->height[1]);
-	game->walls->images[2] = file_to_img(game, game->maze.we, &game->walls->width[2], &game->walls->height[2]);
-	game->walls->images[3] = file_to_img(game, game->maze.ea, &game->walls->width[3], &game->walls->height[3]);
+	game->walls->images[0] = file_to_img(game, game->maze.no, 
+	&game->walls->width[0], &game->walls->height[0]);
+	game->walls->images[1] = file_to_img(game, game->maze.so, 
+	&game->walls->width[1], &game->walls->height[1]);
+	game->walls->images[2] = file_to_img(game, game->maze.we, 
+	&game->walls->width[2], &game->walls->height[2]);
+	game->walls->images[3] = file_to_img(game, game->maze.ea, 
+	&game->walls->width[3], &game->walls->height[3]);
 	walls_address(game);
 }
 

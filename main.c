@@ -34,9 +34,6 @@ void	init_data(t_data *data)
     data->hide_mouse = 0;
 }
 
-
-
-
 int update(t_data *game)
 {
     int x = 0;
@@ -100,7 +97,10 @@ int	main(int ac, char **av)
 			        return (1);
         data.walls = malloc(sizeof(t_images));
         ft_bzero(data.walls, sizeof(t_images));
-        data.maze.width=  ft_strlen(data.maze.map[0]);
+
+        // data.textures = malloc(sizeof(t_textures));
+        // ft_bzero(data.textures, sizeof(t_textures));
+
         tile_size = 30;
         data.player.player_x = (data.player.x * tile_size) + (tile_size / 2);
         data.player.player_y = (data.player.y * tile_size) + (tile_size / 2);
@@ -115,6 +115,7 @@ int	main(int ac, char **av)
     mlx_hook(data.win, 17, 0, ft_exit, &data);
     mlx_mouse_hide(data.mlx, data.win);
     mlx_loop_hook(data.mlx, update, &data);
+    // mlx_loop_hook(data.mlx, render_enemy, &data);
     // mlx_loop_hook(data.mlx, render_minimap, &data);
     mlx_loop(data.mlx);
     mlx_destroy_image(data.mlx, data.img);

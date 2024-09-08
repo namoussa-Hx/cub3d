@@ -59,6 +59,22 @@
 # define ENEMY15 "textures/frame1_xpm/enemy_15.xpm"
 /****************************************/
 
+typedef struct s_textures
+{
+	void *images[16];
+	int *addr[16];
+	int *scale_enemy[16];
+	int bpp[16];
+	int size_line[16];
+	int endian[16];
+	int width[16];
+	int height[16];
+	int enemy_index;
+	int x;
+	int y;
+	int x_enemy;
+	int y_enemy;
+}				t_textures;
 typedef struct s_player
 {
 	int			x;
@@ -71,14 +87,14 @@ typedef struct s_player
 	double		player_y;
 }				t_player;
 
-typedef struct s_mini_map
-{
-	void		*img;
-	char		*img_data;
-	int			bpp;
-	int			size_line;
-	int			endian;
-}				t_mini_map;
+// typedef struct s_mini_map
+// {
+// 	void		*img;
+// 	char		*img_data;
+// 	int			bpp;
+// 	int			size_line;
+// 	int			endian;
+// }				t_mini_map;
 
 typedef struct s_map
 {
@@ -132,7 +148,8 @@ typedef struct s_data
 	t_map		maze;
 	t_player	player;
 	t_vec		vector;
-	t_mini_map	mini_map;
+	t_textures	*textures;
+	// t_mini_map	mini_map;
 	void		*img;
 	char		*img_data;
 	int			bpp;
@@ -170,6 +187,7 @@ int				should_skip(char *line);
 int				check_valid_char(char c, int flag);
 int 			render_minimap(t_data *game);
 void			init_walls(t_data *game);
+void			*file_to_img(t_data *data, char *img_path, int *w, int *h);
 void			draw_map(t_data *game, int tile_size);
 
 #endif
