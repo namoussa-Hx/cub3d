@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoussa <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 13:41:52 by namoussa          #+#    #+#             */
-/*   Updated: 2024/08/29 13:41:53 by namoussa         ###   ########.fr       */
+/*   Updated: 2024/09/08 17:51:10 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,11 @@ int	check_help(t_data *data, int h, char ch)
 			data->player.x = w;
 			data->player.y = h;
 		}
-		// if(data->maze.map[h][w] == 'X')
-		//     {
-		// 			data->textures->x = w;
-		// 			data->textures->y = h;
-		// 	}
+		if(data->maze.map[h][w] == 'X')
+		    {
+					data->enemy.x = w;
+					data->enemy.y = h;
+			}
 		if (data->maze.map[h][w] == ch)
 			count += 1;
 		w++;

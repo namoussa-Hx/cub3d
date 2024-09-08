@@ -6,7 +6,7 @@
 /*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 13:45:39 by namoussa          #+#    #+#             */
-/*   Updated: 2024/09/06 18:45:48 by elchakir         ###   ########.fr       */
+/*   Updated: 2024/09/08 17:54:51 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	init_data(t_data *data)
     data->player.y = 0;
     data->x_mouse_prev = 0;
     data->hide_mouse = 0;
+    data->enemy.x = 0;
+    data->enemy.y = 0;
 }
 
 int update(t_data *game)
@@ -98,8 +100,8 @@ int	main(int ac, char **av)
         data.walls = malloc(sizeof(t_images));
         ft_bzero(data.walls, sizeof(t_images));
 
-        // data.textures = malloc(sizeof(t_textures));
-        // ft_bzero(data.textures, sizeof(t_textures));
+        data.textures = malloc(sizeof(t_textures));
+        ft_bzero(data.textures, sizeof(t_textures));
 
         tile_size = 30;
         data.player.player_x = (data.player.x * tile_size) + (tile_size / 2);
@@ -115,8 +117,6 @@ int	main(int ac, char **av)
     mlx_hook(data.win, 17, 0, ft_exit, &data);
     mlx_mouse_hide(data.mlx, data.win);
     mlx_loop_hook(data.mlx, update, &data);
-    // mlx_loop_hook(data.mlx, render_enemy, &data);
-    // mlx_loop_hook(data.mlx, render_minimap, &data);
     mlx_loop(data.mlx);
     mlx_destroy_image(data.mlx, data.img);
     mlx_mouse_show(data.mlx, data.win);
