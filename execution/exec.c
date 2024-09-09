@@ -86,7 +86,9 @@ void draw_map_tiles(t_data *game)
     }
 }
 
-void draw_player_marker(t_data *game) {
+
+void draw_player_marker(t_data *game) 
+{
     int center_x;
     int center_y;
     int x;
@@ -139,11 +141,14 @@ void draw_minimap_border(t_data *game) {
     }
 }
 
+
+
 int render_minimap(t_data *game) 
 {
     clear_minimap_area(game);
     draw_map_tiles(game);
     draw_player_marker(game);
+    // draw_player_direction(game);
     draw_minimap_border(game);
     return 0;
 }

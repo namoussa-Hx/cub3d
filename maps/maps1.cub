@@ -4,7 +4,7 @@ SO  textures/wall_textures/image2.xpm
 WE  textures/wall_textures/image3.xpm
 EA  textures/wall_textures/image4.xpm
 
-C 0,0,0
+C 210, 190, 140
 F 70, 50,40
 
 111111111111111111111111

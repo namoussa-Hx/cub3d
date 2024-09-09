@@ -26,7 +26,7 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-# define WIDTH 1980
+# define WIDTH 1800
 # define HEIGHT 1000
 # define PI 3.14159265359
 # define UP 1
