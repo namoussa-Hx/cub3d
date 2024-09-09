@@ -26,7 +26,7 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-# define WIDTH 1080
+# define WIDTH 1980
 # define HEIGHT 1000
 # define PI 3.14159265359
 # define UP 1
@@ -58,7 +58,8 @@
 # define ENEMY14 "textures/frame1_xpm/enemy_14.xpm"
 # define ENEMY15 "textures/frame1_xpm/enemy_15.xpm"
 /****************************************/
-
+#define DOOR1 "textures/door/doors_1.xpm"
+#define DOOR2 "textures/door/doors_2.xpm"
 typedef struct s_textures
 {
 	void *images[16];
@@ -69,12 +70,15 @@ typedef struct s_textures
 	int endian[16];
 	int width[16];
 	int height[16];
+}				t_textures;
+typedef struct s_enemy
+{
 	int enemy_index;
 	int x;
 	int y;
 	int x_enemy;
 	int y_enemy;
-}				t_textures;
+} t_enemy;
 typedef struct s_player
 {
 	int			x;
@@ -130,14 +134,14 @@ typedef struct s_vec
 
 typedef struct s_images
 {
-	void		*images[4];
-	int			*addr[4];
-	int			*scale[4];
-	int			width[4];
-	int			height[4];
-	int			bpp[4];
-	int			size_line[4];
-	int			endian[4];
+	void		*images[6];
+	int			*addr[6];
+	int			*scale[6];
+	int			width[6];
+	int			height[6];
+	int			bpp[6];
+	int			size_line[6];
+	int			endian[6];
 }				t_images;
 
 typedef struct s_data
@@ -148,16 +152,30 @@ typedef struct s_data
 	t_map		maze;
 	t_player	player;
 	t_vec		vector;
+	t_enemy		enemy;
 	t_textures	*textures;
 	// t_mini_map	mini_map;
+	void *image_door;
+	int *addr_door;
+	int *scale_door;
 	void		*img;
 	char		*img_data;
+	int is_door;
+	int width_door;
+	int height_door;
+	int bpp_door;
+	int size_line_door;
+	int endian_door;
+	float distance_to_door;
+	int 	is_door_open;
 	int			bpp;
 	int			size_line;
 	int			endian;
 	int			hide_mouse;
 	int			player_face;
 	int			x_mouse_prev;
+	int 		x_door;
+	int 		y_door;
 
 }				t_data;
 
@@ -188,6 +206,8 @@ int				check_valid_char(char c, int flag);
 int 			render_minimap(t_data *game);
 void			init_walls(t_data *game);
 void			*file_to_img(t_data *data, char *img_path, int *w, int *h);
-void			draw_map(t_data *game, int tile_size);
+void			render_enemy(t_data *game);
+int				is_inside_circle(int x, int y, int center_x, int center_y, int radius);
+// void			draw_map(t_data *game, int tile_size);
 
 #endif

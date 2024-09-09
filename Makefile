@@ -12,7 +12,8 @@ SRC = main.c\
 	gnl/get_next_line.c\
 	gnl/get_next_line_utils.c\
 	execution/exec.c\
-	init_walls.c
+	init_walls.c\
+	enemy.c\
 
 OBJ = $(SRC:.c=.o)
 

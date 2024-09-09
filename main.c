@@ -12,6 +12,32 @@
 
 #include "cub3d.h"
 
+void init_door(t_data *game)
+{
+    int j;
+    int k;
+    int l;
+    int *buffer;
+
+    game->image_door = file_to_img(game, DOOR1, &game->width_door, &game->height_door);
+    game->addr_door = (int *)mlx_get_data_addr(game->image_door, &game->bpp_door, 
+                        &game->size_line_door, &game->endian_door);
+		buffer = (int *)malloc(sizeof(int) * game->width_door * game->height_door);
+		j = 0;
+        while (j < game->height_door)
+        {
+            k = 0;
+            while (k < game->width_door)
+            {
+                l = game->width_door * j + k;
+                buffer[game->width_door * j + k] = game->addr_door[l];
+                k++;
+            }
+            j++;
+        }
+        game->scale_door = buffer;
+        mlx_destroy_image(game->mlx, game->image_door);
+}
 void	init_data(t_data *data)
 {
 	data->mlx = mlx_init();
@@ -32,6 +58,25 @@ void	init_data(t_data *data)
     data->player.y = 0;
     data->x_mouse_prev = 0;
     data->hide_mouse = 0;
+    data->enemy.x = 0;
+    data->enemy.y = 0;
+    data->enemy.enemy_index = 0;
+    data->enemy.x_enemy = 0;
+    data->enemy.y_enemy = 0;
+    data->is_door = 0;
+    data->image_door = NULL;
+    data->addr_door = NULL;
+    data->scale_door = NULL;
+    data->width_door = 0;
+    data->height_door = 0;
+    data->bpp_door = 0;
+    data->size_line_door = 0;
+    data->distance_to_door = 0;
+    data->is_door_open = 0;
+    data->endian_door = 0;
+    data->x_door = -1;
+    data->y_door = -1;
+    init_door(data);
 }
 
 int update(t_data *game)
@@ -51,6 +96,7 @@ int update(t_data *game)
         x++;
     }
     render_minimap(game);
+    render_enemy(game);
     mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
     return 0;
 }
@@ -98,8 +144,8 @@ int	main(int ac, char **av)
         data.walls = malloc(sizeof(t_images));
         ft_bzero(data.walls, sizeof(t_images));
 
-        // data.textures = malloc(sizeof(t_textures));
-        // ft_bzero(data.textures, sizeof(t_textures));
+       data.textures = malloc(sizeof(t_textures));
+        ft_bzero(data.textures, sizeof(t_textures));
 
         tile_size = 30;
         data.player.player_x = (data.player.x * tile_size) + (tile_size / 2);
@@ -115,8 +161,6 @@ int	main(int ac, char **av)
     mlx_hook(data.win, 17, 0, ft_exit, &data);
     mlx_mouse_hide(data.mlx, data.win);
     mlx_loop_hook(data.mlx, update, &data);
-    // mlx_loop_hook(data.mlx, render_enemy, &data);
-    // mlx_loop_hook(data.mlx, render_minimap, &data);
     mlx_loop(data.mlx);
     mlx_destroy_image(data.mlx, data.img);
     mlx_mouse_show(data.mlx, data.win);

@@ -18,7 +18,7 @@ void clear_minimap_area(t_data *game)
     int x;
     int y;
     center_x = WIDTH - MINIMAP_RADIUS - 10;
-    center_y = MINIMAP_RADIUS + 10;
+    center_y = (HEIGHT - 10) - MINIMAP_RADIUS + 10;
     y = 0;
     while (y < MINIMAP_DIAMETER)
     {
@@ -49,7 +49,7 @@ void draw_map_tiles(t_data *game)
     int screen_y;
     int y;
     center_x = WIDTH - MINIMAP_RADIUS - 10;
-    center_y = MINIMAP_RADIUS + 10;
+    center_y = (HEIGHT - 10) - MINIMAP_RADIUS + 10;
     player_x = game->player.player_x / 30.0f;
     player_y = game->player.player_y / 30.0f;
     y = -MINIMAP_RADIUS;
@@ -68,7 +68,9 @@ void draw_map_tiles(t_data *game)
                 {
                   if (game->maze.map[map_y][map_x] == '1') 
                             color = 0x36454F;
-                 else 
+                 else if (game->maze.map[map_y][map_x] == 'D')
+                            color = 0x8B4513;
+                 else
                             color = 0xADD8E6;
                 } 
              else 
@@ -90,7 +92,7 @@ void draw_player_marker(t_data *game) {
     int x;
     int y;
     center_x = WIDTH - MINIMAP_RADIUS - 10;
-    center_y = MINIMAP_RADIUS + 10;
+    center_y = (HEIGHT - 10) -  MINIMAP_RADIUS + 10;
     y = -PLAYER_MARKER_SIZE;
     while(y <= PLAYER_MARKER_SIZE)
     {
@@ -117,7 +119,7 @@ void draw_minimap_border(t_data *game) {
     int y;
     int x;
     center_x = WIDTH - MINIMAP_RADIUS - 10;
-    center_y = MINIMAP_RADIUS + 10;
+    center_y = (HEIGHT - 10) - MINIMAP_RADIUS + 10;
     y = -MINIMAP_RADIUS;
 
     while(y <= MINIMAP_RADIUS)
@@ -159,7 +161,7 @@ void render_3d_projection(t_data *game, float distance, int ray_index, int tile_
     float step;
     float texture_pos;
     int pixel_index;
-    int texture_width;
+    int texture_width = 0;
     int texture_x;
     float wall_x;
     if (distance <= 0) distance = 0.1;
@@ -170,7 +172,7 @@ void render_3d_projection(t_data *game, float distance, int ray_index, int tile_
     if (draw_end >= HEIGHT) draw_end = HEIGHT - 1;
 
     if (game->vector.side == 0)
-        wall_x = game->player.player_y / tile_size + distance * game->vector.ray_dir_y / tile_size; //vertical (side == 0) wla horizontal (side == 1) 
+        wall_x = game->player.player_y / tile_size + distance * game->vector.ray_dir_y / tile_size;
     else
         wall_x = game->player.player_x / tile_size + distance * game->vector.ray_dir_x / tile_size;
     wall_x -= floor(wall_x);
@@ -190,8 +192,23 @@ void render_3d_projection(t_data *game, float distance, int ray_index, int tile_
         else
             texture_index =  3;
     }
+  if (game->is_door && game->is_door_open != 2)
+   {
+    texture_index = 4;
     texture_buffer = game->walls->scale[texture_index];
     texture_width = game->walls->width[texture_index];
+    }
+    else if (game->is_door && game->is_door_open == 2)
+    {
+        texture_index = 5;
+        texture_buffer = game->walls->scale[texture_index];
+        texture_width = game->walls->width[texture_index];
+    }
+    else if (game->is_door_open == 0)
+        {
+    texture_buffer = game->walls->scale[texture_index];
+    texture_width = game->walls->width[texture_index];
+        }
     texture_x = (int)(wall_x * (float)texture_width);
     if ((game->vector.side == 0 && game->vector.ray_dir_x > 0) ||
         (game->vector.side == 1 && game->vector.ray_dir_y < 0))
@@ -210,8 +227,13 @@ void render_3d_projection(t_data *game, float distance, int ray_index, int tile_
          pixel_index = (y * WIDTH + ray_index) * (game->bpp / 8);
         *((unsigned int *)(game->img_data + pixel_index)) = color;
         y++;
-    }
+    }  
+game->is_door = 0;
+game->is_door_open = 0;
+// game->maze.map[game->vector.map_y][game->vector.map_x] == 'D'
+
 }
+
 
 
 void render_color(t_data *game) 
@@ -272,7 +294,6 @@ void cast_ray_dda(t_data *game, float angle, int ray_index, int tile_size)
     game->vector.delta_dist_x = fabs(1 / game->vector.ray_dir_x);
     game->vector.delta_dist_y = fabs(1 / game->vector.ray_dir_y);
     game->vector.hit = 0;
-
     if (game->vector.ray_dir_x < 0) 
     {
         game->vector.step_x = -1;
@@ -312,10 +333,14 @@ void cast_ray_dda(t_data *game, float angle, int ray_index, int tile_size)
 
         if (game->vector.map_y < 0 || game->vector.map_y >= game->maze.height ||
             game->vector.map_x < 0 || game->vector.map_x >= game->maze.width)
-            return; // Out of bounds, stop processing
-
-        if (game->maze.map[game->vector.map_y][game->vector.map_x] == '1')
+            return;
+        if (game->maze.map[game->vector.map_y][game->vector.map_x] == '1' 
+                || game->maze.map[game->vector.map_y][game->vector.map_x] == 'D')
+                {
             game->vector.hit = 1;
+            if (game->maze.map[game->vector.map_y][game->vector.map_x] == 'D') 
+                    game->is_door = 1;
+                }
     }
 
     if (game->vector.side == 0)
@@ -326,9 +351,19 @@ void cast_ray_dda(t_data *game, float angle, int ray_index, int tile_size)
     {
         game->vector.perp_wall_dist = (game->vector.map_y - game->player.player_y / tile_size + (1 - game->vector.step_y) / 2) / game->vector.ray_dir_y;
     }
-
+    if(game->maze.map[game->vector.map_y][game->vector.map_x] == 'D')
+    {
+        if(game->vector.perp_wall_dist < 2.5)
+            game->is_door_open = 2;
+        //     // game->maze.map[game->vector.map_y][game->vector.map_x] = 'D';
+        //     // game->x_door = game->vector.map_x;
+        //     // game->y_door = game->vector.map_y;
+        // }
+        // else if (game->vector.perp_wall_dist == 1)
+        // {
+        // }
+    }
     render_3d_projection(game, game->vector.perp_wall_dist * tile_size, ray_index, tile_size);
-    // render_minimap(game);
 }
 
 void handle_collision(t_data *game, float player_angle, float collision_angle)

@@ -9,7 +9,7 @@ void	init_buffer(t_data *game)
 	int		*buffer;
 
 	i = 0;
-	while (i < 4)
+	while (i < 6)
 	{
 		buffer = (int *)malloc(sizeof(int) * game->walls->width[i] * game->walls->height[i]);
 		j = 0;
@@ -31,6 +31,8 @@ void	init_buffer(t_data *game)
 	mlx_destroy_image(game->mlx, game->walls->images[1]);
 	mlx_destroy_image(game->mlx, game->walls->images[2]);
 	mlx_destroy_image(game->mlx, game->walls->images[3]);
+	mlx_destroy_image(game->mlx, game->walls->images[4]);
+	mlx_destroy_image(game->mlx, game->walls->images[5]);
 }
 
 void	walls_address(t_data *game)
@@ -44,6 +46,10 @@ void	walls_address(t_data *game)
 	&game->walls->bpp[2], &game->walls->size_line[2], &game->walls->endian[2]);
 	game->walls->addr[3] = (int *)mlx_get_data_addr(game->walls->images[3],
 	&game->walls->bpp[3], &game->walls->size_line[3], &game->walls->endian[3]);
+	game->walls->addr[4] = (int *)mlx_get_data_addr(game->walls->images[4],
+	&game->walls->bpp[4], &game->walls->size_line[4], &game->walls->endian[4]);
+	game->walls->addr[5] = (int *)mlx_get_data_addr(game->walls->images[5],
+	&game->walls->bpp[5], &game->walls->size_line[5], &game->walls->endian[5]);
 	init_buffer(game);
 }
 
@@ -70,6 +76,10 @@ void	init_walls(t_data *game)
 	&game->walls->width[2], &game->walls->height[2]);
 	game->walls->images[3] = file_to_img(game, game->maze.ea, 
 	&game->walls->width[3], &game->walls->height[3]);
+	game->walls->images[4] = file_to_img(game, DOOR1,
+	&game->walls->width[4], &game->walls->height[4]);
+	game->walls->images[5] = file_to_img(game, DOOR2,
+	&game->walls->width[5], &game->walls->height[5]);
 	walls_address(game);
 }
 

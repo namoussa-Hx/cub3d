@@ -29,7 +29,7 @@ int	ft_check_chars(t_map *maze)
 				w++;
 				continue ;
 			}
-			if (ft_strchr("01NSEWX", maze->map[h][w]) == 0)
+			if (ft_strchr("01NSEWXD", maze->map[h][w]) == 0)
 				return (1);
 			w++;
 		}
@@ -74,8 +74,8 @@ int	check_help(t_data *data, int h, char ch)
 		}
 		// if(data->maze.map[h][w] == 'X')
 		//     {
-		// 			data->textures->x = w;
-		// 			data->textures->y = h;
+		// 		data->enemy.x = w;
+		// 		data->enemy.y = h;
 		// 	}
 		if (data->maze.map[h][w] == ch)
 			count += 1;
