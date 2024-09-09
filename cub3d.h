@@ -6,7 +6,7 @@
 /*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 23:56:58 by namoussa          #+#    #+#             */
-/*   Updated: 2024/09/07 22:06:49 by elchakir         ###   ########.fr       */
+/*   Updated: 2024/09/08 17:50:02 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct s_enemy
 	int y;
 	int x_enemy;
 	int y_enemy;
-} t_enemy;
+}				t_textures;
 typedef struct s_player
 {
 	int			x;
@@ -154,6 +154,7 @@ typedef struct s_data
 	t_vec		vector;
 	t_enemy		enemy;
 	t_textures	*textures;
+	t_enemy enemy;
 	// t_mini_map	mini_map;
 	void *image_door;
 	int *addr_door;

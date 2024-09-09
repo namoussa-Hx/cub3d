@@ -25,7 +25,7 @@ void	buffer_enemy(t_data *game)
 			}
 			j++;
 		}
-		game->textures->scale[i] = buffer;
+		game->textures->scale_enemy[i] = buffer;
 		i++;
 	}
 	i = 0;
