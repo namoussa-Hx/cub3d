@@ -78,7 +78,7 @@ typedef struct s_enemy
 	int y;
 	int x_enemy;
 	int y_enemy;
-}				t_textures;
+}				t_enemy;
 typedef struct s_player
 {
 	int			x;
@@ -154,7 +154,6 @@ typedef struct s_data
 	t_vec		vector;
 	t_enemy		enemy;
 	t_textures	*textures;
-	t_enemy enemy;
 	// t_mini_map	mini_map;
 	void *image_door;
 	int *addr_door;
