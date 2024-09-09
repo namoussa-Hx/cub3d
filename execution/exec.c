@@ -192,18 +192,20 @@ void render_3d_projection(t_data *game, float distance, int ray_index, int tile_
         else
             texture_index =  3;
     }
-  if (game->is_door && game->is_door_open != 2)
-   {
-    texture_index = 4;
+ if (game->is_door)
+{
+    if (game->is_door_open == 2)
+    {
+        texture_index = 5; 
+    }
+    else
+    {
+        texture_index = 4;
+    }
     texture_buffer = game->walls->scale[texture_index];
     texture_width = game->walls->width[texture_index];
-    }
-    else if (game->is_door && game->is_door_open == 2)
-    {
-        texture_index = 5;
-        texture_buffer = game->walls->scale[texture_index];
-        texture_width = game->walls->width[texture_index];
-    }
+}
+
     else if (game->is_door_open == 0)
         {
     texture_buffer = game->walls->scale[texture_index];
@@ -353,15 +355,11 @@ void cast_ray_dda(t_data *game, float angle, int ray_index, int tile_size)
     }
     if(game->maze.map[game->vector.map_y][game->vector.map_x] == 'D')
     {
-        if(game->vector.perp_wall_dist < 2.5)
-            game->is_door_open = 2;
-        //     // game->maze.map[game->vector.map_y][game->vector.map_x] = 'D';
-        //     // game->x_door = game->vector.map_x;
-        //     // game->y_door = game->vector.map_y;
-        // }
-        // else if (game->vector.perp_wall_dist == 1)
-        // {
-        // }
+       if (game->maze.map[game->vector.map_y][game->vector.map_x] == 'D')
+                 if (game->vector.perp_wall_dist < 2.5)  
+                            game->is_door_open = 2;
+ 
+
     }
     render_3d_projection(game, game->vector.perp_wall_dist * tile_size, ray_index, tile_size);
 }
