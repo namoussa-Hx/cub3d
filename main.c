@@ -96,7 +96,6 @@ int update(t_data *game)
         x++;
     }
     render_minimap(game);
-    // render_enemy(game);
     mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
     return 0;
 }
