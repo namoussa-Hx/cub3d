@@ -6,7 +6,7 @@
 /*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 13:45:39 by namoussa          #+#    #+#             */
-/*   Updated: 2024/09/08 17:54:51 by elchakir         ###   ########.fr       */
+/*   Updated: 2024/09/10 23:56:30 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int update(t_data *game)
         x++;
     }
     render_minimap(game);
+    render1_player(game);
     mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
     return 0;
 }

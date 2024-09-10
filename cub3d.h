@@ -6,7 +6,7 @@
 /*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 23:56:58 by namoussa          #+#    #+#             */
-/*   Updated: 2024/09/08 17:50:02 by elchakir         ###   ########.fr       */
+/*   Updated: 2024/09/11 00:12:57 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@
 /****************************************/
 #define DOOR1 "textures/door/doors_1.xpm"
 #define DOOR2 "textures/door/doors_2.xpm"
+#define PLAYER "textures/player/5723e5b6413bb1726009816.xpm"// "/nfs/homes/elchakir/Downloads/aspose_video_133703849024523551_out0038-removebg-preview1726007540.xpm"//  "/nfs/homes/elchakir/Downloads/56b5d4f5a81a2-removebg-preview1725912620.xpm"
+
 typedef struct s_textures
 {
 	void *images[16];
@@ -134,14 +136,14 @@ typedef struct s_vec
 
 typedef struct s_images
 {
-	void		*images[6];
-	int			*addr[6];
-	int			*scale[6];
-	int			width[6];
-	int			height[6];
-	int			bpp[6];
-	int			size_line[6];
-	int			endian[6];
+	void		*images[7];
+	int			*addr[7];
+	int			*scale[7];
+	int			width[7];
+	int			height[7];
+	int			bpp[7];
+	int			size_line[7];
+	int			endian[7];
 }				t_images;
 
 typedef struct s_data
@@ -180,6 +182,7 @@ typedef struct s_data
 }				t_data;
 
 int				update(t_data *data);
+void	render1_player(t_data *game);
 void			render_flor(t_data *game);
 void			render_color(t_data *game);
 void			render_3d_projection(t_data *game, float distance,

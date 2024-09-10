@@ -18,7 +18,7 @@ void clear_minimap_area(t_data *game)
     int x;
     int y;
     center_x = WIDTH - MINIMAP_RADIUS - 10;
-    center_y = (HEIGHT - 10) - MINIMAP_RADIUS + 10;
+    center_y =  MINIMAP_RADIUS ;
     y = 0;
     while (y < MINIMAP_DIAMETER)
     {
@@ -49,7 +49,7 @@ void draw_map_tiles(t_data *game)
     int screen_y;
     int y;
     center_x = WIDTH - MINIMAP_RADIUS - 10;
-    center_y = (HEIGHT - 10) - MINIMAP_RADIUS + 10;
+    center_y = MINIMAP_RADIUS;
     player_x = game->player.player_x / 30.0f;
     player_y = game->player.player_y / 30.0f;
     y = -MINIMAP_RADIUS;
@@ -94,7 +94,7 @@ void draw_player_marker(t_data *game)
     int x;
     int y;
     center_x = WIDTH - MINIMAP_RADIUS - 10;
-    center_y = (HEIGHT - 10) -  MINIMAP_RADIUS + 10;
+    center_y = MINIMAP_RADIUS;
     y = -PLAYER_MARKER_SIZE;
     while(y <= PLAYER_MARKER_SIZE)
     {
@@ -121,7 +121,7 @@ void draw_minimap_border(t_data *game) {
     int y;
     int x;
     center_x = WIDTH - MINIMAP_RADIUS - 10;
-    center_y = (HEIGHT - 10) - MINIMAP_RADIUS + 10;
+    center_y =  MINIMAP_RADIUS ;
     y = -MINIMAP_RADIUS;
 
     while(y <= MINIMAP_RADIUS)
@@ -151,6 +151,47 @@ int render_minimap(t_data *game)
     // draw_player_direction(game);
     draw_minimap_border(game);
     return 0;
+}
+
+void render1_player(t_data *game)
+{
+    int i;
+    int  j;
+    int src_index;
+    int x_start;
+    int y_start;
+    unsigned int *texture_addr;
+    unsigned int *img_addr;
+
+    texture_addr = (unsigned int *)game->walls->addr[6];
+    img_addr = (unsigned int *)game->img_data;
+
+    x_start = 0;
+    y_start = 0;
+
+    if (x_start < 0) x_start = 0;
+    if (y_start < 0) y_start = 0;
+    float x_scale = (float)game->walls->width[6] / (WIDTH );
+    float y_scale = (float) game->walls->height[6]/ (HEIGHT);
+    
+    i = 0;
+    while (i < HEIGHT)
+    {
+        j = 0;
+        while (j < WIDTH)
+        {
+
+           
+            src_index = (int)(j * x_scale) + (int)(i * y_scale) * game->walls->width[6];
+            if (x_start + j >= 0 && x_start + j < (WIDTH) && y_start + i >= 0 && y_start + i < HEIGHT)
+            {
+                if (texture_addr[src_index] != 0xff000000)
+                    img_addr[x_start + j + y_start + i * WIDTH] = texture_addr[src_index];
+            }
+            j++;
+        }
+        i++;
+    }
 }
 
 void render_3d_projection(t_data *game, float distance, int ray_index, int tile_size)
