@@ -63,7 +63,7 @@ void load_textures(t_data *game)
 
 
 
-void init_plyare(t_data *game) 
+void init_player(t_data *game) 
 {
     allocate_player(game);
     load_textures(game);

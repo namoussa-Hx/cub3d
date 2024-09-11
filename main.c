@@ -63,11 +63,10 @@ int update(t_data *game)
     static int index;
     int width;
     int height;
-    int *player;
 
-    if (index >= SPRITE_FRAMES * 6)
+    if (index >= SPRITE_FRAMES  * 6)
 		index = 0;
-	player = game->walls->addr_player[index / 6];
+	//  game->walls->addr_player[index / 6];
     width = game->walls->width_player[index / 6];
     height = game->walls->height_player[index / 6];
     // printf("width = (%d / %d) : %d\n",index , 6, index / 6);
@@ -154,7 +153,7 @@ int	main(int ac, char **av)
         data.player.player_y = (data.player.y * tile_size) + (tile_size / 2);
         data.x_mouse_prev = WIDTH / 2; 
         init_walls(&data);
-        init_plyare(&data);
+        init_player(&data);
         data.img = mlx_new_image(data.mlx, WIDTH, HEIGHT);
         data.img_data = mlx_get_data_addr(data.img, &data.bpp, &data.size_line, &data.endian);
         update(&data);

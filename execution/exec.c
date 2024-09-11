@@ -64,17 +64,23 @@ void draw_map_tiles(t_data *game)
                 int map_y = (int)(player_y + y / (float)TILE_SIZE);
                 
                 unsigned int color;
+                // color = 0x000000;
+                color = 0;
                 if (map_x >= 0 && map_x < game->maze.width && map_y >= 0 && map_y < game->maze.height) 
                 {
                   if (game->maze.map[map_y][map_x] == '1') 
-                            color = 0x36454F;
+                            color = 0x000000;//0x36454F;
                  else if (game->maze.map[map_y][map_x] == 'D')
                             color = 0x8B4513;
-                 else
+                 else if(game->maze.map[map_y][map_x] == '0')
+                            color = 0xADD8E6;
+                else if(game->maze.map[map_y][map_x] == 'W'  
+                || game->maze.map[map_y][map_x] == 'E' || game->maze.map[map_y][map_x] == 'S' 
+                || game->maze.map[map_y][map_x] == 'N')
                             color = 0xADD8E6;
                 } 
-             else 
-                 color = 0x008080;
+                else
+                 color = 0x000000;//0x008080;
                 screen_x = center_x + x;
                 screen_y = center_y + y;
                 int pixel_index = (screen_y * game->size_line) + (screen_x * (game->bpp / 8));
@@ -168,8 +174,8 @@ void render1_player(t_data *game, int *player, int texture_width, int texture_he
     if (x_start < 0) x_start = 0;
     if (y_start < 0) y_start = 0;
 
-    float x_scale = (float)texture_width / WIDTH;
-    float y_scale = (float)texture_height / HEIGHT;
+    float x_scale = (float)(texture_width - 10) / WIDTH ;
+    float y_scale = (float)(texture_height - 10) / HEIGHT;
 
 
     for (i = 0; i < HEIGHT; i++)
@@ -405,6 +411,8 @@ void cast_ray_dda(t_data *game, float angle, int ray_index, int tile_size)
  
 
     }
+    float real_angle = fabs(fmodf(game->player.angle - angle + PI * 3, PI * 2) - PI);
+    game->vector.perp_wall_dist *= cosf(real_angle);
     render_3d_projection(game, game->vector.perp_wall_dist * tile_size, ray_index, tile_size);
 }
 

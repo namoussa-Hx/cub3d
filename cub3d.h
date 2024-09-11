@@ -26,7 +26,7 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-# define WIDTH 1200
+# define WIDTH 900
 # define HEIGHT 900
 # define PI 3.14159265359
 # define UP 1
@@ -208,7 +208,7 @@ int				should_skip(char *line);
 int				check_valid_char(char c, int flag);
 int 			render_minimap(t_data *game);
 void			init_walls(t_data *game);
-void			init_plyare(t_data *game);
+void init_player(t_data *game);
 t_free *newnode(void *address);
 void free_all(t_free **lst);
 void			*file_to_img(t_data *data, char *img_path, int *w, int *h);
