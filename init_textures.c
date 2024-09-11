@@ -29,7 +29,7 @@ void handle_error(t_data *game, int index)
 }
 void mlx_player(t_data *game, char *s[SPRITE_FRAMES]) 
 {
-	 for (int i = 0; i < 40; i++) 
+	 for (int i = 0; i < 37; i++) 
 	{
         game->walls->player[i] = mlx_xpm_file_to_image(game->mlx, s[i], 
 		&game->walls->width_player[i], &game->walls->height_player[i]);
@@ -44,7 +44,6 @@ void mlx_player(t_data *game, char *s[SPRITE_FRAMES])
 void load_textures(t_data *game) 
 {
     char *s[SPRITE_FRAMES] = {
-        "textures/player/1.xpm", "textures/player/2.xpm", "textures/player/3.xpm", 
         "textures/player/4.xpm", "textures/player/5.xpm", "textures/player/6.xpm", 
         "textures/player/7.xpm", "textures/player/8.xpm", "textures/player/9.xpm", 
         "textures/player/10.xpm", "textures/player/11.xpm", "textures/player/12.xpm", 

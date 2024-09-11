@@ -33,13 +33,13 @@
 # define DOWN 2
 # define LEFT 3
 # define RIGHT 4
-# define MOVE_SPEED 5.0
+# define MOVE_SPEED 3.0
 # define ROT_SPEED 0.1
 # define MINIMAP_RADIUS 100
 # define MINIMAP_DIAMETER (MINIMAP_RADIUS * 2)
 # define TILE_SIZE 10
 # define PLAYER_MARKER_SIZE 4
-# define SPRITE_FRAMES 40
+# define SPRITE_FRAMES 37
 
 #define DOOR1 "textures/door/doors_1.xpm"
 #define DOOR2 "textures/door/doors_2.xpm"

@@ -114,7 +114,6 @@ int mouse_hide(t_data *game)
 
 int ft_exit(t_data *game)
 {
-    // mlx_destroy_window(game->mlx, game->win);
     destroy_all(game);
     exit(0);
     return 0;
@@ -122,11 +121,10 @@ int ft_exit(t_data *game)
 void destroy_all(t_data *game)
 {
     mlx_destroy_window(game->mlx, game->win);
-
     mlx_destroy_image(game->mlx, game->img);
-    for (int i = 0; i < 40; i++) 
+    for (int i = 0; i < 37; i++) 
         mlx_destroy_image(game->mlx, game->walls->player[i]);
-    for(int i = 0; i < 7; i++)
+    for(int i = 0; i < 6; i++)
         mlx_destroy_image(game->mlx, game->walls->images[i]);
     free_all(&g_free);
     exit(0);

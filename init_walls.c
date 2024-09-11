@@ -9,7 +9,7 @@ void	init_buffer(t_data *game)
 	int		*buffer;
 
 	i = 0;
-	while (i < 7)
+	while (i < 6)
 	{
 		buffer = (int *)malloc(sizeof(int) * game->walls->width[i] * game->walls->height[i]);
 		addback(&g_free, newnode(buffer));
@@ -45,8 +45,8 @@ void	walls_address(t_data *game)
 	&game->walls->bpp[4], &game->walls->size_line[4], &game->walls->endian[4]);
 	game->walls->addr[5] = (int *)mlx_get_data_addr(game->walls->images[5],
 	&game->walls->bpp[5], &game->walls->size_line[5], &game->walls->endian[5]);
-	game->walls->addr[6] = (int *)mlx_get_data_addr(game->walls->images[6],
-	&game->walls->bpp[6], &game->walls->size_line[6], &game->walls->endian[6]);
+	// game->walls->addr[6] = (int *)mlx_get_data_addr(game->walls->images[6],
+	// &game->walls->bpp[6], &game->walls->size_line[6], &game->walls->endian[6]);
 	init_buffer(game);
 }
 
@@ -77,8 +77,8 @@ void	init_walls(t_data *game)
 	&game->walls->width[4], &game->walls->height[4]);
 	game->walls->images[5] = file_to_img(game, DOOR2,
 	&game->walls->width[5], &game->walls->height[5]);
-	game->walls->images[6] = file_to_img(game, PLAYER,
-	&game->walls->width[6], &game->walls->height[6]);
+	// game->walls->images[6] = file_to_img(game, PLAYER,
+	// &game->walls->width[6], &game->walls->height[6]);
 	walls_address(game);
 }
 
