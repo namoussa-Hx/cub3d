@@ -26,8 +26,8 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-# define WIDTH 1800
-# define HEIGHT 1000
+# define WIDTH 1200
+# define HEIGHT 900
 # define PI 3.14159265359
 # define UP 1
 # define DOWN 2
@@ -35,29 +35,12 @@
 # define RIGHT 4
 # define MOVE_SPEED 5.0
 # define ROT_SPEED 0.1
-#define MINIMAP_RADIUS 100
-#define MINIMAP_DIAMETER (MINIMAP_RADIUS * 2)
-#define TILE_SIZE 10
-#define PLAYER_MARKER_SIZE 4
+# define MINIMAP_RADIUS 100
+# define MINIMAP_DIAMETER (MINIMAP_RADIUS * 2)
+# define TILE_SIZE 10
+# define PLAYER_MARKER_SIZE 4
+# define SPRITE_FRAMES 40
 
-/***************ENEMY*********************/
-# define ENEMY0 "textures/frame1_xpm/enemy_0.xpm"
-# define ENEMY1 "textures/frame1_xpm/enemy_1.xpm"
-# define ENEMY2 "textures/frame1_xpm/enemy_2.xpm"
-# define ENEMY3 "textures/frame1_xpm/enemy_3.xpm"
-# define ENEMY4 "textures/frame1_xpm/enemy_4.xpm"
-# define ENEMY5 "textures/frame1_xpm/enemy_5.xpm"
-# define ENEMY6 "textures/frame1_xpm/enemy_6.xpm"
-# define ENEMY7 "textures/frame1_xpm/enemy_7.xpm"
-# define ENEMY8 "textures/frame1_xpm/enemy_8.xpm"
-# define ENEMY9 "textures/frame1_xpm/enemy_9.xpm"
-# define ENEMY10 "textures/frame1_xpm/enemy_10.xpm"
-# define ENEMY11 "textures/frame1_xpm/enemy_11.xpm"
-# define ENEMY12 "textures/frame1_xpm/enemy_12.xpm"
-# define ENEMY13 "textures/frame1_xpm/enemy_13.xpm"
-# define ENEMY14 "textures/frame1_xpm/enemy_14.xpm"
-# define ENEMY15 "textures/frame1_xpm/enemy_15.xpm"
-/****************************************/
 #define DOOR1 "textures/door/doors_1.xpm"
 #define DOOR2 "textures/door/doors_2.xpm"
 #define PLAYER "textures/player/5723e5b6413bb1726009816.xpm"// "/nfs/homes/elchakir/Downloads/aspose_video_133703849024523551_out0038-removebg-preview1726007540.xpm"//  "/nfs/homes/elchakir/Downloads/56b5d4f5a81a2-removebg-preview1725912620.xpm"
@@ -144,6 +127,13 @@ typedef struct s_images
 	int			bpp[7];
 	int			size_line[7];
 	int			endian[7];
+ 	void        **player;              
+    int         **addr_player;         
+    int         *width_player;        
+    int         *height_player;       
+    int         *bpp_player;  
+    int         *size_line_player;
+    int         *endian_player; 
 }				t_images;
 
 typedef struct s_data
@@ -182,7 +172,7 @@ typedef struct s_data
 }				t_data;
 
 int				update(t_data *data);
-void	render1_player(t_data *game);
+void render1_player(t_data *game, int *player, int texture_width, int texture_height);
 void			render_flor(t_data *game);
 void			render_color(t_data *game);
 void			render_3d_projection(t_data *game, float distance,
@@ -208,6 +198,7 @@ int				should_skip(char *line);
 int				check_valid_char(char c, int flag);
 int 			render_minimap(t_data *game);
 void			init_walls(t_data *game);
+void			init_plyare(t_data *game);
 void			*file_to_img(t_data *data, char *img_path, int *w, int *h);
 void			render_enemy(t_data *game);
 int				is_inside_circle(int x, int y, int center_x, int center_y, int radius);

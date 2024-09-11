@@ -84,6 +84,17 @@ int update(t_data *game)
     int x = 0;
     int tile_size = 30;
     float ray_angle;
+    static int index;
+    int width;
+    int height;
+    int *player;
+
+    if (index >= SPRITE_FRAMES * 6)
+		index = 0;
+	player = game->walls->addr_player[index / 6];
+    width = game->walls->width_player[index / 6];
+    height = game->walls->height_player[index / 6];
+    // printf("width = (%d / %d) : %d\n",index , 6, index / 6);
 
     memset(game->img_data, 0, WIDTH * HEIGHT * (game->bpp / 8));
 
@@ -96,8 +107,9 @@ int update(t_data *game)
         x++;
     }
     render_minimap(game);
-    render1_player(game);
+   render1_player(game, game->walls->addr_player[index / 6], width, height);
     mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
+    index++;
     return 0;
 }
 int mouse_hook(int x_mouse, int y_mouse, t_data *game)
@@ -152,6 +164,7 @@ int	main(int ac, char **av)
         data.player.player_y = (data.player.y * tile_size) + (tile_size / 2);
         data.x_mouse_prev = WIDTH / 2; 
         init_walls(&data);
+        init_plyare(&data);
         data.img = mlx_new_image(data.mlx, WIDTH, HEIGHT);
         data.img_data = mlx_get_data_addr(data.img, &data.bpp, &data.size_line, &data.endian);
         update(&data);

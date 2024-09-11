@@ -153,46 +153,44 @@ int render_minimap(t_data *game)
     return 0;
 }
 
-void render1_player(t_data *game)
+void render1_player(t_data *game, int *player, int texture_width, int texture_height)
 {
-    int i;
-    int  j;
-    int src_index;
-    int x_start;
-    int y_start;
+    int i, j;
+    int src_index = 0;
+    int x_start = 0;
+    int y_start = 0;
     unsigned int *texture_addr;
     unsigned int *img_addr;
 
-    texture_addr = (unsigned int *)game->walls->addr[6];
+    texture_addr = (unsigned int *)player;
     img_addr = (unsigned int *)game->img_data;
-
-    x_start = 0;
-    y_start = 0;
 
     if (x_start < 0) x_start = 0;
     if (y_start < 0) y_start = 0;
-    float x_scale = (float)game->walls->width[6] / (WIDTH );
-    float y_scale = (float) game->walls->height[6]/ (HEIGHT);
-    
-    i = 0;
-    while (i < HEIGHT)
-    {
-        j = 0;
-        while (j < WIDTH)
-        {
 
-           
-            src_index = (int)(j * x_scale) + (int)(i * y_scale) * game->walls->width[6];
-            if (x_start + j >= 0 && x_start + j < (WIDTH) && y_start + i >= 0 && y_start + i < HEIGHT)
+    float x_scale = (float)texture_width / WIDTH;
+    float y_scale = (float)texture_height / HEIGHT;
+
+
+    for (i = 0; i < HEIGHT; i++)
+    {
+        for (j = 0; j < WIDTH; j++)
+        {
+            int texture_x = (int)(j * x_scale);
+            int texture_y = (int)(i * y_scale);
+            src_index = texture_x + texture_y * texture_width;
+
+            if (x_start + j >= 0 && x_start + j < WIDTH && y_start + i >= 0 && y_start + i < HEIGHT)
             {
                 if (texture_addr[src_index] != 0xff000000)
-                    img_addr[x_start + j + y_start + i * WIDTH] = texture_addr[src_index];
+                {
+                    img_addr[x_start + j + (y_start + i) * WIDTH] = texture_addr[src_index];
+                }
             }
-            j++;
         }
-        i++;
     }
 }
+
 
 void render_3d_projection(t_data *game, float distance, int ray_index, int tile_size)
 {

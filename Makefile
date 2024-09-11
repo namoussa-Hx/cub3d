@@ -13,11 +13,12 @@ SRC = main.c\
 	gnl/get_next_line_utils.c\
 	execution/exec.c\
 	init_walls.c\
+	init_textures.c\
 	enemy.c\
 
 OBJ = $(SRC:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g3
 
 XFLAGS = -lXext -lX11 -lm -lmlx
 
