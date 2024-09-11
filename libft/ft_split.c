@@ -66,6 +66,7 @@ const char	*dup_word(char **dest, const char *src, char c)
 	if (len == 0)
 		return (NULL);
 	*dest = (char *)malloc(sizeof(char) * (len + 1));
+	addback(&g_free, newnode(*dest));
 	if (*dest == NULL)
 		return (NULL);
 	i = 0;
@@ -81,19 +82,19 @@ const char	*dup_word(char **dest, const char *src, char c)
 	return (src);
 }
 
-void	free_strs(char ***strs, size_t len)
-{
-	size_t	i;
+// void	free_strs(char ***strs, size_t len)
+// {
+// 	size_t	i;
 
-	i = 0;
-	while (i < len)
-	{
-		free((*strs)[i]);
-		i++;
-	}
-	free(*strs);
-	*strs = NULL;
-}
+// 	i = 0;
+// 	while (i < len)
+// 	{
+// 		free((*strs)[i]);
+// 		i++;
+// 	}
+// 	free(*strs);
+// 	*strs = NULL;
+// }
 
 char	**ft_split(const char *s, char c)
 {
@@ -107,6 +108,7 @@ char	**ft_split(const char *s, char c)
 	if (nbr_strings != 3)
 		return (NULL);
 	strs = (char **)malloc(sizeof(char *) * (nbr_strings + 1));
+	addback(&g_free, newnode(strs));
 	if (strs != NULL)
 	{
 		strs[nbr_strings] = NULL;
@@ -115,7 +117,7 @@ char	**ft_split(const char *s, char c)
 		{
 			s = dup_word(strs + i, s, c);
 			if (s == NULL)
-				return (free_strs(&strs, i), NULL);
+				return (NULL);
 			i++;
 		}
 	}

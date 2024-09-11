@@ -14,6 +14,7 @@ SRC = main.c\
 	execution/exec.c\
 	init_walls.c\
 	init_textures.c\
+	free.c\
 	enemy.c\
 
 OBJ = $(SRC:.c=.o)

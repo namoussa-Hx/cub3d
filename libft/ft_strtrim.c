@@ -42,6 +42,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	while (l > f && check_set(s1[l - 1], set))
 		l--;
 	ptr = malloc(sizeof(char) * (l - f) + 1);
+	addback(&g_free, newnode(ptr));
 	i = 0;
 	if (!ptr)
 		return (NULL);

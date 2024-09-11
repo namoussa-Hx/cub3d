@@ -12,11 +12,6 @@
 
 #include "../cub3d.h"
 
-int	free_line(char *line)
-{
-	free(line);
-	return (1);
-}
 
 int	is_skip(char *line, int flag)
 {
@@ -26,7 +21,7 @@ int	is_skip(char *line, int flag)
 	{
 		if (flag == 2)
 			return (2);
-		if (flag == 1 && free_line(line))
+		if (flag == 1)
 			return (1);
 	}
 	return (0);

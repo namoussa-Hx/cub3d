@@ -56,6 +56,15 @@ typedef struct s_textures
 	int width[16];
 	int height[16];
 }				t_textures;
+
+typedef  struct s_free
+{
+	void *addr;
+	struct s_free *next;
+
+} t_free;
+
+extern t_free *g_free;
 typedef struct s_enemy
 {
 	int enemy_index;
@@ -194,14 +203,18 @@ int				free_line(char *line);
 int				check_conditions(char ch, int count);
 int				parse_cub(char *file, t_data *prog);
 int				is_skip(char *line, int flag);
+void			destroy_all(t_data *game);
 int				should_skip(char *line);
 int				check_valid_char(char c, int flag);
 int 			render_minimap(t_data *game);
 void			init_walls(t_data *game);
 void			init_plyare(t_data *game);
+t_free *newnode(void *address);
+void free_all(t_free **lst);
 void			*file_to_img(t_data *data, char *img_path, int *w, int *h);
 void			render_enemy(t_data *game);
 int				is_inside_circle(int x, int y, int center_x, int center_y, int radius);
+void addback(t_free **lst, t_free *new);
 // void			draw_map(t_data *game, int tile_size);
 
 #endif

@@ -12,32 +12,9 @@
 
 #include "cub3d.h"
 
-void init_door(t_data *game)
-{
-    int j;
-    int k;
-    int l;
-    int *buffer;
+t_free *g_free;
 
-    game->image_door = file_to_img(game, DOOR1, &game->width_door, &game->height_door);
-    game->addr_door = (int *)mlx_get_data_addr(game->image_door, &game->bpp_door, 
-                        &game->size_line_door, &game->endian_door);
-		buffer = (int *)malloc(sizeof(int) * game->width_door * game->height_door);
-		j = 0;
-        while (j < game->height_door)
-        {
-            k = 0;
-            while (k < game->width_door)
-            {
-                l = game->width_door * j + k;
-                buffer[game->width_door * j + k] = game->addr_door[l];
-                k++;
-            }
-            j++;
-        }
-        game->scale_door = buffer;
-        mlx_destroy_image(game->mlx, game->image_door);
-}
+
 void	init_data(t_data *data)
 {
 	data->mlx = mlx_init();
@@ -76,7 +53,6 @@ void	init_data(t_data *data)
     data->endian_door = 0;
     data->x_door = -1;
     data->y_door = -1;
-    init_door(data);
 }
 
 int update(t_data *game)
@@ -138,9 +114,22 @@ int mouse_hide(t_data *game)
 
 int ft_exit(t_data *game)
 {
-    mlx_destroy_window(game->mlx, game->win);
+    // mlx_destroy_window(game->mlx, game->win);
+    destroy_all(game);
     exit(0);
     return 0;
+}
+void destroy_all(t_data *game)
+{
+    mlx_destroy_window(game->mlx, game->win);
+
+    mlx_destroy_image(game->mlx, game->img);
+    for (int i = 0; i < 40; i++) 
+        mlx_destroy_image(game->mlx, game->walls->player[i]);
+    for(int i = 0; i < 7; i++)
+        mlx_destroy_image(game->mlx, game->walls->images[i]);
+    free_all(&g_free);
+    exit(0);
 }
 
 int	main(int ac, char **av)
@@ -151,12 +140,15 @@ int	main(int ac, char **av)
 	if (ac == 2)
 	{
 		init_data(&data);
+        g_free = NULL;
 		if (parse_cub(av[1], &data) && print_error("Error \n"))
 			        return (1);
         data.walls = malloc(sizeof(t_images));
+        addback(&g_free, newnode(data.walls));
         ft_bzero(data.walls, sizeof(t_images));
 
        data.textures = malloc(sizeof(t_textures));
+       addback(&g_free, newnode(data.textures));
         ft_bzero(data.textures, sizeof(t_textures));
 
         tile_size = 30;
@@ -175,9 +167,9 @@ int	main(int ac, char **av)
     mlx_mouse_hide(data.mlx, data.win);
     mlx_loop_hook(data.mlx, update, &data);
     mlx_loop(data.mlx);
-    mlx_destroy_image(data.mlx, data.img);
+    destroy_all(&data);
     mlx_mouse_show(data.mlx, data.win);
-      free(data.maze.map);
+    //   free(data.maze.map);
 	}
 	else
 		print_error("Error: invalid number of arguments\n");

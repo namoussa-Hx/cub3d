@@ -4,12 +4,19 @@
 void allocate_player(t_data *game) 
 {
     game->walls->player = malloc(SPRITE_FRAMES * sizeof(void *));
+	addback(&g_free, newnode(game->walls->player));
     game->walls->addr_player = malloc(SPRITE_FRAMES * sizeof(int *));
+	addback(&g_free, newnode(game->walls->addr_player));
     game->walls->width_player = malloc(SPRITE_FRAMES * sizeof(int));
+	addback(&g_free, newnode(game->walls->width_player));
     game->walls->height_player = malloc(SPRITE_FRAMES * sizeof(int));
+	addback(&g_free, newnode(game->walls->height_player));
     game->walls->bpp_player = malloc(SPRITE_FRAMES * sizeof(int));
+	addback(&g_free, newnode(game->walls->bpp_player));
     game->walls->size_line_player = malloc(SPRITE_FRAMES * sizeof(int));
+	addback(&g_free, newnode(game->walls->size_line_player));
     game->walls->endian_player = malloc(SPRITE_FRAMES * sizeof(int));
+	addback(&g_free, newnode(game->walls->endian_player));
 }
 
 void handle_error(t_data *game, int index) 

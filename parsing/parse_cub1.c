@@ -133,7 +133,6 @@ int	parse_cub(char *file, t_data *prog)
 			break ;
 		i = 0;
 		counter += check_map_line(line, prog);
-		free(line);
 		continue ;
 	}
 	if (counter != 6 || check_is_map_valid(prog, file) || check_textures(prog)

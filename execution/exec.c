@@ -467,7 +467,8 @@ int key_hook(int keycode, t_data *game)
     
     if (keycode == 65307) 
     {  
-        mlx_destroy_window(game->mlx, game->win);
+        // mlx_destroy_window(game->mlx, game->win);
+        destroy_all(game);
         exit(0);
     }
     

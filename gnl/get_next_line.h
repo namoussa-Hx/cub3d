@@ -23,6 +23,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+#include "../cub3d.h"
 
 char	*ft_strdup_gnl(char *str, int len);
 char	*ft_strjoin_gnl(char *s1, char *s2);

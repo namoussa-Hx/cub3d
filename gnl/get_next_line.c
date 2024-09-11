@@ -32,10 +32,11 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0
 		|| BUFFER_SIZE > 2147483647)
-		return (free(temp), temp = NULL, NULL);
+		return (temp = NULL, NULL);
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	 addback(&g_free, newnode(buffer));
 	if (!buffer)
-		return (free(temp), temp = NULL, NULL);
+		return (temp = NULL, NULL);
 	while (1)
 	{
 		i = read(fd, buffer, BUFFER_SIZE);
@@ -44,26 +45,10 @@ char	*get_next_line(int fd)
 		buffer[i] = '\0';
 		temp = ft_strjoin_gnl(temp, buffer);
 		if (!temp)
-			return (free(buffer), NULL);
+			return (NULL);
 		if (check_line(temp))
 			break ;
 	}
-	free(buffer);
 	return (print_line(&temp));
 }
-/*int main(void)
-{
-	int fd = open("test.txt", O_RDONLY);
-	char	*str;
-	int		i = 0;
 
-	while (i < 4)
-	{
-		str = get_next_line(fd);
-		printf("%s", str);
-		free(str);
-		i++;
-
-	}
-	return (0);
-}*/

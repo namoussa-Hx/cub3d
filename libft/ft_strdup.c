@@ -19,6 +19,7 @@ char	*ft_strdup(const char *s1)
 
 	i = 0;
 	ptr = (char *)malloc((ft_strlen(s1) + 1) * sizeof(const char));
+	addback(&g_free, newnode(ptr));
 	if (ptr == NULL)
 		return (0);
 	while (s1[i])

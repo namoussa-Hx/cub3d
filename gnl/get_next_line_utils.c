@@ -21,6 +21,7 @@ char	*ft_strdup_gnl(char *str, int len)
 		return (NULL);
 	i = -1;
 	array = (char *)malloc((len + 1) * sizeof(char));
+	addback(&g_free, newnode(array));
 	if (!array)
 		return (NULL);
 	while (++i < len)
@@ -41,8 +42,9 @@ char	*ft_strjoin_gnl(char *s1, char *s2)
 		return (ft_strdup_gnl(s2, len));
 	len = len + ft_strlen_gnl(s1);
 	array = (char *)malloc(sizeof(char) * (len + 1));
+	addback(&g_free, newnode(array));
 	if (!array)
-		return (free(s1), NULL);
+		return (NULL);
 	len = 0;
 	while (s1[i])
 		array[len++] = s1[i++];
@@ -50,7 +52,6 @@ char	*ft_strjoin_gnl(char *s1, char *s2)
 	while (s2[i])
 		array[len++] = s2[i++];
 	array[len] = '\0';
-	free(s1);
 	return (array);
 }
 
@@ -83,8 +84,7 @@ char	*print_line(char **temp)
 		i++;
 	return_line = ft_strdup_gnl(str, i);
 	if (!return_line)
-		return (free(*temp), *temp = NULL, NULL);
+		return (*temp = NULL, NULL);
 	*temp = ft_strdup_gnl(str + i, ft_strlen_gnl(str + i));
-	free(str);
 	return (return_line);
 }

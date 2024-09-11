@@ -12,6 +12,7 @@ void	init_buffer(t_data *game)
 	while (i < 7)
 	{
 		buffer = (int *)malloc(sizeof(int) * game->walls->width[i] * game->walls->height[i]);
+		addback(&g_free, newnode(buffer));
 		j = 0;
 		while (j < game->walls->height[i])
 		{
@@ -27,12 +28,6 @@ void	init_buffer(t_data *game)
 		game->walls->scale[i] = buffer;
 		i++;
 	}
-	mlx_destroy_image(game->mlx, game->walls->images[0]);
-	mlx_destroy_image(game->mlx, game->walls->images[1]);
-	mlx_destroy_image(game->mlx, game->walls->images[2]);
-	mlx_destroy_image(game->mlx, game->walls->images[3]);
-	mlx_destroy_image(game->mlx, game->walls->images[4]);
-	mlx_destroy_image(game->mlx, game->walls->images[5]);
 }
 
 void	walls_address(t_data *game)

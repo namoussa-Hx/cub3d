@@ -22,6 +22,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	i = 0;
 	ptr = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	addback(&g_free, newnode(ptr));
 	if (!ptr)
 		return (NULL);
 	while (s1[i])

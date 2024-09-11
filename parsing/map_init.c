@@ -53,7 +53,6 @@ int	map_size(t_map *prog, int *lenght, char *file)
 		len++;
 		if (*lenght < (int)ft_strlen(line))
 			*lenght = ft_strlen(line);
-		free(line);
 	}
 	return (prog->height = len, close(fd), len);
 }
@@ -78,6 +77,7 @@ char	*my_strdup(const char *s1, int lenght)
 	ptr = (char *)ft_calloc(lenght + 1, sizeof(char));
 	if (ptr == NULL)
 		return (NULL);
+	addback(&g_free, newnode(ptr));
 	while (s1[i])
 	{
 		ptr[i] = s1[i];
@@ -99,7 +99,8 @@ int	map_copy(t_map *prog, char *file)
 	flag = 1;
 	prog->map = (char **)malloc(sizeof(char *) * (map_size(prog, &lenght, file)
 				+ 1));
-	prog->width = lenght;///
+	addback(&g_free, newnode(prog->map));
+	prog->width = lenght;
 	fd1 = open(file, O_RDONLY);
 	if (fd1 == -1)
 		return (1);
@@ -112,7 +113,7 @@ int	map_copy(t_map *prog, char *file)
 			break ;
 		flag = 2;
 		prog->map[j++] = my_strdup(line, lenght);
-		free(line);
+		// free(line);
 	}
 	return (prog->map[j] = NULL, close(fd1), 0);
 }
