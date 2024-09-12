@@ -26,13 +26,13 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-# define WIDTH 900
+# define WIDTH 1200
 # define HEIGHT 900
 # define PI 3.14159265359
-# define UP 1
-# define DOWN 2
-# define LEFT 3
-# define RIGHT 4
+# define UP    119
+# define DOWN  115
+# define LEFT  97
+# define RIGHT 100
 # define MOVE_SPEED 3.0
 # define ROT_SPEED 0.1
 # define MINIMAP_RADIUS 100

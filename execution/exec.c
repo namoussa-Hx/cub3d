@@ -435,12 +435,12 @@ int key_hook(int keycode, t_data *game)
     int map_x;
     int map_y;
     tile_size = 30;
-    if (keycode == 65361)
+    if (keycode == LEFT)
    game->player.angle -= ROT_SPEED;
-    if (keycode == 65363) 
+    if (keycode == RIGHT) 
         game->player.angle += ROT_SPEED;
  
-    if (keycode == 65362) 
+    if (keycode == UP) 
     {
         map_x = (int)((game->player.player_x + cosf(game->player.angle) * MOVE_SPEED) / tile_size);
         map_y = (int)((game->player.player_y + sinf(game->player.angle) * MOVE_SPEED) / tile_size);
@@ -457,7 +457,7 @@ int key_hook(int keycode, t_data *game)
             handle_collision(game, game->player.angle, collision_angle);
         }
     }
-    if (keycode == 65364)
+    if (keycode == DOWN)
     {
         map_x = (int)((game->player.player_x - cosf(game->player.angle) * MOVE_SPEED) / tile_size);
         map_y = (int)((game->player.player_y - sinf(game->player.angle) * MOVE_SPEED) / tile_size);
