@@ -117,7 +117,7 @@ int ft_exit(t_data *game)
     exit(0);
     return 0;
 }
-void destroy_all(t_data *game)
+int  destroy_all(t_data *game)
 {
     mlx_destroy_window(game->mlx, game->win);
     mlx_destroy_image(game->mlx, game->img);
@@ -127,8 +127,20 @@ void destroy_all(t_data *game)
         mlx_destroy_image(game->mlx, game->walls->images[i]);
     free_all(&g_free);
     exit(0);
+ return (0);
 }
 
+int free_parse(t_data *game)
+{
+    mlx_destroy_window(game->mlx, game->win);
+    free(game->maze.no);
+    free(game->maze.so);
+    free(game->maze.we);
+    free(game->maze.ea);
+    free(game->maze.map);
+    exit(0);
+    return (0);
+}
 int	main(int ac, char **av)
 {
 	t_data	data;
@@ -136,9 +148,9 @@ int	main(int ac, char **av)
 
 	if (ac == 2)
 	{
-		init_data(&data);
         g_free = NULL;
-		if (parse_cub(av[1], &data) && print_error("Error \n"))
+		init_data(&data);
+		if (parse_cub(av[1], &data) && print_error("Error \n") && free_parse(&data))
 			        return (1);
         data.walls = malloc(sizeof(t_images));
         addback(&g_free, newnode(data.walls));

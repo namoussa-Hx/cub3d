@@ -203,7 +203,7 @@ int				free_line(char *line);
 int				check_conditions(char ch, int count);
 int				parse_cub(char *file, t_data *prog);
 int				is_skip(char *line, int flag);
-void			destroy_all(t_data *game);
+int 			destroy_all(t_data *game);
 int				should_skip(char *line);
 int				check_valid_char(char c, int flag);
 int 			render_minimap(t_data *game);

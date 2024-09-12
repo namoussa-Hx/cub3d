@@ -29,6 +29,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		str = (char *)malloc(sizeof(*s) * (len + 1));
 	if (!str)
 		return (NULL);
+	addback(&g_free, newnode(str));
 	i = 0;
 	while (i < len && start + i < ft_strlen(s))
 	{
