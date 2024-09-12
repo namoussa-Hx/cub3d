@@ -12,23 +12,6 @@
 
 #include "../cub3d.h"
 
-int	should_skip(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i] == ' ')
-		i++;
-	if (line[i] == '\0' || line[i] == '\n')
-		return (1);
-	if (ft_strnstr(line, "NO", ft_strlen(line)) || ft_strnstr(line, "SO",
-			ft_strlen(line)) || ft_strnstr(line, "WE", ft_strlen(line))
-		|| ft_strnstr(line, "EA", ft_strlen(line)) || ft_strnstr(line, "F",
-			ft_strlen(line)) || ft_strnstr(line, "C", ft_strlen(line)))
-		return (1);
-	return (0);
-}
-
 int	map_size(t_map *prog, int *lenght, char *file)
 {
 	char	*line;
@@ -54,6 +37,7 @@ int	map_size(t_map *prog, int *lenght, char *file)
 		if (*lenght < (int)ft_strlen(line))
 			*lenght = ft_strlen(line);
 	}
+	prog->width = *lenght;
 	return (prog->height = len, close(fd), len);
 }
 
@@ -100,7 +84,6 @@ int	map_copy(t_map *prog, char *file)
 	prog->map = (char **)malloc(sizeof(char *) * (map_size(prog, &lenght, file)
 				+ 1));
 	addback(&g_free, newnode(prog->map));
-	prog->width = lenght;
 	fd1 = open(file, O_RDONLY);
 	if (fd1 == -1)
 		return (1);

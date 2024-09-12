@@ -38,18 +38,6 @@ int	ft_check_chars(t_map *maze)
 	return (0);
 }
 
-void ft_player_angle(t_data *data, char c)
-{
-	if (c == 'N')
-		data->player.angle = 3 * PI / 2;
-	if (c == 'S')
-		data->player.angle = PI / 2;
-	if (c == 'E')
-		data->player.angle = 0;
-	if (c == 'W')
-		data->player.angle = PI;
-}
-
 int	check_help(t_data *data, int h, char ch)
 {
 	int	w;

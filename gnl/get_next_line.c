@@ -34,7 +34,7 @@ char	*get_next_line(int fd)
 		|| BUFFER_SIZE > 2147483647)
 		return (temp = NULL, NULL);
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	 addback(&g_free, newnode(buffer));
+	addback(&g_free, newnode(buffer));
 	if (!buffer)
 		return (temp = NULL, NULL);
 	while (1)
@@ -51,4 +51,3 @@ char	*get_next_line(int fd)
 	}
 	return (print_line(&temp));
 }
-

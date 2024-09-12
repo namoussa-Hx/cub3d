@@ -7,6 +7,7 @@ SRC = main.c\
 	parsing/validate_map.c\
 	parsing/validate_walls.c\
 	parsing/validate_textures.c\
+	parsing/utils.c\
 	parsing/errors.c\
 	parsing/parse_cub1.c\
 	gnl/get_next_line.c\
@@ -15,11 +16,10 @@ SRC = main.c\
 	init_walls.c\
 	init_textures.c\
 	free.c\
-	enemy.c\
 
 OBJ = $(SRC:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address -g3
 
 XFLAGS = -lXext -lX11 -lm -lmlx
 

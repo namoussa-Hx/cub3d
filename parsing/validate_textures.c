@@ -12,7 +12,6 @@
 
 #include "../cub3d.h"
 
-
 int	is_skip(char *line, int flag)
 {
 	if (line == NULL)

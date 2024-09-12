@@ -47,11 +47,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	if (!ptr)
 		return (NULL);
 	while (f < l)
-	{
-		ptr[i] = s1[f];
-		i++;
-		f++;
-	}
+		ptr[i++] = s1[f++];
 	ptr[i] = '\0';
 	return (ptr);
 }

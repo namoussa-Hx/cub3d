@@ -35,7 +35,7 @@ long long	ft_atoi(const char *str)
 		res = res * 10 + (str[i] - 48);
 		i++;
 	}
-	if(res > 2147483647 || res < -2147483648)
+	if (res > 2147483647 || res < -2147483648)
 		return (-1);
 	ress = (res * negative);
 	return (ress);
