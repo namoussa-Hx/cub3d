@@ -29,7 +29,7 @@ int	ft_check_chars(t_map *maze)
 				w++;
 				continue ;
 			}
-			if (ft_strchr("01NSEWXD", maze->map[h][w]) == 0)
+			if (ft_strchr("01NSEWD", maze->map[h][w]) == 0)
 				return (1);
 			w++;
 		}
@@ -72,11 +72,6 @@ int	check_help(t_data *data, int h, char ch)
 			data->player.x = w;
 			data->player.y = h;
 		}
-		// if(data->maze.map[h][w] == 'X')
-		//     {
-		// 		data->enemy.x = w;
-		// 		data->enemy.y = h;
-		// 	}
 		if (data->maze.map[h][w] == ch)
 			count += 1;
 		w++;
@@ -127,24 +122,12 @@ int	check_every_char(t_data *prog)
 int	check_is_map_valid(t_data *prog, char *file)
 {
 	if (map_copy(&prog->maze, file))
-	{
-		printf("map_copy\n");
 		return (1);
-	}
 	if (validate_walls(&prog->maze))
-	{
-		printf("validate_walls\n");
 		return (1);
-	}
 	if (check_every_char(prog))
-	{
-		printf("check_every_char\n");
 		return (1);
-	}
 	if (check_empty(&prog->maze))
-	{
-		printf("check_empty\n");
 		return (1);
-	}
 	return (0);
 }

@@ -65,6 +65,8 @@ void	*file_to_img(t_data *data, char *img_path, int *w, int *h)
 
 void	init_walls(t_data *game)
 {
+	game->mlx = mlx_init();
+	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "Cub3D");
 	game->walls->images[0] = file_to_img(game, game->maze.no, 
 	&game->walls->width[0], &game->walls->height[0]);
 	game->walls->images[1] = file_to_img(game, game->maze.so, 
@@ -77,8 +79,6 @@ void	init_walls(t_data *game)
 	&game->walls->width[4], &game->walls->height[4]);
 	game->walls->images[5] = file_to_img(game, DOOR2,
 	&game->walls->width[5], &game->walls->height[5]);
-	// game->walls->images[6] = file_to_img(game, PLAYER,
-	// &game->walls->width[6], &game->walls->height[6]);
 	walls_address(game);
 }
 

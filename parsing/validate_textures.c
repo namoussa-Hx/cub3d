@@ -43,16 +43,9 @@ int	check_textures(t_data *prog)
 {
 	if (prog->maze.no == NULL || prog->maze.so == NULL || prog->maze.we == NULL
 		|| prog->maze.ea == NULL || prog->maze.f < 0 || prog->maze.c < 0)
-		{
-			printf("Error\nMissing texture or color\n");
 		return (1);
-		}
 	if (include_xpm(prog->maze.no) || include_xpm(prog->maze.so)
 		|| include_xpm(prog->maze.we) || include_xpm(prog->maze.ea))
-		{
-			printf("Error\nInvalid texture file\n");
 		return (1);
-
-		}
 	return (0);
 }

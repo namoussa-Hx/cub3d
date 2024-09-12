@@ -17,8 +17,6 @@ t_free *g_free;
 
 void	init_data(t_data *data)
 {
-	data->mlx = mlx_init();
-	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "Cub3D");
 	data->maze.map = NULL;
 	data->maze.no = NULL;
 	data->maze.so = NULL;
@@ -132,7 +130,6 @@ int  destroy_all(t_data *game)
 
 int free_parse(t_data *game)
 {
-    mlx_destroy_window(game->mlx, game->win);
     free(game->maze.no);
     free(game->maze.so);
     free(game->maze.we);
@@ -150,7 +147,7 @@ int	main(int ac, char **av)
 	{
         g_free = NULL;
 		init_data(&data);
-		if (parse_cub(av[1], &data) && print_error("Error \n") && free_parse(&data))
+		if (parse_cub(av[1], &data) && print_error("Error\n") && free_parse(&data))
 			        return (1);
         data.walls = malloc(sizeof(t_images));
         addback(&g_free, newnode(data.walls));

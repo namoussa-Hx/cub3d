@@ -113,7 +113,6 @@ int	map_copy(t_map *prog, char *file)
 			break ;
 		flag = 2;
 		prog->map[j++] = my_strdup(line, lenght);
-		// free(line);
 	}
 	return (prog->map[j] = NULL, close(fd1), 0);
 }
