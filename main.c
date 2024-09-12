@@ -65,10 +65,8 @@ int	update(t_data *game)
 	tile_size = 30;
 	if (index >= SPRITE_FRAMES * 6)
 		index = 0;
-	//  game->walls->addr_player[index / 6];
 	width = game->walls->width_player[index / 6];
 	height = game->walls->height_player[index / 6];
-	// printf("width = (%d / %d) : %d\n",index , 6, index / 6);
 	memset(game->img_data, 0, WIDTH * HEIGHT * (game->bpp / 8));
 	render_color(game);
 	render_flor(game);
@@ -115,12 +113,22 @@ int	ft_exit(t_data *game)
 }
 int	destroy_all(t_data *game)
 {
+	int i;
+
+	i = 0;
 	mlx_destroy_window(game->mlx, game->win);
 	mlx_destroy_image(game->mlx, game->img);
-	for (int i = 0; i < 37; i++)
-		mlx_destroy_image(game->mlx, game->walls->player[i]);
-	for (int i = 0; i < 6; i++)
+	while(i < 6)
+	{
 		mlx_destroy_image(game->mlx, game->walls->images[i]);
+		i++;
+	}
+	i = 0;
+	while(i < 37)
+	{
+		mlx_destroy_image(game->mlx, game->walls->player[i]);
+		i++;
+	}
 	free_all(&g_free);
 	exit(0);
 	return (0);
@@ -168,7 +176,6 @@ int	main(int ac, char **av)
 		mlx_loop(data.mlx);
 		destroy_all(&data);
 		mlx_mouse_show(data.mlx, data.win);
-		//   free(data.maze.map);
 	}
 	else
 		print_error("Error: invalid number of arguments\n");

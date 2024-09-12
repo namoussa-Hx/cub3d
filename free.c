@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namoussa <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/12 15:09:07 by namoussa          #+#    #+#             */
+/*   Updated: 2024/09/12 15:09:08 by namoussa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 t_free	*newnode(void *address)
@@ -29,7 +41,7 @@ void	addback(t_free **lst, t_free *new)
 
 void	free_all(t_free **lst)
 {
-	t_free *temp;
+	t_free	*temp;
 
 	while (*lst)
 	{

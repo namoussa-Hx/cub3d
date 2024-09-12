@@ -36,15 +36,13 @@
 # define MOVE_SPEED 3.0
 # define ROT_SPEED 0.1
 # define MINIMAP_RADIUS 100
-# define MINIMAP_DIAMETER (MINIMAP_RADIUS * 2)
+# define MINIMAP_DIAMETER 200
 # define TILE_SIZE 10
 # define PLAYER_MARKER_SIZE 4
 # define SPRITE_FRAMES 37
 
 # define DOOR1 "textures/door/doors_1.xpm"
 # define DOOR2 "textures/door/doors_2.xpm"
-# define PLAYER "textures/player/5723e5b6413bb1726009816.xpm"
-	// "/nfs/homes/elchakir/Downloads/aspose_video_133703849024523551_out0038-removebg-preview1726007540.xpm"//  "/nfs/homes/elchakir/Downloads/56b5d4f5a81a2-removebg-preview1725912620.xpm"
 
 typedef struct s_textures
 {
@@ -78,22 +76,11 @@ typedef struct s_player
 {
 	int				x;
 	int				y;
-	// double		dir_x;
-	// double		dir_y;
 	float			angle;
 	double			fov;
 	double			player_x;
 	double			player_y;
 }					t_player;
-
-// typedef struct s_mini_map
-// {
-// 	void		*img;
-// 	char		*img_data;
-// 	int			bpp;
-// 	int			size_line;
-// 	int			endian;
-// }				t_mini_map;
 
 typedef struct s_map
 {
@@ -156,7 +143,6 @@ typedef struct s_data
 	t_vec			vector;
 	t_enemy			enemy;
 	t_textures		*textures;
-	// t_mini_map	mini_map;
 	void			*image_door;
 	int				*addr_door;
 	int				*scale_door;
@@ -178,7 +164,6 @@ typedef struct s_data
 	int				x_mouse_prev;
 	int				x_door;
 	int				y_door;
-
 }					t_data;
 
 int					update(t_data *data);
@@ -195,13 +180,10 @@ int					check_is_map_valid(t_data *prog, char *file);
 int					validate_walls(t_map *maze);
 int					check_empty(t_map *maze);
 int					print_error(char *str);
-void				init_textures(t_data *game);
-void				texture_address(t_data *game);
 int					map_copy(t_map *prog, char *file);
 int					check_textures(t_data *prog);
 int					my_strchr(char *str, char *c);
 int					check_extension(char *file);
-int					free_line(char *line);
 int					check_conditions(char ch, int count);
 int					parse_cub(char *file, t_data *prog);
 int					is_skip(char *line, int flag);
@@ -217,10 +199,8 @@ int					should_skip(char *line);
 int					is_comma(char *line);
 void				ft_player_angle(t_data *data, char c);
 void				*file_to_img(t_data *data, char *img_path, int *w, int *h);
-void				render_enemy(t_data *game);
 int					is_inside_circle(int x, int y, int center_x, int center_y,
 						int radius);
 void				addback(t_free **lst, t_free *new);
-// void			draw_map(t_data *game, int tile_size);
 
 #endif
