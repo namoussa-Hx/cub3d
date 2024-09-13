@@ -6,7 +6,7 @@
 /*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 23:56:58 by namoussa          #+#    #+#             */
-/*   Updated: 2024/09/11 00:12:57 by elchakir         ###   ########.fr       */
+/*   Updated: 2024/09/12 21:04:47 by namoussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-# define WIDTH 1200
-# define HEIGHT 900
+# define WIDTH 1900
+# define HEIGHT 1000
 # define PI 3.14159265359
 # define UP 119
 # define DOWN 115

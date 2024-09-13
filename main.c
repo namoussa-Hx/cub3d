@@ -63,10 +63,10 @@ int	update(t_data *game)
 
 	x = 0;
 	tile_size = 30;
-	if (index >= SPRITE_FRAMES * 6)
+	if (index >= SPRITE_FRAMES * 4)
 		index = 0;
-	width = game->walls->width_player[index / 6];
-	height = game->walls->height_player[index / 6];
+	width = game->walls->width_player[index / 4];
+	height = game->walls->height_player[index / 4];
 	memset(game->img_data, 0, WIDTH * HEIGHT * (game->bpp / 8));
 	render_color(game);
 	render_flor(game);
@@ -78,7 +78,7 @@ int	update(t_data *game)
 		x++;
 	}
 	render_minimap(game);
-	render1_player(game, game->walls->addr_player[index / 6], width, height);
+	render1_player(game, game->walls->addr_player[index / 4], width, height);
 	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
 	index++;
 	return (0);
@@ -171,11 +171,9 @@ int	main(int ac, char **av)
 		mlx_hook(data.win, 6, 1L << 6, mouse_hook, &data);
 		mlx_hook(data.win, 7, 1L << 4, mouse_hide, &data);
 		mlx_hook(data.win, 17, 0, ft_exit, &data);
-		mlx_mouse_hide(data.mlx, data.win);
 		mlx_loop_hook(data.mlx, update, &data);
 		mlx_loop(data.mlx);
 		destroy_all(&data);
-		mlx_mouse_show(data.mlx, data.win);
 	}
 	else
 		print_error("Error: invalid number of arguments\n");
