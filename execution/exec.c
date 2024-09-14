@@ -114,4 +114,3 @@ void	render_flor(t_data *game)
 		y++;
 	}
 }
-

@@ -159,21 +159,21 @@ typedef struct s_images
 
 typedef struct s_render
 {
-    int texture_y;
-    int wall_height;
-    int draw_start;
-    int draw_end;
-    int texture_index;
-    int *texture_buffer;
-    int color;
-    int y;
-    float step;
-    float texture_pos;
-    int pixel_index;
-    int texture_width;
-    int texture_x;
-    float wall_x;
-}   t_render;
+	int				texture_y;
+	int				wall_height;
+	int				draw_start;
+	int				draw_end;
+	int				texture_index;
+	int				*texture_buffer;
+	int				color;
+	int				y;
+	float			step;
+	float			texture_pos;
+	int				pixel_index;
+	int				texture_width;
+	int				texture_x;
+	float			wall_x;
+}					t_render;
 
 typedef struct s_data
 {
@@ -204,56 +204,59 @@ typedef struct s_data
 	int				player_face;
 	int				x_mouse_prev;
 	int				x_door;
-	double		real_dist;
+	double			real_dist;
 	int				y_door;
 }					t_data;
 
 /*************************minimap_tools********************** */
-void	init_player_tiles(t_minimap *mini, t_data *game);
-void	check_position(t_data *game, t_minimap *mini);
-int	check_circle_and_init(t_data *game, t_minimap *mini);
-void	draw_map_tiles(t_data *game);
-void	border_init(t_minimap *mini);
-void	check_border(t_minimap *mini, t_data *game);
-void	draw_player_marker_init(t_minimap *mini);
+void				init_player_tiles(t_minimap *mini, t_data *game);
+void				check_position(t_data *game, t_minimap *mini);
+int					check_circle_and_init(t_data *game, t_minimap *mini);
+void				draw_map_tiles(t_data *game);
+void				border_init(t_minimap *mini);
+void				check_border(t_minimap *mini, t_data *game);
+void				draw_player_marker_init(t_minimap *mini);
 /* -------------------minimap------------------------*/
-int	is_inside_circle(int x, int y,int rad);
-void raydirx(t_data *game, int tile_size);
-void	clear_minimap_area(t_data *game);
-void	draw_player_marker(t_data *game);
-void	draw_minimap_border(t_data *game);
-int	render_minimap(t_data *game);
+int					is_inside_circle(int x, int y, int rad);
+void				raydirx(t_data *game, int tile_size);
+void				clear_minimap_area(t_data *game);
+void				draw_player_marker(t_data *game);
+void				draw_minimap_border(t_data *game);
+int					render_minimap(t_data *game);
 /***************************************************/
-int				update(t_data *data);
-void render1_player(t_data *game, int *player, int texture_width, int texture_height);
-void			render_flor(t_data *game);
-void			render_color(t_data *game);
-void			render_3d_projection(t_data *game, float distance, int ray_index);
-void			cast_ray_dda(t_data *game, float angle, int ray_index,
-					int tile_size);
-int				key_hook(int keycode, t_data *game);
-int				check_is_map_valid(t_data *prog, char *file);
-int				validate_walls(t_map *maze);
-int				check_empty(t_map *maze);
-int				print_error(char *str);
-int				map_copy(t_map *prog, char *file);
-int				check_textures(t_data *prog);
-int				my_strchr(char *str, char *c);
-int				check_extension(char *file);
-int				check_conditions(char ch, int count);
-int				parse_cub(char *file, t_data *prog);
-int				should_skip(char *line);
-int				check_valid_char(char c, int flag);
-void			init_walls(t_data *game);
-void init_player(t_data *game);
-t_free *newnode(void *address);
-void free_all(t_free **lst);
-void			*file_to_img(t_data *data, char *img_path, int *w, int *h);
-void addback(t_free **lst, t_free *new);
+int					update(t_data *data);
+void				render1_player(t_data *game, int *player, int texture_width,
+						int texture_height);
+void				render_flor(t_data *game);
+void				render_color(t_data *game);
+void				render_3d_projection(t_data *game, float distance,
+						int ray_index);
+void				cast_ray_dda(t_data *game, float angle, int ray_index,
+						int tile_size);
+int					key_hook(int keycode, t_data *game);
+int					check_is_map_valid(t_data *prog, char *file);
+int					validate_walls(t_map *maze);
+int					check_empty(t_map *maze);
+int					print_error(char *str);
+int					map_copy(t_map *prog, char *file);
+int					check_textures(t_data *prog);
+int					my_strchr(char *str, char *c);
+int					check_extension(char *file);
+int					check_conditions(char ch, int count);
+int					parse_cub(char *file, t_data *prog);
+int					should_skip(char *line);
+int					check_valid_char(char c, int flag);
+void				init_walls(t_data *game);
+void				init_player(t_data *game);
+t_free				*newnode(void *address);
+void				free_all(t_free **lst);
+void				*file_to_img(t_data *data, char *img_path, int *w, int *h);
+void				addback(t_free **lst, t_free *new);
 int					is_skip(char *line, int flag);
 int					destroy_all(t_data *game);
 int					is_comma(char *line);
-void	 init_render_player(t_data *game, t_player_ren *player, int texture_width, int texture_height);
+void				init_render_player(t_data *game, t_player_ren *player,
+						int texture_width, int texture_height);
 void				ft_player_angle(t_data *data, char c);
 
 #endif
