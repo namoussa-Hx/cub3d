@@ -6,7 +6,7 @@
 /*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 13:45:39 by namoussa          #+#    #+#             */
-/*   Updated: 2024/09/14 18:27:33 by elchakir         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:11:14 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ int	main(int ac, char **av)
 		data.textures = malloc(sizeof(t_textures));
 		addback(&g_free, newnode(data.textures));
 		ft_bzero(data.textures, sizeof(t_textures));
-		data.player.player_x = (data.player.x * TILE_SIZE) + (TILE_SIZE / 2);
-		data.player.player_y = (data.player.y * TILE_SIZE) + (TILE_SIZE / 2);
+		data.player.player_x = (data.player.x * 30) + (30 / 2);
+		data.player.player_y = (data.player.y * 30) + (30 / 2);
 		data.x_mouse_prev = WIDTH / 2;
 		ft_mlx(&data);
 	}

@@ -6,7 +6,7 @@
 /*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 23:56:58 by namoussa          #+#    #+#             */
-/*   Updated: 2024/09/14 18:31:04 by elchakir         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:11:21 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 # define MINIMAP_DIAMETER 160
 # define PLAYER_MARKER_SIZE 4
 # define SPRITE_FRAMES 37
-# define TILE_SIZE 30
+# define TILE_SIZE 10
 
 # define DOOR1 "textures/door/doors_1.xpm"
 # define DOOR2 "textures/door/doors_2.xpm"
