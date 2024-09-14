@@ -37,9 +37,9 @@
 # define ROT_SPEED 0.1
 # define MINIMAP_RADIUS 80
 # define MINIMAP_DIAMETER 160
-# define TILE_SIZE 10
 # define PLAYER_MARKER_SIZE 4
 # define SPRITE_FRAMES 37
+# define TILE_SIZE 30
 
 # define DOOR1 "textures/door/doors_1.xpm"
 # define DOOR2 "textures/door/doors_2.xpm"
@@ -258,5 +258,10 @@ int					is_comma(char *line);
 void				init_render_player(t_data *game, t_player_ren *player,
 						int texture_width, int texture_height);
 void				ft_player_angle(t_data *data, char c);
+//////////////////////////////////////////////////////////
+void				init_data(t_data *data);
+int					mouse_hook(int x_mouse, int y_mouse, t_data *game);
+int					mouse_hide(t_data *game);
+int					destroy_all(t_data *game);
 
 #endif
