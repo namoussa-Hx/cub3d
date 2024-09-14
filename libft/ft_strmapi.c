@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoussa <namoussa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 21:42:52 by namoussa          #+#    #+#             */
-/*   Updated: 2023/11/12 17:25:55 by namoussa         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:14:56 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	if (!s)
 		return (NULL);
 	len = ft_strlen(s);
-	str = malloc(sizeof(char) * len + 1);
-	addback(&g_free, newnode(str));
+	str = ft_malloc(sizeof(char) * len + 1);
 	if (!str)
 		return (NULL);
 	i = 0;

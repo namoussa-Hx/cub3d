@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_walls.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoussa <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:52:51 by namoussa          #+#    #+#             */
-/*   Updated: 2024/09/12 14:52:53 by namoussa         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:14:37 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,8 @@ void	init_buffer(t_data *game)
 	i = -1;
 	while ((++i) < 6)
 	{
-		buffer = (int *)malloc(sizeof(int) * game->walls->width[i]
+		buffer = (int *)ft_malloc(sizeof(int) * game->walls->width[i]
 				* game->walls->height[i]);
-		addback(&g_free, newnode(buffer));
 		j = -1;
 		while ((++j) < game->walls->height[i])
 		{

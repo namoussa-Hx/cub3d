@@ -6,7 +6,7 @@
 /*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 16:06:41 by elchakir          #+#    #+#             */
-/*   Updated: 2024/09/14 16:28:29 by elchakir         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:21:40 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	render_3d_projection(t_data *game, float distance, int ray_index)
 {
 	t_render	*render;
 
-	render = malloc(sizeof(t_render));
+	render = ft_malloc(sizeof(t_render));
 	init_ren(render);
 	if (distance <= 0)
 		distance = 0.1;
@@ -117,5 +117,5 @@ void	render_3d_projection(t_data *game, float distance, int ray_index)
 		render->y++;
 	}
 	game->is_door_open = 0;
-	return (game->is_door = 0, (void)free(render));
+	game->is_door = 0;
 }

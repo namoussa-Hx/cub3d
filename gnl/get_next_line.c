@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoussa <namoussa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 14:40:42 by namoussa          #+#    #+#             */
-/*   Updated: 2023/12/08 16:40:00 by namoussa         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:14:19 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0
 		|| BUFFER_SIZE > 2147483647)
 		return (temp = NULL, NULL);
-	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	addback(&g_free, newnode(buffer));
+	buffer = (char *)ft_malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (temp = NULL, NULL);
 	while (1)

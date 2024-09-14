@@ -6,7 +6,7 @@
 /*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 23:56:58 by namoussa          #+#    #+#             */
-/*   Updated: 2024/09/14 19:11:21 by elchakir         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:28:57 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-# define WIDTH 1900
+# define WIDTH 1200
 # define HEIGHT 1000
 # define PI 3.14159265359
 # define UP 119
@@ -87,14 +87,11 @@ typedef struct s_render_player
 	int				j;
 }					t_player_ren;
 
-typedef struct s_free
+typedef struct s_save
 {
-	void			*addr;
-	struct s_free	*next;
-
-}					t_free;
-
-extern t_free		*g_free;
+	void			*add;
+	struct s_save	*next;
+}					t_save;
 
 typedef struct s_player
 {
@@ -208,6 +205,9 @@ typedef struct s_data
 	int				y_door;
 }					t_data;
 
+/******************anit_leaks***********************/
+void				*ft_malloc(size_t size);
+void				free_all(void);
 /*************************minimap_tools********************** */
 void				init_player_tiles(t_minimap *mini, t_data *game);
 void				check_position(t_data *game, t_minimap *mini);
@@ -248,10 +248,7 @@ int					should_skip(char *line);
 int					check_valid_char(char c, int flag);
 void				init_walls(t_data *game);
 void				init_player(t_data *game);
-t_free				*newnode(void *address);
-void				free_all(t_free **lst);
 void				*file_to_img(t_data *data, char *img_path, int *w, int *h);
-void				addback(t_free **lst, t_free *new);
 int					is_skip(char *line, int flag);
 int					destroy_all(t_data *game);
 int					is_comma(char *line);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoussa <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:37:44 by namoussa          #+#    #+#             */
-/*   Updated: 2024/09/12 14:37:45 by namoussa         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:14:31 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,13 @@
 
 void	allocate_player(t_data *game)
 {
-	game->walls->player = malloc(SPRITE_FRAMES * sizeof(void *));
-	addback(&g_free, newnode(game->walls->player));
-	game->walls->addr_player = malloc(SPRITE_FRAMES * sizeof(int *));
-	addback(&g_free, newnode(game->walls->addr_player));
-	game->walls->width_player = malloc(SPRITE_FRAMES * sizeof(int));
-	addback(&g_free, newnode(game->walls->width_player));
-	game->walls->height_player = malloc(SPRITE_FRAMES * sizeof(int));
-	addback(&g_free, newnode(game->walls->height_player));
-	game->walls->bpp_player = malloc(SPRITE_FRAMES * sizeof(int));
-	addback(&g_free, newnode(game->walls->bpp_player));
-	game->walls->size_line_player = malloc(SPRITE_FRAMES * sizeof(int));
-	addback(&g_free, newnode(game->walls->size_line_player));
-	game->walls->endian_player = malloc(SPRITE_FRAMES * sizeof(int));
-	addback(&g_free, newnode(game->walls->endian_player));
+	game->walls->player = ft_malloc(SPRITE_FRAMES * sizeof(void *));
+	game->walls->addr_player = ft_malloc(SPRITE_FRAMES * sizeof(int *));
+	game->walls->width_player = ft_malloc(SPRITE_FRAMES * sizeof(int));
+	game->walls->height_player = ft_malloc(SPRITE_FRAMES * sizeof(int));
+	game->walls->bpp_player = ft_malloc(SPRITE_FRAMES * sizeof(int));
+	game->walls->size_line_player = ft_malloc(SPRITE_FRAMES * sizeof(int));
+	game->walls->endian_player = ft_malloc(SPRITE_FRAMES * sizeof(int));
 }
 
 void	handle_error(t_data *game, int index)

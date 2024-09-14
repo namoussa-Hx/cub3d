@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoussa <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 18:58:51 by namoussa          #+#    #+#             */
-/*   Updated: 2024/09/14 18:58:53 by namoussa         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:39:27 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void	init_half(t_data *data)
 
 void	init_data(t_data *data)
 {
-	data->mlx = mlx_init();
-	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "Cub3D");
 	data->maze.map = NULL;
 	data->maze.no = NULL;
 	data->maze.so = NULL;
@@ -94,7 +92,7 @@ int	destroy_all(t_data *game)
 		mlx_destroy_image(game->mlx, game->walls->player[i]);
 		i++;
 	}
-	free_all(&g_free);
+	free_all();
 	exit(0);
 	return (0);
 }

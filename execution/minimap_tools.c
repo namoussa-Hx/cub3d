@@ -6,7 +6,7 @@
 /*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 17:50:51 by elchakir          #+#    #+#             */
-/*   Updated: 2024/09/14 18:37:22 by elchakir         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:19:09 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	draw_map_tiles(t_data *game)
 {
 	t_minimap	*mini;
 
-	mini = malloc(sizeof(t_minimap));
+	mini = ft_malloc(sizeof(t_minimap));
 	init_player_tiles(mini, game);
 	while (mini->y < MINIMAP_RADIUS)
 	{
@@ -78,7 +78,6 @@ void	draw_map_tiles(t_data *game)
 		}
 		mini->y++;
 	}
-	free(mini);
 }
 
 void	draw_player_marker_init(t_minimap *mini)

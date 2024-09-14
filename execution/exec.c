@@ -6,7 +6,7 @@
 /*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 16:07:13 by elchakir          #+#    #+#             */
-/*   Updated: 2024/09/14 18:33:40 by elchakir         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:19:02 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	render1_player(t_data *game, int *player, int texture_width,
 {
 	t_player_ren	*player1;
 
-	player1 = malloc(sizeof(t_player_ren));
+	player1 = ft_malloc(sizeof(t_player_ren));
 	player1->texture_addr = (unsigned int *)player;
 	init_render_player(game, player1, texture_width, texture_height);
 	while (player1->i < HEIGHT)
@@ -64,7 +64,6 @@ void	render1_player(t_data *game, int *player, int texture_width,
 		}
 		player1->i++;
 	}
-	free(player1);
 }
 
 void	render_color(t_data *game)

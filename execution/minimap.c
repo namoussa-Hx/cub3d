@@ -6,7 +6,7 @@
 /*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 16:06:55 by elchakir          #+#    #+#             */
-/*   Updated: 2024/09/14 18:00:15 by elchakir         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:19:21 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	clear_minimap_area(t_data *game)
 {
 	t_minimap	*mini;
 
-	mini = malloc(sizeof(t_minimap));
+	mini = ft_malloc(sizeof(t_minimap));
 	clear_init(mini);
 	while (mini->y < MINIMAP_DIAMETER)
 	{
@@ -43,14 +43,13 @@ void	clear_minimap_area(t_data *game)
 		}
 		mini->y++;
 	}
-	free(mini);
 }
 
 void	draw_player_marker(t_data *game)
 {
 	t_minimap	*mini;
 
-	mini = malloc(sizeof(t_minimap));
+	mini = ft_malloc(sizeof(t_minimap));
 	draw_player_marker_init(mini);
 	while (mini->y <= PLAYER_MARKER_SIZE)
 	{
@@ -71,14 +70,13 @@ void	draw_player_marker(t_data *game)
 		}
 		mini->y++;
 	}
-	free(mini);
 }
 
 void	draw_minimap_border(t_data *game)
 {
 	t_minimap	*mini;
 
-	mini = malloc(sizeof(t_minimap));
+	mini = ft_malloc(sizeof(t_minimap));
 	border_init(mini);
 	while (mini->y <= MINIMAP_RADIUS)
 	{
@@ -90,7 +88,6 @@ void	draw_minimap_border(t_data *game)
 		}
 		mini->y++;
 	}
-	free(mini);
 }
 
 int	render_minimap(t_data *game)

@@ -3,51 +3,76 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoussa <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:09:07 by namoussa          #+#    #+#             */
-/*   Updated: 2024/09/12 15:09:08 by namoussa         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:19:57 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-t_free	*newnode(void *address)
+t_save	**save_add(void)
 {
-	t_free	*new;
+	static t_save	*save;
 
-	new = (t_free *)malloc(sizeof(t_free));
-	if (!new)
-		return (NULL);
-	new->addr = address;
-	new->next = NULL;
-	return (new);
-}
-
-void	addback(t_free **lst, t_free *new)
-{
-	t_free	*temp;
-
-	if (!*lst)
+	if (save == NULL)
 	{
-		*lst = new;
-		return ;
+		save = malloc(sizeof(t_save));
+		if (!save)
+			return (NULL);
+		save->add = NULL;
+		save->next = NULL;
 	}
-	temp = *lst;
-	while (temp->next)
-		temp = temp->next;
-	temp->next = new;
+	return (&save);
 }
 
-void	free_all(t_free **lst)
+void	*ft_malloc(size_t size)
 {
-	t_free	*temp;
+	void	*add;
+	t_save	*head;
 
-	while (*lst)
+	add = malloc(size);
+	if (!add)
+		return (0);
+	head = malloc(sizeof(t_save));
+	if (!head)
+		return (0);
+	head->add = add;
+	head->next = *save_add();
+	*save_add() = head;
+	return (add);
+}
+
+int	is_ft_malloc_ptr(void *ptr)
+{
+	t_save	*head;
+
+	head = *save_add();
+	while (head)
 	{
-		temp = *lst;
-		*lst = (*lst)->next;
-		free(temp->addr);
+		if (head->add == ptr)
+			return (1);
+		head = head->next;
+	}
+	return (0);
+}
+
+void	free_all(void)
+{
+	t_save	*head;
+	t_save	*temp;
+	int		i;
+
+	i = 0;
+	head = *save_add();
+	while (head)
+	{
+		temp = head;
+		head = head->next;
+		if (temp->add)
+			free(temp->add);
 		free(temp);
+		i++;
 	}
 }

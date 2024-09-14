@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoussa <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 13:41:33 by namoussa          #+#    #+#             */
-/*   Updated: 2024/08/29 13:41:35 by namoussa         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:15:08 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	*ft_calloc(size_t count, size_t size)
 {
 	void	*result;
 
-	result = malloc(count * size);
+	result = ft_malloc(count * size);
 	if (result == NULL)
 		return (NULL);
 	ft_bzero(result, count * size);
@@ -61,7 +61,6 @@ char	*my_strdup(const char *s1, int lenght)
 	ptr = (char *)ft_calloc(lenght + 1, sizeof(char));
 	if (ptr == NULL)
 		return (NULL);
-	addback(&g_free, newnode(ptr));
 	while (s1[i])
 	{
 		ptr[i] = s1[i];
@@ -81,9 +80,8 @@ int	map_copy(t_map *prog, char *file)
 
 	j = 0;
 	flag = 1;
-	prog->map = (char **)malloc(sizeof(char *) * (map_size(prog, &lenght, file)
-				+ 1));
-	addback(&g_free, newnode(prog->map));
+	prog->map = (char **)ft_malloc(sizeof(char *) * (map_size(prog, &lenght,
+					file) + 1));
 	fd1 = open(file, O_RDONLY);
 	if (fd1 == -1)
 		return (1);

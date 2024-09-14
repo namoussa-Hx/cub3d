@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoussa <namoussa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 21:26:05 by namoussa          #+#    #+#             */
-/*   Updated: 2023/11/17 17:04:19 by namoussa         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:14:59 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	l = ft_strlen(s1);
 	while (l > f && check_set(s1[l - 1], set))
 		l--;
-	ptr = malloc(sizeof(char) * (l - f) + 1);
-	addback(&g_free, newnode(ptr));
+	ptr = ft_malloc(sizeof(char) * (l - f) + 1);
 	i = 0;
 	if (!ptr)
 		return (NULL);

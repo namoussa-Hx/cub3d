@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoussa <namoussa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:23:21 by namoussa          #+#    #+#             */
-/*   Updated: 2023/11/17 17:34:03 by namoussa         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:20:35 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,7 @@ const char	*dup_word(char **dest, const char *src, char c)
 		len++;
 	if (len == 0)
 		return (NULL);
-	*dest = (char *)malloc(sizeof(char) * (len + 1));
-	addback(&g_free, newnode(*dest));
+	*dest = (char *)ft_malloc(sizeof(char) * (len + 1));
 	if (*dest == NULL)
 		return (NULL);
 	i = 0;
@@ -82,20 +81,6 @@ const char	*dup_word(char **dest, const char *src, char c)
 	return (src);
 }
 
-// void	free_strs(char ***strs, size_t len)
-// {
-// 	size_t	i;
-
-// 	i = 0;
-// 	while (i < len)
-// 	{
-// 		free((*strs)[i]);
-// 		i++;
-// 	}
-// 	free(*strs);
-// 	*strs = NULL;
-// }
-
 char	**ft_split(const char *s, char c)
 {
 	char	**strs;
@@ -107,8 +92,7 @@ char	**ft_split(const char *s, char c)
 	nbr_strings = count_strings(s, c);
 	if (nbr_strings != 3)
 		return (NULL);
-	strs = (char **)malloc(sizeof(char *) * (nbr_strings + 1));
-	addback(&g_free, newnode(strs));
+	strs = (char **)ft_malloc(sizeof(char *) * (nbr_strings + 1));
 	if (strs != NULL)
 	{
 		strs[nbr_strings] = NULL;

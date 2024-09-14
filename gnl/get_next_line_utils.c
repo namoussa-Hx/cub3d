@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoussa <namoussa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 14:42:54 by namoussa          #+#    #+#             */
-/*   Updated: 2023/12/08 16:29:00 by namoussa         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:13:48 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ char	*ft_strdup_gnl(char *str, int len)
 	if (!str || !len)
 		return (NULL);
 	i = -1;
-	array = (char *)malloc((len + 1) * sizeof(char));
-	addback(&g_free, newnode(array));
+	array = (char *)ft_malloc((len + 1) * sizeof(char));
 	if (!array)
 		return (NULL);
 	while (++i < len)
@@ -41,8 +40,7 @@ char	*ft_strjoin_gnl(char *s1, char *s2)
 	if (!s1)
 		return (ft_strdup_gnl(s2, len));
 	len = len + ft_strlen_gnl(s1);
-	array = (char *)malloc(sizeof(char) * (len + 1));
-	addback(&g_free, newnode(array));
+	array = (char *)ft_malloc(sizeof(char) * (len + 1));
 	if (!array)
 		return (NULL);
 	len = 0;

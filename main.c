@@ -6,13 +6,11 @@
 /*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 13:45:39 by namoussa          #+#    #+#             */
-/*   Updated: 2024/09/14 19:11:14 by elchakir         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:36:11 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-t_free	*g_free;
 
 int	update(t_data *game)
 {
@@ -52,7 +50,7 @@ int	ft_exit(t_data *game)
 
 int	free_parse(void)
 {
-	free_all(&g_free);
+	free_all();
 	exit(0);
 	return (0);
 }
@@ -64,10 +62,10 @@ void	ft_mlx(t_data *game)
 	game->img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	game->img_data = mlx_get_data_addr(game->img, &game->bpp, &game->size_line,
 			&game->endian);
-	mlx_hook(game->win, 2, 1L << 0, key_hook, game);
-	mlx_hook(game->win, 17, 1L << 17, ft_exit, game);
+	mlx_hook(game->win, 02, 1L << 0, key_hook, game);
 	mlx_hook(game->win, 6, 1L << 6, mouse_hook, game);
-	mlx_mouse_hide(game->mlx, game->win);
+	mlx_hook(game->win, 7, 1L << 4, mouse_hide, game);
+	mlx_hook(game->win, 17, 0, ft_exit, game);
 	mlx_loop_hook(game->mlx, update, game);
 	mlx_loop(game->mlx);
 }
@@ -78,15 +76,12 @@ int	main(int ac, char **av)
 
 	if (ac == 2)
 	{
-		g_free = NULL;
 		init_data(&data);
 		if (parse_cub(av[1], &data) && print_error("Error\n") && free_parse())
 			return (1);
-		data.walls = malloc(sizeof(t_images));
-		addback(&g_free, newnode(data.walls));
+		data.walls = ft_malloc(sizeof(t_images));
 		ft_bzero(data.walls, sizeof(t_images));
-		data.textures = malloc(sizeof(t_textures));
-		addback(&g_free, newnode(data.textures));
+		data.textures = ft_malloc(sizeof(t_textures));
 		ft_bzero(data.textures, sizeof(t_textures));
 		data.player.player_x = (data.player.x * 30) + (30 / 2);
 		data.player.player_y = (data.player.y * 30) + (30 / 2);
