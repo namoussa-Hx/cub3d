@@ -12,10 +12,16 @@ SRC = main.c\
 	parsing/parse_cub1.c\
 	gnl/get_next_line.c\
 	gnl/get_next_line_utils.c\
-	execution/exec.c\
 	init_walls.c\
 	init_textures.c\
 	free.c\
+	execution/exec.c\
+	execution/key_handle.c\
+	execution/ray_init.c\
+	execution/minimap_tools.c\
+	execution/minimap_v2.c\
+	execution/minimap.c\
+	execution/cast_ray.c\
 
 OBJ = $(SRC:.c=.o)
 

@@ -1,484 +1,117 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/14 16:07:13 by elchakir          #+#    #+#             */
+/*   Updated: 2024/09/14 18:33:40 by elchakir         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3d.h"
 
-int is_inside_circle(int x, int y, int center_x, int center_y, int radius)
+void	init_render_player(t_data *game, t_player_ren *player,
+		int texture_width, int texture_height)
 {
-    int dx ;
-    int dy;
-    dx = x - center_x;
-    dy = y - center_y;
-    return (dx * dx + dy * dy) <= (radius * radius);
+	player->src_index = 0;
+	player->x_start = 0;
+	player->i = 0;
+	player->y_start = 0;
+	player->img_addr = (unsigned int *)game->img_data;
+	if (player->x_start < 0)
+		player->x_start = 0;
+	if (player->y_start < 0)
+		player->y_start = 0;
+	player->x_scale = (float)(texture_width - 20) / WIDTH;
+	player->y_scale = (float)(texture_height - 20) / HEIGHT;
 }
 
-void clear_minimap_area(t_data *game) 
+void	scale(t_player_ren *player, int texture_width)
 {
-    int center_x;
-    int center_y;
-    int screen_x;
-    int screen_y;
-    int x;
-    int y;
-    center_x = WIDTH - MINIMAP_RADIUS - 10;
-    center_y =  MINIMAP_RADIUS ;
-    y = 0;
-    while (y < MINIMAP_DIAMETER)
-    {
-        x = 0;
-        while (x < MINIMAP_DIAMETER)
-        {
-            if (is_inside_circle(x, y, MINIMAP_RADIUS, MINIMAP_RADIUS, MINIMAP_RADIUS)) 
-            {
-                screen_x = center_x - MINIMAP_RADIUS + x;
-                screen_y = center_y - MINIMAP_RADIUS + y;
-                int pixel_index = (screen_y * game->size_line) + (screen_x * (game->bpp / 8));
-                *((unsigned int *)(game->img_data + pixel_index)) = 0x000000; // Black background
-            }
-            x++;
-        }
-        y++;
-    }
+	player->texture_x = (int)(player->j * player->x_scale);
+	player->texture_y = (int)(player->i * player->y_scale);
+	player->src_index = player->texture_x + player->texture_y * texture_width;
+	if (player->x_start + player->j >= 0 && player->x_start + player->j < WIDTH
+		&& player->y_start + player->i >= 0 && player->y_start
+		+ player->i < HEIGHT)
+	{
+		if (player->texture_addr[player->src_index] != 0xff000000)
+		{
+			player->img_addr[player->x_start + player->j + (player->y_start
+					+ player->i)
+				* WIDTH] = player->texture_addr[player->src_index];
+		}
+	}
 }
 
-void draw_map_tiles(t_data *game) 
+void	render1_player(t_data *game, int *player, int texture_width,
+		int texture_height)
 {
-    int center_x;
-    int center_y;
-    float player_x;
-    float player_y;
-    int x;
-    int screen_x;
-    int screen_y;
-    int y;
-    center_x = WIDTH - MINIMAP_RADIUS - 10;
-    center_y = MINIMAP_RADIUS;
-    player_x = game->player.player_x / 30.0f;
-    player_y = game->player.player_y / 30.0f;
-    y = -MINIMAP_RADIUS;
-    while ( y < MINIMAP_RADIUS) 
-    {
-        x = -MINIMAP_RADIUS;
-        while ( x < MINIMAP_RADIUS) 
-        {
-            if (is_inside_circle(x + MINIMAP_RADIUS, y + MINIMAP_RADIUS, MINIMAP_RADIUS, MINIMAP_RADIUS, MINIMAP_RADIUS - 2))
-            {
-                int map_x = (int)(player_x + x / (float)TILE_SIZE);
-                int map_y = (int)(player_y + y / (float)TILE_SIZE);
-                
-                unsigned int color;
-                // color = 0x000000;
-                color = 0;
-                if (map_x >= 0 && map_x < game->maze.width && map_y >= 0 && map_y < game->maze.height) 
-                {
-                  if (game->maze.map[map_y][map_x] == '1') 
-                            color = 0x000000;//0x36454F;
-                 else if (game->maze.map[map_y][map_x] == 'D')
-                            color = 0x8B4513;
-                 else if(game->maze.map[map_y][map_x] == '0')
-                            color = 0xADD8E6;
-                else if(game->maze.map[map_y][map_x] == 'W'  
-                || game->maze.map[map_y][map_x] == 'E' || game->maze.map[map_y][map_x] == 'S' 
-                || game->maze.map[map_y][map_x] == 'N')
-                            color = 0xADD8E6;
-                } 
-                else
-                 color = 0x000000;//0x008080;
-                screen_x = center_x + x;
-                screen_y = center_y + y;
-                int pixel_index = (screen_y * game->size_line) + (screen_x * (game->bpp / 8));
-                *((unsigned int *)(game->img_data + pixel_index)) = color;
-            }
-            x++;
-        }
-        y++;
-    }
+	t_player_ren	*player1;
+
+	player1 = malloc(sizeof(t_player_ren));
+	player1->texture_addr = (unsigned int *)player;
+	init_render_player(game, player1, texture_width, texture_height);
+	while (player1->i < HEIGHT)
+	{
+		player1->j = 0;
+		while (player1->j < WIDTH)
+		{
+			scale(player1, texture_width);
+			player1->j++;
+		}
+		player1->i++;
+	}
+	free(player1);
 }
 
-
-void draw_player_marker(t_data *game) 
+void	render_color(t_data *game)
 {
-    int center_x;
-    int center_y;
-    int x;
-    int y;
-    center_x = WIDTH - MINIMAP_RADIUS - 10;
-    center_y = MINIMAP_RADIUS;
-    y = -PLAYER_MARKER_SIZE;
-    while(y <= PLAYER_MARKER_SIZE)
-    {
-        x = -PLAYER_MARKER_SIZE;
-        while( x <= PLAYER_MARKER_SIZE)
-        {
-            if (x*x + y*y <= PLAYER_MARKER_SIZE*PLAYER_MARKER_SIZE) {
-                int screen_x = center_x + x;
-                int screen_y = center_y + y;
-                int pixel_index = (screen_y * game->size_line) + (screen_x * (game->bpp / 8));
-                *((unsigned int *)(game->img_data + pixel_index)) =  0xFFFF00; // Yellow for player
-            }
-            x++;
-        }
-        y++;
-    }
+	int	draw_end;
+	int	y;
+	int	x;
+	int	pixel_index;
+
+	draw_end = HEIGHT / 2;
+	if (draw_end >= HEIGHT)
+		draw_end = HEIGHT - 1;
+	y = 0;
+	while (y < draw_end)
+	{
+		x = 0;
+		while (x < WIDTH)
+		{
+			pixel_index = (y * WIDTH + x) * (game->bpp / 8);
+			*((unsigned int *)(game->img_data + pixel_index)) = game->maze.c;
+			x++;
+		}
+		y++;
+	}
 }
 
-
-
-void draw_minimap_border(t_data *game) {
-    int center_x;
-    int center_y;
-    int y;
-    int x;
-    center_x = WIDTH - MINIMAP_RADIUS - 10;
-    center_y =  MINIMAP_RADIUS ;
-    y = -MINIMAP_RADIUS;
-
-    while(y <= MINIMAP_RADIUS)
-    {
-        x = -MINIMAP_RADIUS;
-        while(x <= MINIMAP_RADIUS) 
-        {
-            if (abs(x*x + y*y - MINIMAP_RADIUS*MINIMAP_RADIUS) < MINIMAP_RADIUS) {
-                int screen_x = center_x + x;
-                int screen_y = center_y + y;
-                int pixel_index = (screen_y * game->size_line) + (screen_x * (game->bpp / 8));
-                *((unsigned int *)(game->img_data + pixel_index)) = 0xFFFFFF; //white
-            }
-            x++;
-        }
-        y++;
-    }
-}
-
-
-
-int render_minimap(t_data *game) 
+void	render_flor(t_data *game)
 {
-    clear_minimap_area(game);
-    draw_map_tiles(game);
-    draw_player_marker(game);
-    // draw_player_direction(game);
-    draw_minimap_border(game);
-    return 0;
+	int	draw_end;
+	int	y;
+	int	x;
+	int	pixel_index;
+
+	draw_end = HEIGHT;
+	if (draw_end >= HEIGHT)
+		draw_end = HEIGHT - 1;
+	y = HEIGHT / 2;
+	while (y < draw_end)
+	{
+		x = 0;
+		while (x < WIDTH)
+		{
+			pixel_index = (y * WIDTH + x) * (game->bpp / 8);
+			*((unsigned int *)(game->img_data + pixel_index)) = game->maze.f;
+			x++;
+		}
+		y++;
+	}
 }
 
-void render1_player(t_data *game, int *player, int texture_width, int texture_height)
-{
-    int i, j;
-    int src_index = 0;
-    int x_start = 0;
-    int y_start = 0;
-    unsigned int *texture_addr;
-    unsigned int *img_addr;
-
-    texture_addr = (unsigned int *)player;
-    img_addr = (unsigned int *)game->img_data;
-
-    if (x_start < 0) x_start = 0;
-    if (y_start < 0) y_start = 0;
-
-    float x_scale = (float)(texture_width - 10) / WIDTH ;
-    float y_scale = (float)(texture_height - 10) / HEIGHT;
-
-
-    for (i = 0; i < HEIGHT; i++)
-    {
-        for (j = 0; j < WIDTH; j++)
-        {
-            int texture_x = (int)(j * x_scale);
-            int texture_y = (int)(i * y_scale);
-            src_index = texture_x + texture_y * texture_width;
-
-            if (x_start + j >= 0 && x_start + j < WIDTH && y_start + i >= 0 && y_start + i < HEIGHT)
-            {
-                if (texture_addr[src_index] != 0xff000000)
-                {
-                    img_addr[x_start + j + (y_start + i) * WIDTH] = texture_addr[src_index];
-                }
-            }
-        }
-    }
-}
-
-
-void render_3d_projection(t_data *game, float distance, int ray_index, int tile_size)
-{
-    int texture_y;
-    int wall_height;
-    int draw_start;
-    int draw_end;
-    int texture_index;
-    int *texture_buffer;
-    int color;
-    int y;
-    float step;
-    float texture_pos;
-    int pixel_index;
-    int texture_width = 0;
-    int texture_x;
-    float wall_x;
-    if (distance <= 0) distance = 0.1;
-     wall_height = (int)(tile_size * HEIGHT / distance);
-     draw_start = HEIGHT / 2 - wall_height / 2 ;
-    if (draw_start < 0) draw_start = 0;
-     draw_end = wall_height / 2 + HEIGHT / 2;
-    if (draw_end >= HEIGHT) draw_end = HEIGHT - 1;
-
-    if (game->vector.side == 0)
-        wall_x = game->player.player_y / tile_size + distance * game->vector.ray_dir_y / tile_size;
-    else
-        wall_x = game->player.player_x / tile_size + distance * game->vector.ray_dir_x / tile_size;
-    wall_x -= floor(wall_x);
-
-    if (game->vector.side == 0)
-    {
-
-        if(game->vector.ray_dir_x > 0)
-             texture_index = 0;
-        else
-            texture_index = 1;
-    } 
-    else
-    {
-         if(game->vector.ray_dir_y > 0) 
-            texture_index = 2;
-        else
-            texture_index =  3;
-    }
- if (game->is_door)
-{
-    if (game->is_door_open == 2)
-    {
-        texture_index = 5; 
-    }
-    else
-    {
-        texture_index = 4;
-    }
-    texture_buffer = game->walls->scale[texture_index];
-    texture_width = game->walls->width[texture_index];
-}
-
-    else if (game->is_door_open == 0)
-        {
-    texture_buffer = game->walls->scale[texture_index];
-    texture_width = game->walls->width[texture_index];
-        }
-    texture_x = (int)(wall_x * (float)texture_width);
-    if ((game->vector.side == 0 && game->vector.ray_dir_x > 0) ||
-        (game->vector.side == 1 && game->vector.ray_dir_y < 0))
-        texture_x = texture_width - texture_x - 1;
-    step = 1.0 * game->walls->height[texture_index] / wall_height;
-    texture_pos = (draw_start - HEIGHT / 2 + wall_height / 2) * step;
-    y = draw_start;
-    while(y < draw_end)
-    {
-         texture_y = (int)texture_pos % (game->walls->height[texture_index] - 1); 
-        texture_pos += step; 
-        color = texture_buffer[texture_y * texture_width + texture_x]; 
-        
-        if (game->vector.side == 1)
-            color = (color >> 1) & 8355711;
-         pixel_index = (y * WIDTH + ray_index) * (game->bpp / 8);
-        *((unsigned int *)(game->img_data + pixel_index)) = color;
-        y++;
-    }  
-game->is_door = 0;
-game->is_door_open = 0;
-// game->maze.map[game->vector.map_y][game->vector.map_x] == 'D'
-
-}
-
-
-
-void render_color(t_data *game) 
-{
-    int draw_end;
-    int y;
-    int x;
-    int pixel_index;
-
-    draw_end = HEIGHT / 2;
-    if (draw_end >= HEIGHT) draw_end = HEIGHT - 1;
-    y = 0;
-    while( y < draw_end) 
-    {
-        x = 0;
-         while(x < WIDTH)
-         {
-
-        pixel_index = (y * WIDTH + x) * (game->bpp / 8);
-         *((unsigned int *)(game->img_data + pixel_index)) = game->maze.c;
-         x++;
-         }
-    y++;
-    }
-}
-
-void render_flor(t_data *game) 
-{
-    int draw_end;
-    int y;
-    int x;
-    int pixel_index;
-
-    draw_end = HEIGHT ;
-    if (draw_end >= HEIGHT) draw_end = HEIGHT - 1;
-    y =  HEIGHT / 2;
-    while( y < draw_end) 
-    {
-        x = 0;
-         while(x < WIDTH)
-         {
-
-        pixel_index = (y * WIDTH + x) * (game->bpp / 8);
-         *((unsigned int *)(game->img_data + pixel_index)) = game->maze.f;
-         x++;
-         }
-    y++;
-    }
-}
-
-void cast_ray_dda(t_data *game, float angle, int ray_index, int tile_size) 
-{
-    game->vector.map_x = (int)(game->player.player_x / tile_size);
-    game->vector.map_y = (int)(game->player.player_y / tile_size);
-    game->vector.ray_dir_x = cosf(angle);
-    game->vector.ray_dir_y = sinf(angle);
-
-    game->vector.delta_dist_x = fabs(1 / game->vector.ray_dir_x);
-    game->vector.delta_dist_y = fabs(1 / game->vector.ray_dir_y);
-    game->vector.hit = 0;
-    if (game->vector.ray_dir_x < 0) 
-    {
-        game->vector.step_x = -1;
-        game->vector.side_dist_x = (game->player.player_x / tile_size - game->vector.map_x) * game->vector.delta_dist_x;
-    } 
-    else 
-    {
-        game->vector.step_x = 1;
-        game->vector.side_dist_x = (game->vector.map_x + 1.0 - game->player.player_x / tile_size) * game->vector.delta_dist_x;
-    }
-
-    if (game->vector.ray_dir_y < 0) 
-    {
-        game->vector.step_y = -1;
-        game->vector.side_dist_y = (game->player.player_y / tile_size - game->vector.map_y) * game->vector.delta_dist_y;
-    }
-    else 
-    {
-        game->vector.step_y = 1;
-        game->vector.side_dist_y = (game->vector.map_y + 1.0 - game->player.player_y / tile_size) * game->vector.delta_dist_y;
-    }
-
-    while (game->vector.hit == 0) 
-    {
-        if (game->vector.side_dist_x < game->vector.side_dist_y) 
-        {
-            game->vector.side_dist_x += game->vector.delta_dist_x;
-            game->vector.map_x += game->vector.step_x;
-            game->vector.side = 0;
-        } 
-        else
-        {
-            game->vector.side_dist_y += game->vector.delta_dist_y;
-            game->vector.map_y += game->vector.step_y;
-            game->vector.side = 1;
-        }
-
-        if (game->vector.map_y < 0 || game->vector.map_y >= game->maze.height ||
-            game->vector.map_x < 0 || game->vector.map_x >= game->maze.width)
-            return;
-        if (game->maze.map[game->vector.map_y][game->vector.map_x] == '1' 
-                || game->maze.map[game->vector.map_y][game->vector.map_x] == 'D')
-                {
-            game->vector.hit = 1;
-            if (game->maze.map[game->vector.map_y][game->vector.map_x] == 'D') 
-                    game->is_door = 1;
-                }
-    }
-
-    if (game->vector.side == 0)
-    {
-        game->vector.perp_wall_dist = (game->vector.map_x - game->player.player_x / tile_size + (1 - game->vector.step_x) / 2) / game->vector.ray_dir_x;
-    } 
-    else 
-    {
-        game->vector.perp_wall_dist = (game->vector.map_y - game->player.player_y / tile_size + (1 - game->vector.step_y) / 2) / game->vector.ray_dir_y;
-    }
-    if(game->maze.map[game->vector.map_y][game->vector.map_x] == 'D')
-    {
-       if (game->maze.map[game->vector.map_y][game->vector.map_x] == 'D')
-                 if (game->vector.perp_wall_dist < 2.5)  
-                            game->is_door_open = 2;
- 
-
-    }
-    float real_angle = fabs(fmodf(game->player.angle - angle + PI * 3, PI * 2) - PI);
-    game->vector.perp_wall_dist *= cosf(real_angle);
-    render_3d_projection(game, game->vector.perp_wall_dist * tile_size, ray_index, tile_size);
-}
-
-void handle_collision(t_data *game, float player_angle, float collision_angle)
-{
-    float angle_diff;
-    angle_diff  = fmodf(collision_angle - player_angle + PI * 3, PI * 2) - PI;
-    
-    if (angle_diff > 0) 
-        game->player.angle -= 0.02;
-    else 
-        game->player.angle += 0.02;
-    
-    game->player.angle = fmodf(game->player.angle + PI * 2, PI * 2);
-}
-
-int key_hook(int keycode, t_data *game) 
-{
-    int tile_size;
-    int map_x;
-    int map_y;
-    tile_size = 30;
-    if (keycode == LEFT)
-   game->player.angle -= ROT_SPEED;
-    if (keycode == RIGHT) 
-        game->player.angle += ROT_SPEED;
- 
-    if (keycode == UP) 
-    {
-        map_x = (int)((game->player.player_x + cosf(game->player.angle) * MOVE_SPEED) / tile_size);
-        map_y = (int)((game->player.player_y + sinf(game->player.angle) * MOVE_SPEED) / tile_size);
-        if (game->maze.map[map_y][map_x] != '1') 
-        {
-            game->player.player_x += cosf(game->player.angle) * MOVE_SPEED;
-            game->player.player_y += sinf(game->player.angle) * MOVE_SPEED;
-        }
-       else
-        {
-
-           float collision_angle = atan2f(map_y * tile_size + tile_size / 2 - game->player.player_y,
-                                           map_x * tile_size + tile_size / 2 - game->player.player_x);
-            handle_collision(game, game->player.angle, collision_angle);
-        }
-    }
-    if (keycode == DOWN)
-    {
-        map_x = (int)((game->player.player_x - cosf(game->player.angle) * MOVE_SPEED) / tile_size);
-        map_y = (int)((game->player.player_y - sinf(game->player.angle) * MOVE_SPEED) / tile_size);
-        if (game->maze.map[map_y][map_x] != '1') 
-        {
-            game->player.player_x -= cosf(game->player.angle) * MOVE_SPEED;
-            game->player.player_y -= sinf(game->player.angle) * MOVE_SPEED;
-        }
-    }
-    if(keycode == 32)
-    {
-         game->hide_mouse = 1;
-        mlx_mouse_show(game->mlx, game->win);
-    }
-    
-    if (keycode == 65307) 
-    {  
-        // mlx_destroy_window(game->mlx, game->win);
-        destroy_all(game);
-        exit(0);
-    }
-    
-    return (0);
-}

@@ -6,7 +6,7 @@
 /*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 13:45:39 by namoussa          #+#    #+#             */
-/*   Updated: 2024/09/10 23:56:30 by elchakir         ###   ########.fr       */
+/*   Updated: 2024/09/14 18:27:33 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,29 @@
 
 t_free	*g_free;
 
+void init_half(t_data *data)
+{
+    data->x_mouse_prev = 0;
+    data->hide_mouse = 0;
+    data->is_door = 0;
+    data->image_door = NULL;
+    data->addr_door = NULL;
+    data->scale_door = NULL;
+    data->width_door = 0;
+    data->height_door = 0;
+    data->bpp_door = 0;
+    data->size_line_door = 0;
+    data->distance_to_door = 0;
+    data->is_door_open = 0;
+    data->endian_door = 0;
+    data->x_door = -1;
+    data->y_door = -1;
+    data->real_dist = 0;
+}
 void	init_data(t_data *data)
 {
+	data->mlx = mlx_init();
+	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "Cub3D");
 	data->maze.map = NULL;
 	data->maze.no = NULL;
 	data->maze.so = NULL;
@@ -27,29 +48,10 @@ void	init_data(t_data *data)
 	data->player.angle = 0;
 	data->player.fov = PI / 3;
 	data->player.player_x = 0;
-	data->player.player_y = 0;
-	data->player.x = 0;
-	data->player.y = 0;
-	data->x_mouse_prev = 0;
-	data->hide_mouse = 0;
-	data->enemy.x = 0;
-	data->enemy.y = 0;
-	data->enemy.enemy_index = 0;
-	data->enemy.x_enemy = 0;
-	data->enemy.y_enemy = 0;
-	data->is_door = 0;
-	data->image_door = NULL;
-	data->addr_door = NULL;
-	data->scale_door = NULL;
-	data->width_door = 0;
-	data->height_door = 0;
-	data->bpp_door = 0;
-	data->size_line_door = 0;
-	data->distance_to_door = 0;
-	data->is_door_open = 0;
-	data->endian_door = 0;
-	data->x_door = -1;
-	data->y_door = -1;
+    data->player.player_y = 0;
+    data->player.x = 0;
+    data->player.y = 0;
+    init_half(data);
 }
 
 int	update(t_data *game)
@@ -111,6 +113,7 @@ int	ft_exit(t_data *game)
 	exit(0);
 	return (0);
 }
+
 int	destroy_all(t_data *game)
 {
 	int i;

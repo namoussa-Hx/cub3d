@@ -6,7 +6,7 @@
 /*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 23:56:58 by namoussa          #+#    #+#             */
-/*   Updated: 2024/09/12 21:04:47 by namoussa         ###   ########.fr       */
+/*   Updated: 2024/09/14 18:31:04 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@
 # define RIGHT 100
 # define MOVE_SPEED 3.0
 # define ROT_SPEED 0.1
-# define MINIMAP_RADIUS 100
-# define MINIMAP_DIAMETER 200
+# define MINIMAP_RADIUS 80
+# define MINIMAP_DIAMETER 160
 # define TILE_SIZE 10
 # define PLAYER_MARKER_SIZE 4
 # define SPRITE_FRAMES 37
@@ -56,6 +56,37 @@ typedef struct s_textures
 	int				height[16];
 }					t_textures;
 
+typedef struct s_minimap
+{
+	int				center_x;
+	int				center_y;
+	int				screen_x;
+	int				screen_y;
+	int				x;
+	int				y;
+	int				pixel_index;
+	float			player_x;
+	float			player_y;
+	int				map_x;
+	int				map_y;
+	unsigned int	color;
+}					t_minimap;
+
+typedef struct s_render_player
+{
+	int				src_index;
+	int				x_start;
+	int				y_start;
+	unsigned int	*texture_addr;
+	unsigned int	*img_addr;
+	float			x_scale;
+	float			y_scale;
+	int				texture_x;
+	int				texture_y;
+	int				i;
+	int				j;
+}					t_player_ren;
+
 typedef struct s_free
 {
 	void			*addr;
@@ -64,14 +95,7 @@ typedef struct s_free
 }					t_free;
 
 extern t_free		*g_free;
-typedef struct s_enemy
-{
-	int				enemy_index;
-	int				x;
-	int				y;
-	int				x_enemy;
-	int				y_enemy;
-}					t_enemy;
+
 typedef struct s_player
 {
 	int				x;
@@ -133,6 +157,24 @@ typedef struct s_images
 	int				*endian_player;
 }					t_images;
 
+typedef struct s_render
+{
+    int texture_y;
+    int wall_height;
+    int draw_start;
+    int draw_end;
+    int texture_index;
+    int *texture_buffer;
+    int color;
+    int y;
+    float step;
+    float texture_pos;
+    int pixel_index;
+    int texture_width;
+    int texture_x;
+    float wall_x;
+}   t_render;
+
 typedef struct s_data
 {
 	void			*mlx;
@@ -141,7 +183,6 @@ typedef struct s_data
 	t_map			maze;
 	t_player		player;
 	t_vec			vector;
-	t_enemy			enemy;
 	t_textures		*textures;
 	void			*image_door;
 	int				*addr_door;
@@ -163,44 +204,56 @@ typedef struct s_data
 	int				player_face;
 	int				x_mouse_prev;
 	int				x_door;
+	double		real_dist;
 	int				y_door;
 }					t_data;
 
-int					update(t_data *data);
-void				render1_player(t_data *game, int *player, int texture_width,
-						int texture_height);
-void				render_flor(t_data *game);
-void				render_color(t_data *game);
-void				render_3d_projection(t_data *game, float distance,
-						int ray_index, int tile_size);
-void				cast_ray_dda(t_data *game, float angle, int ray_index,
-						int tile_size);
-int					key_hook(int keycode, t_data *game);
-int					check_is_map_valid(t_data *prog, char *file);
-int					validate_walls(t_map *maze);
-int					check_empty(t_map *maze);
-int					print_error(char *str);
-int					map_copy(t_map *prog, char *file);
-int					check_textures(t_data *prog);
-int					my_strchr(char *str, char *c);
-int					check_extension(char *file);
-int					check_conditions(char ch, int count);
-int					parse_cub(char *file, t_data *prog);
+/*************************minimap_tools********************** */
+void	init_player_tiles(t_minimap *mini, t_data *game);
+void	check_position(t_data *game, t_minimap *mini);
+int	check_circle_and_init(t_data *game, t_minimap *mini);
+void	draw_map_tiles(t_data *game);
+void	border_init(t_minimap *mini);
+void	check_border(t_minimap *mini, t_data *game);
+void	draw_player_marker_init(t_minimap *mini);
+/* -------------------minimap------------------------*/
+int	is_inside_circle(int x, int y,int rad);
+void raydirx(t_data *game, int tile_size);
+void	clear_minimap_area(t_data *game);
+void	draw_player_marker(t_data *game);
+void	draw_minimap_border(t_data *game);
+int	render_minimap(t_data *game);
+/***************************************************/
+int				update(t_data *data);
+void render1_player(t_data *game, int *player, int texture_width, int texture_height);
+void			render_flor(t_data *game);
+void			render_color(t_data *game);
+void			render_3d_projection(t_data *game, float distance, int ray_index);
+void			cast_ray_dda(t_data *game, float angle, int ray_index,
+					int tile_size);
+int				key_hook(int keycode, t_data *game);
+int				check_is_map_valid(t_data *prog, char *file);
+int				validate_walls(t_map *maze);
+int				check_empty(t_map *maze);
+int				print_error(char *str);
+int				map_copy(t_map *prog, char *file);
+int				check_textures(t_data *prog);
+int				my_strchr(char *str, char *c);
+int				check_extension(char *file);
+int				check_conditions(char ch, int count);
+int				parse_cub(char *file, t_data *prog);
+int				should_skip(char *line);
+int				check_valid_char(char c, int flag);
+void			init_walls(t_data *game);
+void init_player(t_data *game);
+t_free *newnode(void *address);
+void free_all(t_free **lst);
+void			*file_to_img(t_data *data, char *img_path, int *w, int *h);
+void addback(t_free **lst, t_free *new);
 int					is_skip(char *line, int flag);
 int					destroy_all(t_data *game);
-int					should_skip(char *line);
-int					check_valid_char(char c, int flag);
-int					render_minimap(t_data *game);
-void				init_walls(t_data *game);
-void				init_player(t_data *game);
-t_free				*newnode(void *address);
-void				free_all(t_free **lst);
-int					should_skip(char *line);
 int					is_comma(char *line);
+void	 init_render_player(t_data *game, t_player_ren *player, int texture_width, int texture_height);
 void				ft_player_angle(t_data *data, char c);
-void				*file_to_img(t_data *data, char *img_path, int *w, int *h);
-int					is_inside_circle(int x, int y, int center_x, int center_y,
-						int radius);
-void				addback(t_free **lst, t_free *new);
 
 #endif
