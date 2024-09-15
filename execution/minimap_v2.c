@@ -6,7 +6,7 @@
 /*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 17:59:39 by elchakir          #+#    #+#             */
-/*   Updated: 2024/09/14 18:37:46 by elchakir         ###   ########.fr       */
+/*   Updated: 2024/09/15 15:52:05 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,31 @@ void	check_border(t_minimap *mini, t_data *game)
 		mini->pixel_index = (mini->screen_y * game->size_line) + (mini->screen_x
 				* (game->bpp / 8));
 		*((unsigned int *)(game->img_data + mini->pixel_index)) = 0xFFFFFF;
+	}
+}
+
+void	left(t_data *game, int keycode, int *map_x, int *map_y)
+{
+	float	new_x;
+	float	new_y;
+
+	if (keycode == LEFT)
+	{
+		new_x = game->player.player_x - cosf(game->player.angle + (PI / 2))
+			* MOVE_SPEED;
+		new_y = game->player.player_y - sinf(game->player.angle + (PI / 2))
+			* MOVE_SPEED;
+		*map_x = (int)((new_x - copysignf(6, cosf(game->player.angle + (PI
+								/ 2)))) / 30);
+		*map_y = (int)((new_y - copysignf(6, sinf(game->player.angle + (PI
+								/ 2)))) / 30);
+		if (game->maze.map[*map_y][(int)(game->player.player_x / 30)] != '1')
+		{
+			game->player.player_y = new_y;
+		}
+		if (game->maze.map[(int)(game->player.player_y / 30)][*map_x] != '1')
+		{
+			game->player.player_x = new_x;
+		}
 	}
 }

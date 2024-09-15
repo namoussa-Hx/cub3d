@@ -6,7 +6,7 @@
 /*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 23:56:58 by namoussa          #+#    #+#             */
-/*   Updated: 2024/09/14 19:28:57 by elchakir         ###   ########.fr       */
+/*   Updated: 2024/09/15 15:59:15 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,10 +255,10 @@ int					is_comma(char *line);
 void				init_render_player(t_data *game, t_player_ren *player,
 						int texture_width, int texture_height);
 void				ft_player_angle(t_data *data, char c);
-//////////////////////////////////////////////////////////
 void				init_data(t_data *data);
 int					check_head_file(char *file);
 int					mouse_hook(int x_mouse, int y_mouse, t_data *game);
+void				left(t_data *game, int keycode, int *map_x, int *map_y);
 int					mouse_hide(t_data *game);
 int					destroy_all(t_data *game);
 

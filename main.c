@@ -6,7 +6,7 @@
 /*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 13:45:39 by namoussa          #+#    #+#             */
-/*   Updated: 2024/09/14 19:36:11 by elchakir         ###   ########.fr       */
+/*   Updated: 2024/09/15 16:52:28 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,15 @@ int	update(t_data *game)
 	render_flor(game);
 	while (++x < WIDTH)
 	{
-		ray_angle = game->player.angle + atanf((x - WIDTH / 2.0) / (WIDTH / 2.0
-					/ tanf(game->player.fov / 2.0)));
+		ray_angle = (x - WIDTH / 2.0) / (WIDTH / 2.0) * (game->player.fov
+				/ 2.0);
+		ray_angle = game->player.angle + ray_angle;
 		cast_ray_dda(game, ray_angle, x, 30);
 	}
 	render_minimap(game);
 	render1_player(game, game->walls->addr_player[index / 4], width, height);
 	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
-	index++;
-	return (0);
+	return (index++, 0);
 }
 
 int	ft_exit(t_data *game)

@@ -6,7 +6,7 @@
 /*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 16:07:13 by elchakir          #+#    #+#             */
-/*   Updated: 2024/09/14 19:19:02 by elchakir         ###   ########.fr       */
+/*   Updated: 2024/09/15 16:41:38 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,8 @@ void	init_render_player(t_data *game, t_player_ren *player,
 		int texture_width, int texture_height)
 {
 	player->src_index = 0;
-	player->x_start = 0;
 	player->i = 0;
-	player->y_start = 0;
 	player->img_addr = (unsigned int *)game->img_data;
-	if (player->x_start < 0)
-		player->x_start = 0;
-	if (player->y_start < 0)
-		player->y_start = 0;
 	player->x_scale = (float)(texture_width - 20) / WIDTH;
 	player->y_scale = (float)(texture_height - 20) / HEIGHT;
 }
@@ -33,14 +27,12 @@ void	scale(t_player_ren *player, int texture_width)
 	player->texture_x = (int)(player->j * player->x_scale);
 	player->texture_y = (int)(player->i * player->y_scale);
 	player->src_index = player->texture_x + player->texture_y * texture_width;
-	if (player->x_start + player->j >= 0 && player->x_start + player->j < WIDTH
-		&& player->y_start + player->i >= 0 && player->y_start
-		+ player->i < HEIGHT)
+	if (player->j >= 0 && player->j < WIDTH && player->i >= 0
+		&& player->i < HEIGHT)
 	{
 		if (player->texture_addr[player->src_index] != 0xff000000)
 		{
-			player->img_addr[player->x_start + player->j + (player->y_start
-					+ player->i)
+			player->img_addr[player->j + player->i
 				* WIDTH] = player->texture_addr[player->src_index];
 		}
 	}
