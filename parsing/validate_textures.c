@@ -29,11 +29,11 @@ int	is_skip(char *line, int flag)
 int	include_xpm(char *str)
 {
 	char	*ext;
-	char	*res;
+	int		res;
 
 	ext = ft_strrchr(str, '.');
-	res = ft_strnstr(ext, ".xpm", 4);
-	if (ext == NULL || res == NULL)
+	res = ft_strcmp(ext, ".xpm");
+	if (ext == NULL || res != 0)
 		return (1);
 	return (0);
 }

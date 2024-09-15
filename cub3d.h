@@ -257,6 +257,7 @@ void				init_render_player(t_data *game, t_player_ren *player,
 void				ft_player_angle(t_data *data, char c);
 //////////////////////////////////////////////////////////
 void				init_data(t_data *data);
+int					check_head_file(char *file);
 int					mouse_hook(int x_mouse, int y_mouse, t_data *game);
 int					mouse_hide(t_data *game);
 int					destroy_all(t_data *game);

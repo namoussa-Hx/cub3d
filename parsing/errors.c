@@ -35,11 +35,13 @@ int	my_strchr(char *str, char *c)
 int	check_extension(char *file)
 {
 	char	*ext;
-	char	*res;
+	int		res;
 
 	ext = ft_strchr(file, '.');
-	res = ft_strnstr(ext, ".cub", 4);
-	if (ext == NULL || res == NULL)
+	res = ft_strcmp(ext, ".cub");
+	if (ext == NULL || res != 0)
+		return (1);
+	if (check_head_file(file))
 		return (1);
 	return (0);
 }

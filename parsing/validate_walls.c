@@ -49,12 +49,12 @@ int	last_line(t_map *maze, int h)
 		return (1);
 	while (line[j])
 	{
-		if ((line[j] >= 9 && line[j] <= 13))
+		if ((line[j] >= 9 && line[j] <= 13) || line[j] == 32)
 		{
 			j++;
 			continue ;
 		}
-		if (line[j] == '0')
+		if (line[j] != '1')
 			return (1);
 		j++;
 	}
@@ -73,12 +73,12 @@ int	check_first_last_line(t_map *maze)
 		return (1);
 	while (line[j])
 	{
-		if ((line[j] >= 9 && line[j] <= 13))
+		if ((line[j] >= 9 && line[j] <= 13) || line[j] == 32)
 		{
 			j++;
 			continue ;
 		}
-		if (line[j] == '0')
+		if (line[j] != '1')
 			return (1);
 		j++;
 	}
