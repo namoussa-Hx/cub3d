@@ -61,7 +61,7 @@ void	*file_to_img(t_data *data, char *img_path, int *w, int *h)
 	img = mlx_xpm_file_to_image(data->mlx, img_path, w, h);
 	if (!img)
 	{
-		print_error("Error\nTexture\n");
+		print_error("Error\n");
 		exit(1);
 	}
 	return (img);

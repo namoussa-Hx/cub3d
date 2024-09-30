@@ -26,7 +26,7 @@ SRC = main.c\
 
 OBJ = $(SRC:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address -g3
 
 XFLAGS = -lXext -lX11 -lm -lmlx
 
