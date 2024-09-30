@@ -6,7 +6,7 @@
 /*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 13:45:39 by namoussa          #+#    #+#             */
-/*   Updated: 2024/09/15 16:52:28 by elchakir         ###   ########.fr       */
+/*   Updated: 2024/09/30 12:16:34 by namoussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	update(t_data *game)
 	static int	index;
 	int			width;
 	int			height;
-
+//////////////wqe
 	x = -1;
 	if (index >= SPRITE_FRAMES * 4)
 		index = 0;
