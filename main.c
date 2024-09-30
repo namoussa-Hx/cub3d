@@ -6,7 +6,7 @@
 /*   By: elchakir <elchakir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 13:45:39 by namoussa          #+#    #+#             */
-/*   Updated: 2024/09/30 12:16:34 by namoussa         ###   ########.fr       */
+/*   Updated: 2024/09/15 16:52:28 by elchakir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	update(t_data *game)
 	static int	index;
 	int			width;
 	int			height;
-//////////////wqe
+
 	x = -1;
 	if (index >= SPRITE_FRAMES * 4)
 		index = 0;
@@ -59,6 +59,7 @@ void	ft_mlx(t_data *game)
 {
 	init_walls(game);
 	init_player(game);
+	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "Cub3D");
 	game->img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	game->img_data = mlx_get_data_addr(game->img, &game->bpp, &game->size_line,
 			&game->endian);

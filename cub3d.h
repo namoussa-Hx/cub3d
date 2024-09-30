@@ -251,6 +251,7 @@ void				init_player(t_data *game);
 void				*file_to_img(t_data *data, char *img_path, int *w, int *h);
 int					is_skip(char *line, int flag);
 int					destroy_all(t_data *game);
+char				*parse_texture(char *line, int *counter);
 int					is_comma(char *line);
 void				init_render_player(t_data *game, t_player_ren *player,
 						int texture_width, int texture_height);

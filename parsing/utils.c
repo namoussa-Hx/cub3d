@@ -85,3 +85,25 @@ int	is_comma(char *line)
 		return (1);
 	return (0);
 }
+
+char	*parse_texture(char *line, int *counter)
+{
+	int		i;
+	int		j;
+	char	*texture;
+	char	*str;
+
+	i = 0;
+	*counter += 1;
+	str = ft_strtrim(line, " ");
+	if (str == NULL)
+		return (NULL);
+	i += 2;
+	while (str[i] == ' ')
+		i++;
+	j = i;
+	while (str[j] && str[j] != '\n' && str[j] != ' ')
+		j++;
+	texture = ft_substr(str, i, j - i);
+	return (texture);
+}

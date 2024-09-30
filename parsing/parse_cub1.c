@@ -12,28 +12,6 @@
 
 #include "../cub3d.h"
 
-char	*parse_texture(char *line, int *counter)
-{
-	int		i;
-	int		j;
-	char	*texture;
-	char	*str;
-
-	i = 0;
-	*counter += 1;
-	str = ft_strtrim(line, " ");
-	if (str == NULL)
-		return (NULL);
-	i += 2;
-	while (line[i] == ' ')
-		i++;
-	j = i;
-	while (line[j] && line[j] != '\n' && line[j] != ' ')
-		j++;
-	texture = ft_substr(line, i, j - i);
-	return (texture);
-}
-
 int	check_color(char *str, int *color)
 {
 	int		i;
@@ -97,6 +75,23 @@ int	check_map_line(char *line, t_data *prog)
 	return (counter);
 }
 
+int	except_map(char *line)
+{
+	char	*str;
+
+	str = ft_strtrim(line, " ");
+	if (str == NULL || str[0] == '\0')
+		return (0);
+	if (!ft_strnstr(str, "WE", ft_strlen(str))
+		&& !ft_strnstr(str, "EA", ft_strlen(str))
+		&& !ft_strnstr(str, "F", ft_strlen(str))
+		&& !ft_strnstr(str, "C", ft_strlen(str))
+		&& !ft_strnstr(str, "NO", ft_strlen(str))
+		&& !ft_strnstr(str, "SO", ft_strlen(str)))
+		return (1);
+	return (0);
+}
+
 int	parse_cub(char *file, t_data *prog)
 {
 	int		fd;
@@ -111,11 +106,13 @@ int	parse_cub(char *file, t_data *prog)
 	while (1)
 	{
 		line = get_next_line(fd);
-		if (line == NULL)
+		if (line == NULL || except_map(line))
 			break ;
 		i = 0;
 		counter += check_map_line(line, prog);
 		continue ;
+		if (counter == 6)
+			break ;
 	}
 	if (counter != 6 || check_is_map_valid(prog, file) || check_textures(prog)
 		|| check_extension(file))

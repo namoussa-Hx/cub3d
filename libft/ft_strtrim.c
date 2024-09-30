@@ -19,7 +19,7 @@ int	check_set(char c, char const *set)
 	i = 0;
 	while (set[i])
 	{
-		if (c == set[i])
+		if (c == set[i] || c == '\n')
 			return (1);
 		i++;
 	}
@@ -50,3 +50,14 @@ char	*ft_strtrim(char const *s1, char const *set)
 	ptr[i] = '\0';
 	return (ptr);
 }
+
+// int main ()
+// {
+// 	char str1[] = "   Hello World!   ";
+// 	char str2[] = " ";
+// 	char *result;
+// 	result = ft_strtrim(str1, str2);
+// 	printf("'%s'\n", result);
+// 	free(result);
+// 	return 0;
+// }

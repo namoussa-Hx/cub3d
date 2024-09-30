@@ -28,12 +28,10 @@ int	is_skip(char *line, int flag)
 
 int	include_xpm(char *str)
 {
-	char	*ext;
-	int		res;
+	char	*res;
 
-	ext = ft_strrchr(str, '.');
-	res = ft_strcmp(ext, ".xpm");
-	if (ext == NULL || res != 0)
+	res = ft_strnstr(str, ".xpm", ft_strlen(str));
+	if (res == NULL)
 		return (1);
 	return (0);
 }
