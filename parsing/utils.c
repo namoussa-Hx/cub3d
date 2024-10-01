@@ -102,7 +102,7 @@ char	*parse_texture(char *line, int *counter)
 	while (str[i] == ' ')
 		i++;
 	j = i;
-	while (str[j] && str[j] != '\n' && str[j] != ' ')
+	while (str[j] && str[j] != '\n')
 		j++;
 	texture = ft_substr(str, i, j - i);
 	return (texture);
