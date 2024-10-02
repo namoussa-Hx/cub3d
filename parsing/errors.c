@@ -18,30 +18,14 @@ int	print_error(char *str)
 	return (1);
 }
 
-int	my_strchr(char *str, char *c)
+int	check_extension(char *str)
 {
-	int	i;
+	int		i;
+	char	*res;
 
-	i = 0;
-	while (str[i])
-	{
-		if (ft_strchr(c, str[i]))
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int	check_extension(char *file)
-{
-	char	*ext;
-	int		res;
-
-	ext = ft_strchr(file, '.');
-	res = ft_strcmp(ext, ".cub");
-	if (ext == NULL || res != 0)
-		return (1);
-	if (check_head_file(file))
+	res = ft_strrchr(str, '.');
+	i = ft_strncmp(res, ".cub", ft_strlen(res));
+	if (i != 0 || ft_strlen(str) < 5)
 		return (1);
 	return (0);
 }
@@ -62,7 +46,8 @@ int	check_valid_char(char c, int flag)
 	}
 	if (flag == 2)
 	{
-		if (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W')
+		if (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W'
+			|| c == 'D')
 			return (1);
 	}
 	return (0);

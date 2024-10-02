@@ -240,7 +240,6 @@ int					check_empty(t_map *maze);
 int					print_error(char *str);
 int					map_copy(t_map *prog, char *file);
 int					check_textures(t_data *prog);
-int					my_strchr(char *str, char *c);
 int					check_extension(char *file);
 int					check_conditions(char ch, int count);
 int					parse_cub(char *file, t_data *prog);

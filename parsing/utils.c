@@ -41,33 +41,6 @@ int	should_skip(char *line)
 	return (0);
 }
 
-int	check_head_file(char *file)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (file[i])
-	{
-		if (file[i] == '/')
-		{
-			i++;
-			while (file[i])
-			{
-				if (file[i] == '.')
-					break ;
-				j++;
-				i++;
-			}
-		}
-		i++;
-	}
-	if (j < 1)
-		return (1);
-	return (0);
-}
-
 int	is_comma(char *line)
 {
 	int	i;
