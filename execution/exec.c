@@ -18,8 +18,8 @@ void	init_render_player(t_data *game, t_player_ren *player,
 	player->src_index = 0;
 	player->i = 0;
 	player->img_addr = (unsigned int *)game->img_data;
-	player->x_scale = (float)(texture_width - 20) / WIDTH;
-	player->y_scale = (float)(texture_height - 20) / HEIGHT;
+	player->x_scale = (float)(texture_width) / WIDTH;
+	player->y_scale = (float)(texture_height) / HEIGHT;
 }
 
 void	scale(t_player_ren *player, int texture_width)

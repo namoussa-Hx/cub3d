@@ -25,6 +25,8 @@ int	ft_isdigit(char *c)
 		return (0);
 	if (str[i] == '-' || str[i] == '+')
 		i++;
+	while (str[i] && str[i] == '0')
+		i++;
 	j = 0;
 	while (str[i] != '\0' && str[i] != '\n' && (str[i] >= '0' && str[i] <= '9'))
 	{
