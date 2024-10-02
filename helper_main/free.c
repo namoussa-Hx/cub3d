@@ -76,3 +76,22 @@ void	free_all(void)
 		i++;
 	}
 }
+
+int	_r(int fd1)
+{
+	char	*line;
+
+	while (1)
+	{
+		line = get_next_line(fd1);
+		if (line == NULL)
+			break ;
+		if (is_expect(line) == 1)
+		{
+			close(fd1);
+			return (1);
+		}
+	}
+	close(fd1);
+	return (0);
+}

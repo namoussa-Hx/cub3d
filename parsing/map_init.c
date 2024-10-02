@@ -70,6 +70,16 @@ char	*my_strdup(const char *s1, int lenght)
 	return (ptr);
 }
 
+int	is_expect(char *str)
+{
+	char	*temp;
+
+	temp = ft_strtrim(str, " ");
+	if (temp == NULL || temp[0] == '\0')
+		return (0);
+	return (1);
+}
+
 int	map_copy(t_map *prog, char *file)
 {
 	char	*line;
@@ -95,5 +105,5 @@ int	map_copy(t_map *prog, char *file)
 		flag = 2;
 		prog->map[j++] = my_strdup(line, lenght);
 	}
-	return (prog->map[j] = NULL, close(fd1), 0);
+	return (prog->map[j] = NULL, _r(fd1));
 }
