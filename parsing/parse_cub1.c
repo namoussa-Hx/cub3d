@@ -21,7 +21,7 @@ int	check_color(char *str, int *color)
 	char	**res;
 
 	i = 0;
-	if (is_comma(str))
+	if (is_comma(str) || _f_c(str))
 		return (-1);
 	i++;
 	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))

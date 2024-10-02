@@ -12,6 +12,14 @@
 
 #include "../cub3d.h"
 
+int	_f_c(char *str)
+{
+	if ((str[0] == 'C' || str[0] == 'F')
+		&& (str[1] != ' ' && str[1] != '\t'))
+		return (1);
+	return (0);
+}
+
 void	init_buffer(t_data *game)
 {
 	int	i;

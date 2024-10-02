@@ -256,8 +256,8 @@ void				init_render_player(t_data *game, t_player_ren *player,
 						int texture_width, int texture_height);
 void				ft_player_angle(t_data *data, char c);
 void				init_data(t_data *data);
-int					check_head_file(char *file);
 int					_r(int fd1);
+int					_f_c(char *str);
 int					is_expect(char *str);
 int					mouse_hook(int x_mouse, int y_mouse, t_data *game);
 void				left(t_data *game, int keycode, int *map_x, int *map_y);

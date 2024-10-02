@@ -1,6 +1,5 @@
-
-                             C 0, 0, 0
-                             F 70,  00000000000000000000000000000000000000000005,40
+C               0                  , 0                      ,000000000000000000000000000000000000000000000000000000004 
+                             F 255, 00000,0
 
 
 
@@ -11,7 +10,7 @@
 
 SO  textures/wall_textures/image2.xpm
 
-EA textures/wall_textures/image4.xpm  
+         EA textures/wall_textures/image4.xpm  
 
 
 WE  textures/wall_textures/image3.xpm
