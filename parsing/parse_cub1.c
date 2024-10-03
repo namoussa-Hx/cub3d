@@ -95,7 +95,6 @@ int	except_map(char *line)
 int	parse_cub(char *file, t_data *prog)
 {
 	int		fd;
-	int		i;
 	char	*line;
 	int		counter;
 
@@ -108,7 +107,6 @@ int	parse_cub(char *file, t_data *prog)
 		line = get_next_line(fd);
 		if (line == NULL || except_map(line))
 			break ;
-		i = 0;
 		counter += check_map_line(line, prog);
 		continue ;
 		if (counter == 6)
