@@ -28,11 +28,10 @@ int	update(t_data *game)
 	memset(game->img_data, 0, WIDTH * HEIGHT * (game->bpp / 8));
 	render_color(game);
 	render_flor(game);
+	ray_angle = game->player.angle - (game->player.fov / 2);
 	while (++x < WIDTH)
 	{
-		ray_angle = (x - WIDTH / 2.0) / (WIDTH / 2.0) * (game->player.fov
-				/ 2.0);
-		ray_angle = game->player.angle + ray_angle;
+		ray_angle += game->player.fov / WIDTH;
 		cast_ray_dda(game, ray_angle, x, 30);
 	}
 	render_minimap(game);

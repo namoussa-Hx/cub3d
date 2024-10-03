@@ -91,11 +91,19 @@ void	wall_dist_door(t_data *game, int tile_size)
 
 void	cast_ray_dda(t_data *game, float angle, int ray_index, int tile_size)
 {
+	int	rangle;
+
 	ray_init(game, angle, tile_size);
 	ray_dir(game, tile_size);
 	while (game->vector.hit == 0)
 		check_side(game);
 	wall_dist_door(game, tile_size);
+	rangle = game->player.angle - angle;
+	if (rangle >= 2 * PI)
+		rangle -= 2 * PI;
+	if (rangle < 0)
+		rangle += 2 * PI;
+	game->vector.perp_wall_dist *= cos(rangle);
 	render_3d_projection(game, game->vector.perp_wall_dist * tile_size,
 		ray_index);
 }
