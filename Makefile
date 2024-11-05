@@ -28,13 +28,13 @@ OBJ = $(SRC:.c=.o)
 
 CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address -g3
 
-XFLAGS = -lXext -lX11 -lm -lmlx
+XFLAGS = -lXext -lX11 -lm -lmlx -lXrandr -lXrender -lXinerama -lXcursor -lXfixes -lX11 -lpthread
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C libft
-	$(CC) $(CFLAGS) $(OBJ)  -L libft -lft  -o $(NAME) $(XFLAGS)
+	$(CC) $(CFLAGS) $(OBJ) -L libft -lft -L /usr/local/lib -lmlx $(XFLAGS) -o $(NAME)
 
 clean:
 	make -C libft clean
